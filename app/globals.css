@@ -1,26 +1,182 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+ * Two themes share one set of colour names. Dark is the default (navy #08335D
+ * from the brief). Wrap a section in .theme-light to flip it to ivory paper;
+ * every utility that uses these names follows automatically.
+ */
+:root,
+.theme-dark {
+  --navy-950: #041d36;
+  --navy-900: #062b4f;
+  --navy: #08335d;
+  --navy-800: #0e3f6e;
+  --navy-700: #145a86;
+  --gold: #f7b538;
+  --gold-soft: #f6cd80;
+  --beige: #efe4cf;
+  --ink: #fdffff;
+  --muted: rgba(253, 255, 255, 0.64);
+  --line: rgba(247, 181, 56, 0.32);
+  --paper: #fbf7ee;
+  --on-gold: #041d36;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.theme-light {
+  --navy-900: #f3ecdd;
+  --navy: #fbf7ee;
+  --navy-800: #efe6d2;
+  --navy-700: #e6dac0;
+  --gold: #946414;
+  --gold-soft: #b07a1e;
+  --beige: #0e3f6e;
+  --ink: #08335d;
+  --muted: rgba(8, 51, 93, 0.7);
+  --line: rgba(8, 51, 93, 0.2);
+  --on-gold: #fbf7ee;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  .theme-light,
+  .theme-dark {
+    background-color: var(--navy);
+    color: var(--ink);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@theme inline {
+  --color-navy-950: var(--navy-950);
+  --color-navy-900: var(--navy-900);
+  --color-navy: var(--navy);
+  --color-navy-800: var(--navy-800);
+  --color-navy-700: var(--navy-700);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-beige: var(--beige);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-paper: var(--paper);
+  --color-on-gold: var(--on-gold);
+  --font-serif: var(--font-display);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-label);
 }
+
+html {
+  background: var(--navy);
+  /* The page scrollbar is hidden, as on the reference site; scrolling still works
+     with wheel, trackpad, keyboard and touch. */
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+/* No overflow change when smooth scroll is paused: hiding the scrollbar would
+   shift the page sideways. The menu blocks wheel and touch scrolling itself. */
+
+body {
+  background: var(--navy);
+  color: var(--ink);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--gold);
+  color: var(--navy-950);
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+
+/* Kept as a hook for texture; flat for now so the navy stays exactly #08335D. */
+.grain {
+  background-image: none;
+}
+
+@utility label {
+  font-family: var(--font-label), ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+}
+
+/* Sentence-case editorial headings */
+@utility display {
+  font-family: "Gambarino", var(--font-display), ui-serif, Georgia, serif;
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+/* Gambarino has no italic, so emphasised words inside headings use Bodoni's. */
+.display em,
+.display i {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  font-weight: 500;
+}
+
+/* Tall condensed capitals for the giant titles */
+@utility caps {
+  font-family: var(--font-caps), ui-serif, Georgia, serif;
+  font-weight: 500;
+  font-variation-settings: "wdth" 62.5;
+  font-stretch: 62.5%;
+  line-height: 0.86;
+  /* Keep normal: an em value would be inherited as a fixed px amount by FitText's measuring copies. */
+  letter-spacing: normal;
+  text-transform: uppercase;
+}
+
+/* Hollow lettering: just the gold outline */
+@utility outline-text {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--gold);
+}
+
+/* Ruled grid: hairlines between cells without a coloured gap showing through. */
+@layer components {
+  .ledger {
+    --ledger: var(--line);
+    border-top: 1px solid var(--ledger);
+    border-left: 1px solid var(--ledger);
+  }
+  .ledger > * {
+    border-right: 1px solid var(--ledger);
+    border-bottom: 1px solid var(--ledger);
+  }
+
+  /*
+   * Ticket corners: each layer of a <Ticket> cuts a concave notch out of all
+   * four corners. --o is how far the layer sits inside the outer edge, so every
+   * layer's notch is centred on the same outer corner and the gold rules stay
+   * an even width around the curve.
+   */
+  .notch {
+    --n: 18px;
+    --o: 0px;
+    --r: calc(var(--n) + var(--o));
+    --r2: calc(var(--r) + 0.5px);
+    mask:
+      radial-gradient(circle at calc(0px - var(--o)) calc(0px - var(--o)), #0000 var(--r), #000 var(--r2)) top left / 51% 51% no-repeat,
+      radial-gradient(circle at calc(100% + var(--o)) calc(0px - var(--o)), #0000 var(--r), #000 var(--r2)) top right / 51% 51% no-repeat,
+      radial-gradient(circle at calc(0px - var(--o)) calc(100% + var(--o)), #0000 var(--r), #000 var(--r2)) bottom left / 51% 51% no-repeat,
+      radial-gradient(circle at calc(100% + var(--o)) calc(100% + var(--o)), #0000 var(--r), #000 var(--r2)) bottom right / 51% 51% no-repeat;
+  }
+
+  /* Row of punched holes along a section edge, like the tear line on a race ticket. */
+  .perforation {
+    height: 14px;
+    background: radial-gradient(circle at 50% 0, var(--hole) 6px, transparent 6.5px) 0 0 / 28px 14px repeat-x;
+  }
+}
+
