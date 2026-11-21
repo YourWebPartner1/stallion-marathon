@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { FactLedger } from "@/components/official-run";
 import { CountLedger, PageHeading } from "@/components/page-heading";
 import { WorkshopGrid } from "@/components/workshop-grid";
-import { TBA, workshops } from "@/lib/content";
+import { numberWord, TBA, workshopCount, workshops } from "@/lib/content";
 
 // "To fill before launch" from the content document, in its order.
 const details = [
-  { label: "Dates", value: TBA },
+  { label: "Dates", value: "Coming soon", note: "For all workshops" },
   { label: "Venue", value: TBA, note: "In Hyderabad" },
   { label: "Speakers", value: TBA },
   { label: "Seat limits", value: TBA, note: "Per session; groups of 30 to 100" },
@@ -16,7 +16,7 @@ const details = [
 export const metadata: Metadata = {
   alternates: { canonical: "/workshops" },
   title: { absolute: "Free Running and Wellbeing Workshops | Stallion Marathon" },
-  description: "Twelve free workshops on running, health, money and safety for virtual run participants.",
+  description: `${numberWord(workshopCount.total)} free workshops on running, health, wildlife, money and safety for virtual run participants.`,
 };
 
 /** Workshops, in the reference's inner-page layout: heading with a ledger, a short intro, then the filterable grid. */
@@ -52,7 +52,7 @@ export default function WorkshopsPage() {
             know the subject. Free for every Stallion Virtual Run participant who can join us in Hyderabad.
           </p>
           <p className="m-0 self-end text-base leading-[1.3] text-ink/60 lg:col-span-3 lg:text-right">
-            Dates, venue and speakers will be announced. Reserve your seat now and we&rsquo;ll be in touch.
+            Dates for all workshops are coming soon. Reserve your seat now and we&rsquo;ll be in touch.
           </p>
         </div>
       </section>

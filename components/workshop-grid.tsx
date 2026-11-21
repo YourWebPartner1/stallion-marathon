@@ -9,9 +9,9 @@ const STORAGE_KEY = "stallion:reserved-workshops";
 const PAINT = ["#f7b538", "#c98f2e", "#145a86", "#08335d"];
 
 const filters = [
-  { id: "all", label: "All 12" },
-  { id: "before", label: "Before the run 03" },
-  { id: "after", label: "After the run 09" },
+  { id: "all", label: "All" },
+  { id: "before", label: "Before the run" },
+  { id: "after", label: "After the run" },
 ] as const;
 
 type FilterId = (typeof filters)[number]["id"];
@@ -80,6 +80,7 @@ export function WorkshopGrid({ workshops }: { workshops: Workshop[] }) {
       <div role="group" aria-label="Filter workshops" className="flex flex-wrap gap-x-10 gap-y-3 border-b border-ink pb-6">
         {filters.map((f) => {
           const on = filter === f.id;
+          const count = f.id === "all" ? workshops.length : workshops.filter((w) => w.phase === f.id).length;
           return (
             <button
               key={f.id}
@@ -90,7 +91,7 @@ export function WorkshopGrid({ workshops }: { workshops: Workshop[] }) {
                 on ? "text-ink" : "text-ink/50 hover:text-ink"
               }`}
             >
-              {f.label}
+              {f.label} {f.id === "all" ? count : String(count).padStart(2, "0")}
               <span
                 aria-hidden
                 className={`absolute inset-x-0 -bottom-[25px] h-[3px] origin-left bg-[#f7b538] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${

@@ -6,7 +6,7 @@ import { FactLedger, RacePanel } from "@/components/official-run";
 import { CountLedger, PageHeading } from "@/components/page-heading";
 import { Roll } from "@/components/roll";
 import { StartLineArt } from "@/components/start-line-art";
-import { bookHref, challenges, TBA, venue } from "@/lib/content";
+import { bookHref, challenges, TBA, venue, workshopCount } from "@/lib/content";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/official-run" },
@@ -123,13 +123,13 @@ export default function OfficialRunPage() {
         </h2>
         <div className="grid gap-px bg-[#08335d] p-px lg:grid-cols-3">
           {[
-            { label: "Free sessions", mark: "12", title: "Workshops", meta: ["Before and after the run"], href: "/workshops" },
+            { label: "Free sessions", mark: String(workshopCount.total), title: "Workshops", meta: ["Before and after the run"], href: "/workshops" },
             {
               label: "Sector Challenges",
               mark: String(challenges.length),
               title: "Challenges",
               meta: ["Organisations compete for the most bookings"],
-              href: "/challenges",
+              href: "/volunteers#challenges",
             },
             { label: "Of profits", mark: "10%", title: "Giving Back", meta: ["Supporting NGOs doing good work"], href: "/giving-back" },
           ].map((c) => (

@@ -39,7 +39,7 @@ export const pages = [
   "/virtual-run",
   "/official-run",
   "/workshops",
-  "/challenges",
+  "/volunteers",
   "/giving-back",
   "/book",
   "/faq",
@@ -69,6 +69,17 @@ export const booking = {
   websiteUrl: null as string | null,
   bookMyShowUrl: null as string | null,
 };
+
+export const forms = {
+  // Volunteer registration form (the team has one; paste its link here).
+  volunteerUrl: null as string | null,
+  // Sector Challenges registration form, [form link] in the content document.
+  challengeUrl: null as string | null,
+};
+
+/** Until each form link is supplied, its buttons lead to the Contact page. */
+export const volunteerHref = forms.volunteerUrl ?? "/contact";
+export const challengeHref = forms.challengeUrl ?? "/contact";
 
 /** Where a "Book" button should go. */
 export const bookHref = "/book";
@@ -117,7 +128,7 @@ export const nav = [
   { href: "/virtual-run", label: "Virtual Run" },
   { href: "/official-run", label: "Official Run" },
   { href: "/workshops", label: "Workshops" },
-  { href: "/challenges", label: "Challenges" },
+  { href: "/volunteers", label: "Volunteers" },
   { href: "/giving-back", label: "Giving Back" },
   { href: "/faq", label: "FAQ" },
 ] as const;
@@ -162,7 +173,7 @@ export const tiers: Tier[] = [
     name: "Two-Day Stallion",
     distance: "25 km a day for two days (50 km total)",
     km: 50,
-    price: 5000,
+    price: 1599,
     bestFor: "Passionate endurance runners",
   },
 ];
@@ -236,6 +247,8 @@ export const workshops: Workshop[] = [
   { id: "w01", phase: "before", title: "How to Run", body: "Pace, breathing and form for your first or fastest run." },
   { id: "w02", phase: "before", title: "How to Golf", body: "A calm, skilful game you can take up at any age." },
   { id: "w03", phase: "before", title: "Diet for a Working Day", body: "Eat for energy when you sit at a desk all day." },
+  { id: "w13", phase: "before", title: "Snake Awareness Programme", body: "The different kinds of snakes and the habitats they live in." },
+  { id: "w14", phase: "before", title: "Reptile Interaction", body: "How reptiles react and where they live, from the largest plant-eating lizard to desert lizards." },
   { id: "w04", phase: "after", title: "Physical Wellbeing", body: "Recover well and keep your body moving." },
   { id: "w05", phase: "after", title: "Self-Defence", body: "Practical moves and awareness to stay safe." },
   { id: "w06", phase: "after", title: "Beating Short Attention Span", body: "Focus habits that work in a distracted world." },
@@ -301,7 +314,7 @@ export const faqs: FaqGroup[] = [
       { q: "When does the virtual run start and end?", a: "It starts on 19 January 2027, one week before Republic Day. The submission closing date will be announced. Winners are announced on 26 January 2027." },
       { q: "Where do I run the virtual run?", a: "Anywhere you like." },
       { q: "What distances can I choose?", a: "5 km, 8 km, 10 km, 15 km, 21 km and 42 km, or the Two-Day Stallion: 25 km a day for two days, 50 km in total." },
-      { q: "How much does it cost?", a: "5 km ₹599, 8 km ₹699, 10 km ₹799, 15 km ₹899, 21 km ₹1,199, 42 km ₹1,299, Two-Day Stallion ₹5,000." },
+      { q: "How much does it cost?", a: "5 km ₹599, 8 km ₹699, 10 km ₹799, 15 km ₹899, 21 km ₹1,199, 42 km ₹1,299, Two-Day Stallion ₹1,599." },
       { q: "What do I get?", a: "A finisher's medal and a goodie bag delivered to your home, and free workshops if you can attend in Hyderabad." },
       { q: "What do winners get?", a: "A prize, recognition, a trophy delivered to your home, and a premium ticket to the official race on 14 March 2027 in any category you choose." },
     ],
@@ -328,3 +341,14 @@ export const faqs: FaqGroup[] = [
     ],
   },
 ];
+
+/** Workshop counts, so every mention stays right when sessions change. */
+export const workshopCount = {
+  total: workshops.length,
+  before: workshops.filter((w) => w.phase === "before").length,
+  after: workshops.filter((w) => w.phase === "after").length,
+};
+
+/** A small number in words, for sentences ("Fourteen free sessions"). */
+export const numberWord = (n: number) =>
+  ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"][n] ?? String(n);

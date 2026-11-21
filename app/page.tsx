@@ -12,7 +12,7 @@ import { FeaturedChapters } from "@/components/featured-chapters";
 import { LiveCountdown } from "@/components/live-countdown";
 import { Reveal } from "@/components/motion";
 import { ButtonLink, Container } from "@/components/ui";
-import { bookHref, heroArt, TBA, timers } from "@/lib/content";
+import { bookHref, heroArt, TBA, timers, workshopCount } from "@/lib/content";
 
 export default function Home() {
   return (
@@ -25,7 +25,7 @@ export default function Home() {
       <StartLine />
       <TeaserBand
         id="workshops-teaser"
-        figure="12"
+        figure={String(workshopCount.total)}
         figureCaption="free workshops"
         lines={["Learn before you run.", "Learn after you finish."]}
         note="Free workshops for virtual run participants."
@@ -37,7 +37,7 @@ export default function Home() {
         figureCaption="HR Champion prize"
         lines={["Is your company ready?"]}
         note="Corporate, Hospital, Pharmacy and Bank Challenges. The HR who brings the most bookings wins ₹50,000."
-        cta={{ label: "Enter your organisation", href: "/challenges" }}
+        cta={{ label: "Enter your organisation", href: "/volunteers#challenges" }}
       />
       <GivingBackStrip />
       <Numbers />
@@ -208,7 +208,7 @@ function Numbers() {
         { title: "Runners", value: "30,000", sub: "Up to, on race day" },
         { title: "Distances", value: "7", sub: "5 km to 50 km" },
         { title: "Virtual from", value: "₹599", sub: "Medal shipped home" },
-        { title: "Workshops", value: "12", sub: "Free", caption: "3 before · 9 after" },
+        { title: "Workshops", value: String(workshopCount.total), sub: "Free", caption: `${workshopCount.before} before · ${workshopCount.after} after` },
         { title: "HR prize", value: "₹50K", sub: "Sector Challenges" },
         { title: "Given back", value: "10%", sub: "Of profits to NGOs" },
         { title: "Virtual start", value: "19.01", sub: "2027", caption: "Run from anywhere" },

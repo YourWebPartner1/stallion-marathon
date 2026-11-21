@@ -3,7 +3,7 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { challengePrizes, challenges, headcountBands } from "@/lib/content";
+import { challengeHref, challengePrizes, challenges, headcountBands } from "@/lib/content";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 const FRAME = "clamp(20px, 2.6vw, 36px)";
@@ -68,7 +68,7 @@ export function ChallengeGrid() {
       {challenges.map((c, i) => (
         <Link
           key={c.name}
-          href="/contact"
+          href={challengeHref}
           className="group relative isolate flex min-h-[clamp(360px,26vw,500px)] flex-col overflow-hidden bg-navy p-[clamp(24px,2.1vw,40px)] text-ink transition-colors duration-[250ms] [transition-delay:120ms] hover:text-[#f7b538]"
         >
           {PAINT.map((color, j) => (

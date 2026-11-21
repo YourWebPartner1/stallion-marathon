@@ -2,43 +2,68 @@ import type { Metadata } from "next";
 import { ChallengeGrid, PrizePanel } from "@/components/challenges";
 import { FactLedger } from "@/components/official-run";
 import { CountLedger, PageHeading } from "@/components/page-heading";
-import { challengeSteps, challenges } from "@/lib/content";
+import { ButtonLink } from "@/components/ui";
+import { challengeHref, challengeSteps, challenges, volunteerHref } from "@/lib/content";
 
 export const metadata: Metadata = {
-  alternates: { canonical: "/challenges" },
-  title: { absolute: "Corporate, Hospital, Pharmacy, Bank Run Challenges" },
-  description: "Compete for your organisation. The HR lead with the most bookings wins ₹50,000.",
+  alternates: { canonical: "/volunteers" },
+  title: { absolute: "Volunteer and Sector Challenges | Stallion Marathon" },
+  description:
+    "Volunteer at Stallion Marathon, or enter your organisation in the Corporate, Hospital, Pharmacy or Bank Challenge. The HR lead with the most bookings wins ₹50,000.",
 };
 
 // Short labels for the four entry steps; the sentences are the confirmed wording.
 const stepLabels = ["Register", "Book", "Count", "Announce"];
 
 /**
- * Sector Challenges, in the reference's inner-page layout: heading with the
- * four challenges, an intro band, the gold-framed prize panel, the challenge
- * cards, then how to enter.
+ * Volunteers, in the reference's inner-page layout: heading, the volunteer
+ * sign-up band, then the Sector Challenges (prize panel, challenge cards and
+ * how to enter).
  */
-export default function ChallengesPage() {
+export default function VolunteersPage() {
   return (
     <div className="theme-light bg-navy text-ink">
       <section className="px-[max(20px,2.78vw)] pb-16 pt-[max(120px,9.44vw)]">
         <PageHeading
-          title="Challenges"
-          statement={["Which organisation", "runs hardest?"]}
+          title="Volunteers"
+          statement={["Run it, or help", "run it."]}
           aside={
             <CountLedger
               count={String(challenges.length)}
-              caption="sector challenges, ₹50,000 HR prize"
-              rows={challenges.map((c) => ({
-                label: c.name.replace(" Challenge", ""),
-                value: c.banded ? "By headcount" : "One winner",
-              }))}
+              caption="sector challenges, and a place for every volunteer"
+              rows={[
+                { label: "Volunteers", value: "Register below" },
+                ...challenges.map((c) => ({
+                  label: c.name.replace(" Challenge", ""),
+                  value: c.banded ? "By headcount" : "One winner",
+                })),
+              ]}
             />
           }
         />
       </section>
 
-      <section aria-label="About the challenges" className="px-[max(20px,2.78vw)] py-16">
+      <section aria-labelledby="volunteer-title" className="px-[max(20px,2.78vw)] py-16">
+        <div className="grid items-end gap-x-6 gap-y-8 border-y border-ink py-14 lg:grid-cols-12">
+          <div className="flex flex-col gap-3 lg:col-span-3">
+            <p className="m-0 text-sm text-ink/60">Volunteer with us</p>
+          </div>
+          <div className="flex flex-col gap-3 lg:col-span-6">
+            <h2 id="volunteer-title" className="display m-0 text-[clamp(32px,3.15vw,60px)] leading-[1.05] tracking-[-0.02em]">
+              Help bring Chapter I to life.
+            </h2>
+            <p className="m-0 text-lg leading-[1.35] text-ink/70">
+              Join the team behind Stallion Marathon. Register as a volunteer and we&rsquo;ll be in touch with roles and
+              timings.
+            </p>
+          </div>
+          <div className="lg:col-span-3 lg:justify-self-end">
+            <ButtonLink href={volunteerHref}>Register as a volunteer</ButtonLink>
+          </div>
+        </div>
+      </section>
+
+      <section id="challenges" aria-label="About the challenges" className="scroll-mt-24 px-[max(20px,2.78vw)] py-16">
         <div className="grid gap-y-6 border-y border-ink py-14 lg:grid-cols-12 lg:gap-x-6">
           <p className="m-0 text-sm text-ink/60 lg:col-span-3">Sector Challenges</p>
           <p className="display m-0 text-[clamp(24px,1.89vw,36px)] leading-[1.25] lg:col-span-6">
@@ -71,7 +96,7 @@ export default function ChallengesPage() {
           aside={{
             count: String(challengeSteps.length),
             caption: "Steps",
-            link: { label: "Register your organisation", href: "/contact" },
+            link: { label: "Register your organisation", href: challengeHref },
           }}
           rows={challengeSteps.map((s, i) => ({ label: stepLabels[i] ?? `Step ${i + 1}`, value: s }))}
         />

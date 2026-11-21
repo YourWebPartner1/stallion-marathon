@@ -69,7 +69,7 @@ export default function ContactPage() {
               mark: String(challenges.length),
               title: "Register your team",
               meta: ["HR leads: register your organisation"],
-              href: "/challenges",
+              href: "/volunteers#challenges",
             },
             {
               label: "Distances",

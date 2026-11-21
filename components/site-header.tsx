@@ -17,7 +17,7 @@ const primaryLinks = [
   { href: "/workshops", label: "Workshops" },
 ];
 const secondaryLinks = [
-  { href: "/challenges", label: "Challenges" },
+  { href: "/volunteers", label: "Volunteers" },
   { href: "/giving-back", label: "Giving Back" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },

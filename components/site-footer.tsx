@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { bookHref, heroArt, legalLinks, site } from "@/lib/content";
+import { bookHref, heroArt, legalLinks, numberWord, site, workshopCount } from "@/lib/content";
 import { Crest } from "@/components/logo";
 import { Roll } from "@/components/roll";
 
@@ -13,7 +13,7 @@ const PAINT = ["#f7b538", "#c98f2e", "#145a86", "#08335d"];
 
 const places = [
   { href: bookHref, label: "Book your run", note: "Pick your distance and take your place." },
-  { href: "/workshops", label: "Workshops", note: "Twelve free sessions, before and after the run." },
+  { href: "/workshops", label: "Workshops", note: `${numberWord(workshopCount.total)} free sessions, before and after the run.` },
   { href: "/giving-back", label: "Giving Back", note: "10% of profits go to NGOs doing good work." },
 ];
 
@@ -22,7 +22,7 @@ const quickLinks = [
   { href: "/virtual-run", label: "Virtual Run" },
   { href: "/official-run", label: "Official Run" },
   { href: "/faq", label: "FAQ" },
-  { href: "/challenges", label: "Challenges" },
+  { href: "/volunteers", label: "Volunteers" },
   { href: "/contact", label: "Contact" },
 ];
 
