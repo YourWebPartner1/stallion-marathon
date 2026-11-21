@@ -14,6 +14,7 @@ const details = [
 ];
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/workshops" },
   title: { absolute: "Free Running and Wellbeing Workshops | Stallion Marathon" },
   description: "Twelve free workshops on running, health, money and safety for virtual run participants.",
 };

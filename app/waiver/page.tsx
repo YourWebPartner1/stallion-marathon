@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { LegalPage } from "@/components/legal-page";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/waiver" },
   title: "Waiver",
   description: "Participant waiver and release for Stallion Marathon, Chapter I.",
 };

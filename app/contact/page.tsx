@@ -6,6 +6,7 @@ import { Roll } from "@/components/roll";
 import { bookHref, challenges, faqs, site, tiers } from "@/lib/content";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/contact" },
   title: "Contact",
   description: `Contact the ${site.organiser} on ${site.phone}.`,
 };

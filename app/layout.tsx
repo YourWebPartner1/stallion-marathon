@@ -6,6 +6,8 @@ import { CountdownBar } from "@/components/countdown-bar";
 import { SiteFooter } from "@/components/site-footer";
 import { MotionProvider } from "@/components/motion";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { site } from "@/lib/content";
+import { jsonLd, organization, website } from "@/lib/structured-data";
 
 // Bodoni Moda supplies the gold italic accents inside headings (Gambarino has no italic).
 const display = Bodoni_Moda({
@@ -35,6 +37,9 @@ const label = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(site.url),
+  alternates: { canonical: "/" },
+  applicationName: site.name,
   title: {
     default: "Stallion Marathon 2027 Hyderabad: How's Your Horsepower?",
     template: "%s | Stallion Marathon",
@@ -54,7 +59,9 @@ export const metadata: Metadata = {
       "Virtual run for Republic Day 2027 and the official marathon at Gachibowli Stadium on 14 March 2027. Book now.",
     type: "website",
     locale: "en_IN",
+    siteName: site.name,
   },
+  twitter: { card: "summary_large_image" },
 };
 
 export const viewport: Viewport = {
@@ -73,6 +80,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=gambarino@400&display=swap" />
       </head>
       <body className="flex min-h-full flex-col">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd([organization, website]) }} />
         <SmoothScroll />
         <MotionProvider>
           <a

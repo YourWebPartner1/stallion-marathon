@@ -3,6 +3,7 @@ import { LegalPage } from "@/components/legal-page";
 import { site } from "@/lib/content";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/terms" },
   title: "Terms",
   description: "Terms and conditions for Stallion Marathon, Chapter I.",
 };

@@ -4,8 +4,10 @@ import { Accordion } from "@/components/accordion";
 import { CountLedger, PageHeading } from "@/components/page-heading";
 import { Roll } from "@/components/roll";
 import { faqs, site } from "@/lib/content";
+import { faqPage, jsonLd } from "@/lib/structured-data";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/faq" },
   title: "FAQ",
   description: "Answers about the Stallion Marathon virtual run, race day, workshops, challenges and payments.",
 };
@@ -22,6 +24,7 @@ export default function FaqPage() {
 
   return (
     <div className="theme-light bg-navy text-ink">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(faqPage) }} />
       <section className="px-[max(20px,2.78vw)] pb-16 pt-[max(120px,9.44vw)]">
         <PageHeading
           title="Questions"

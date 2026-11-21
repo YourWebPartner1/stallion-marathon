@@ -7,6 +7,7 @@ import { CountLedger, PageHeading } from "@/components/page-heading";
 import { bookingSteps, TBA } from "@/lib/content";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/book" },
   title: "Book Now",
   description: "Book the Stallion Virtual Run or race day at Gachibowli Stadium on the official website or BookMyShow.",
 };

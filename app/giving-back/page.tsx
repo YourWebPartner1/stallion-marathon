@@ -6,6 +6,7 @@ import { Roll } from "@/components/roll";
 import { bookHref, deraPillars } from "@/lib/content";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/giving-back" },
   title: "Giving Back",
   description: "10% of Stallion Marathon profits go to NGOs working on the four pillars of D.E.R.A. Every run counts twice.",
 };

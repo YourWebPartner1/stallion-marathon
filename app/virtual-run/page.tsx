@@ -15,6 +15,7 @@ const virtualRules = [
 ];
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/virtual-run" },
   title: { absolute: "Virtual Run Republic Day 2027 | Stallion Marathon" },
   description: "Run 5 to 42 km anywhere from 19 January 2027. Medal and goodie bag delivered home. From ₹599.",
 };

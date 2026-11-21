@@ -5,6 +5,7 @@ import { CountLedger, PageHeading } from "@/components/page-heading";
 import { challengeSteps, challenges } from "@/lib/content";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/challenges" },
   title: { absolute: "Corporate, Hospital, Pharmacy, Bank Run Challenges" },
   description: "Compete for your organisation. The HR lead with the most bookings wins ₹50,000.",
 };

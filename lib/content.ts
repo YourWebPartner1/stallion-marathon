@@ -28,7 +28,27 @@ export const site = {
   phoneDisplay: "7075701406",
   // Not yet supplied: a dedicated Stallion Marathon address. Hidden until set.
   email: null as string | null,
+  // The live address, used for search engines and share links. Set
+  // NEXT_PUBLIC_SITE_URL in Vercel once the own domain is connected.
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://stallion-marathon.vercel.app").replace(/\/$/, ""),
 };
+
+/** Every public page, for the sitemap. */
+export const pages = [
+  "/",
+  "/virtual-run",
+  "/official-run",
+  "/workshops",
+  "/challenges",
+  "/giving-back",
+  "/book",
+  "/faq",
+  "/contact",
+  "/terms",
+  "/waiver",
+  "/refund-policy",
+  "/privacy",
+] as const;
 
 /**
  * Optional cover artwork for the homepage hero, shown in front of the lower half

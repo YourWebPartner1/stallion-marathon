@@ -9,6 +9,7 @@ import { StartLineArt } from "@/components/start-line-art";
 import { bookHref, challenges, TBA, venue } from "@/lib/content";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/official-run" },
   title: { absolute: "Stallion Marathon 14 March 2027, Gachibowli Stadium" },
   description: "Hyderabad's race day starts behind a stallion. Choose your category and book.",
 };

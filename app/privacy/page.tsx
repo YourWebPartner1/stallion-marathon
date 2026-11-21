@@ -3,6 +3,7 @@ import { LegalPage } from "@/components/legal-page";
 import { site } from "@/lib/content";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/privacy" },
   title: "Privacy Policy",
   description: "How Stallion Marathon uses the information you give when you book.",
 };

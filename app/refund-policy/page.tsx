@@ -3,6 +3,7 @@ import { LegalPage } from "@/components/legal-page";
 import { site } from "@/lib/content";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/refund-policy" },
   title: "Refund Policy",
   description: "Refund policy for Stallion Marathon, Chapter I.",
 };
