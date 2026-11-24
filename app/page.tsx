@@ -186,9 +186,7 @@ function Chapters() {
           rows: [
             { k: "When", v: "Sunday 14 March 2027" },
             { k: "Where", v: "Gachibowli Stadium, Hyderabad" },
-            { k: "Distances", v: TBA, pending: true },
-            { k: "From", v: TBA, pending: true },
-            { k: "Includes", v: TBA, pending: true },
+            { k: "Details", v: `Distances, prices and what’s included: ${TBA.toLowerCase()}`, pending: true },
           ],
           cta: "Book race day",
           href: bookHref,

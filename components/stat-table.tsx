@@ -65,7 +65,7 @@ export function StatTable({ word, centre, stats, hint }: { word: string; centre:
   }
 
   return (
-    <section ref={ref} aria-label="The season in numbers" className="theme-light relative -mt-px h-[320svh] bg-navy text-ink">
+    <section ref={ref} aria-label="The season in numbers" className="theme-light relative -mt-px h-[220svh] bg-navy text-ink">
       <div ref={tableRef} className="sticky top-0 h-[100svh] overflow-clip">
         {/* Giant outline word, each letter rising from its own mask as the section arrives. */}
         <motion.p
@@ -187,17 +187,17 @@ function Card({ stat, big = false }: { stat: Stat; big?: boolean }) {
         style={{ borderColor: line }}
       />
       {/* Padding lives on this inner layer so the card's own size stays the unit for everything inside. */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-[4.9cqh] p-[16.6cqh]">
-        <p className="m-0 text-[3.5cqh] leading-tight tracking-[-0.01em]">{stat.title}</p>
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-[4.5cqh] p-[10cqh]">
+        <p className="m-0 text-[max(12px,3.5cqh)] leading-tight tracking-[-0.01em]">{stat.title}</p>
         <span aria-hidden className="flex w-[34cqw] items-center gap-[2cqw]">
           <span className="h-px flex-1 bg-current opacity-40" />
           <span className="size-[1.6cqh] rotate-45" style={{ background: GOLD }} />
           <span className="h-px flex-1 bg-current opacity-40" />
         </span>
         <p className="caps m-0 whitespace-nowrap text-[12.7cqh] leading-[0.9]">{stat.value}</p>
-        {stat.sub && <p className="caps m-0 text-[5.5cqh] leading-[0.95]">{stat.sub}</p>}
+        {stat.sub && <p className="caps m-0 text-[max(13px,5.5cqh)] leading-[0.95]">{stat.sub}</p>}
         {stat.extra && <p className="caps m-0 text-[5.5cqh] leading-[0.95] text-[#f7b538]">{stat.extra}</p>}
-        {stat.caption && <p className="m-0 text-[2.9cqh] leading-snug opacity-60">{stat.caption}</p>}
+        {stat.caption && <p className="m-0 text-[max(12px,2.9cqh)] leading-snug opacity-70">{stat.caption}</p>}
       </div>
     </div>
   );

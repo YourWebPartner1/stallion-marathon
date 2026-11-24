@@ -62,7 +62,7 @@ export function LiveCountdown({ spec, size }: { spec: TimerSpec; size: "large" |
                   <span className={`display leading-none tabular-nums tracking-[-0.02em] ${num}`}>
                     {k === 0 ? String(value) : pad(value as number)}
                   </span>
-                  <span className="text-[11px] uppercase tracking-[0.14em] text-[#fdffff]/60">{unit}</span>
+                  <span className="text-xs uppercase tracking-[0.14em] text-[#fdffff]/60">{unit}</span>
                 </div>
               </div>
             ))}

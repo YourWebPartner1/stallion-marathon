@@ -4,7 +4,9 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { CountdownBar } from "@/components/countdown-bar";
 import { SiteFooter } from "@/components/site-footer";
+import { IntroLoader } from "@/components/intro-loader";
 import { MotionProvider } from "@/components/motion";
+import { PageTransition } from "@/components/page-transition";
 import { SmoothScroll } from "@/components/smooth-scroll";
 import { site } from "@/lib/content";
 import { jsonLd, organization, website } from "@/lib/structured-data";
@@ -82,6 +84,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd([organization, website]) }} />
         <SmoothScroll />
+        <IntroLoader />
+        <noscript>
+          <style>{".intro{display:none}"}</style>
+        </noscript>
         <MotionProvider>
           <a
             href="#main"
@@ -95,6 +101,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             {children}
           </main>
           <SiteFooter />
+          <PageTransition />
         </MotionProvider>
       </body>
     </html>

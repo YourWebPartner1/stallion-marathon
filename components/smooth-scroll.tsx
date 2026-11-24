@@ -10,7 +10,7 @@ export function SmoothScroll() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const lenis = new Lenis({
       autoRaf: true,
-      lerp: 0.1,
+      lerp: 0.24,
       allowNestedScroll: true,
       // Keep in-page anchors clear of the fixed header.
       anchors: { offset: -120 },

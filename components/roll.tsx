@@ -6,7 +6,7 @@
 export function Roll({ text, under = "text-gold" }: { text: string; under?: string }) {
   const letters = Array.from(text);
   const letterClass =
-    "inline-block transition-transform duration-[650ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform";
+    "inline-block transition-transform duration-[650ms] ease-[cubic-bezier(0.16,1,0.3,1)]";
   const glyph = (ch: string) => (ch === " " ? " " : ch);
   return (
     <span className="relative -my-[0.14em] inline-block overflow-x-visible overflow-y-clip whitespace-nowrap py-[0.14em] align-top">

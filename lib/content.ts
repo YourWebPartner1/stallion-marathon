@@ -58,10 +58,10 @@ export const pages = [
  */
 // Using the SM crest until commissioned artwork arrives. Set to null for a text-only hero.
 export const heroArt = {
-  src: "/hero/stallion-mucha.webp",
-  alt: "Art Nouveau stallion wearing a finisher's medal, with marigolds, running shoes and a stopwatch in its mane",
-  width: 1214,
-  height: 1295,
+  src: "/hero/stallion-chapter-one.webp",
+  alt: "Cream and gold stallion wearing a finisher's medal, its mane flowing into runners passing Charminar, an equestrian leading the field on a stadium track, marigolds, running shoes and a stopwatch",
+  width: 1233,
+  height: 1276,
 } as { src: string; alt: string; width: number; height: number } | null;
 
 export const booking = {

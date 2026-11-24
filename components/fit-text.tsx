@@ -2,6 +2,7 @@
 
 import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
+import { useIntroReady } from "@/lib/intro";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 const PROBE = 100; // px size the hidden copies are measured at
@@ -40,6 +41,7 @@ export function FitText({
   /** Seconds before the first letter starts (perLetter only). */
   letterDelay?: number;
 }) {
+  const ready = useIntroReady();
   const wrap = useRef<HTMLSpanElement>(null);
   const probes = useRef<(HTMLSpanElement | null)[]>([]);
   const [sizes, setSizes] = useState<number[] | null>(null);
@@ -70,7 +72,7 @@ export function FitText({
       ref={wrap}
       className={`relative block ${align === "center" ? "text-center" : ""}`}
       initial="hidden"
-      {...(immediate ? { animate: "show" } : { whileInView: "show", viewport: { once: true, amount: 0.2 } })}
+      {...(immediate ? { animate: ready ? "show" : "hidden" } : { whileInView: "show", viewport: { once: true, amount: 0.2 } })}
       variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
     >
       {lines.map((line, i) => {
@@ -93,10 +95,10 @@ export function FitText({
                 {Array.from(line).map((ch, j) => (
                   <span key={j} className="inline-block overflow-x-visible overflow-y-clip align-top">
                     <motion.span
-                      className="inline-block will-change-transform"
+                      className="inline-block"
                       variants={{
                         hidden: { y: "100%" },
-                        show: { y: "0%", transition: { duration: 1.1, ease, delay: letterDelay + j * 0.06 } },
+                        show: { y: "0%", transition: { duration: 0.8, ease, delay: letterDelay + j * 0.035 } },
                       }}
                     >
                       {ch === " " ? " " : ch}
@@ -107,7 +109,7 @@ export function FitText({
             ) : (
               <motion.span
                 className="block"
-                variants={{ hidden: { y: "105%" }, show: { y: "0%", transition: { duration: 1.2, ease } } }}
+                variants={{ hidden: { y: "105%" }, show: { y: "0%", transition: { duration: 0.8, ease } } }}
               >
                 <span
                   className="block origin-top"

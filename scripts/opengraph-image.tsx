@@ -11,7 +11,8 @@ import { heroArt, site } from "@/lib/content";
  * The site serves the saved PNG, not this file. To redraw it (for example after
  * the hero stallion is replaced): copy this file to app/opengraph-image.tsx,
  * move app/opengraph-image.png aside, run the dev server, save
- * http://localhost:3001/opengraph-image as app/opengraph-image.png, then move
+ * http://localhost:3001/opengraph-image as app/opengraph-image.png (compress it to
+ * under 300 KB for WhatsApp, for example with sharp palette PNG), then move
  * this file back here.
  */
 
@@ -81,7 +82,7 @@ export default async function OpengraphImage() {
         {/* Thin gold frame. */}
         {stallion && (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={stallion} alt="" width={523} height={558} style={{ position: "absolute", right: -40, bottom: 0 }} />
+          <img src={stallion} alt="" width={480} height={497} style={{ position: "absolute", right: 34, top: 66 }} />
         )}
 
         <div
@@ -97,7 +98,7 @@ export default async function OpengraphImage() {
           }}
         />
 
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "64px 72px", width: 780 }}>
+        <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "64px 72px", width: 760 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
             {crest && (
               // eslint-disable-next-line @next/next/no-img-element
@@ -107,7 +108,7 @@ export default async function OpengraphImage() {
           </div>
 
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <span style={{ fontFamily: caps ? "Caps" : "serif", fontSize: 168, lineHeight: 0.9, letterSpacing: -2 }}>{title}</span>
+            <span style={{ fontFamily: caps ? "Caps" : "serif", fontSize: 148, lineHeight: 0.9, letterSpacing: -2 }}>{title}</span>
             <span style={{ color: gold, fontSize: 30, letterSpacing: 6, marginTop: 14 }}>MARATHON · CHAPTER I</span>
           </div>
 
@@ -118,7 +119,7 @@ export default async function OpengraphImage() {
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
               <span style={{ color: gold, fontSize: 16, letterSpacing: 3 }}>RACE DAY</span>
-              <span style={{ fontSize: 20, letterSpacing: 0.5 }}>14 MAR 2027 · GACHIBOWLI STADIUM</span>
+              <span style={{ fontSize: 19, letterSpacing: 0.3 }}>14 MAR 2027 · GACHIBOWLI STADIUM</span>
             </div>
           </div>
         </div>

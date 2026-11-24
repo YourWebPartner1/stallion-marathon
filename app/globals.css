@@ -105,8 +105,8 @@ body {
 
 @utility label {
   font-family: var(--font-label), ui-monospace, monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.32em;
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
 }
 
@@ -180,3 +180,334 @@ body {
   }
 }
 
+/*
+ * Motion for the vet scene. Everything loops only while the stage is on screen
+ * (data-playing="true"). Without motion the drawing shows its finished state:
+ * paw bandaged, hearts visible.
+ */
+.vet-stage :is(.vet-part, .vet-wrap, .vet-heart, .vet-pulse, .vet-leaf) {
+  animation-play-state: paused;
+}
+
+.vet-stage[data-playing="true"] :is(.vet-part, .vet-wrap, .vet-heart, .vet-pulse, .vet-leaf) {
+  animation-play-state: running;
+}
+
+/* Each moving part turns around a point given in drawing units (--ox, --oy). */
+.vet-part {
+  transform-box: view-box;
+  transform-origin: var(--ox) var(--oy);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .vet-wag {
+    animation: vet-turn 0.42s ease-in-out infinite alternate;
+    --from: -9deg;
+    --to: 13deg;
+  }
+  .vet-swish {
+    animation: vet-turn 2.6s ease-in-out infinite alternate;
+    --from: -8deg;
+    --to: 10deg;
+  }
+  .vet-nod {
+    animation: vet-turn 3.4s ease-in-out infinite alternate;
+    --from: -1.5deg;
+    --to: 2.5deg;
+  }
+  .vet-work {
+    animation: vet-turn 1.3s ease-in-out infinite alternate;
+    --from: -2deg;
+    --to: 3deg;
+  }
+  .vet-flick {
+    animation: vet-flick 4.6s ease-in-out infinite;
+  }
+  .vet-breathe {
+    animation: vet-breathe 2.8s ease-in-out infinite alternate;
+  }
+  .vet-blink {
+    animation: vet-blink 4.2s linear infinite;
+  }
+  .vet-lid {
+    animation: vet-lid 8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  }
+  .vet-wrap {
+    stroke-dasharray: 1;
+    animation: vet-wrap 8s ease-in-out infinite;
+  }
+  .vet-heart {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: vet-heart 8s ease-out infinite;
+  }
+  .vet-pulse {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: vet-pulse 2s ease-out infinite;
+  }
+  .vet-leaf {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: vet-leaf 9s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vet-pulse {
+    opacity: 0.35;
+  }
+}
+
+@keyframes vet-turn {
+  from {
+    transform: rotate(var(--from));
+  }
+  to {
+    transform: rotate(var(--to));
+  }
+}
+
+@keyframes vet-flick {
+  0%,
+  78%,
+  100% {
+    transform: rotate(0deg);
+  }
+  82%,
+  90% {
+    transform: rotate(-16deg);
+  }
+  86%,
+  94% {
+    transform: rotate(8deg);
+  }
+}
+
+@keyframes vet-breathe {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.012, 1.02);
+  }
+}
+
+@keyframes vet-blink {
+  0%,
+  94%,
+  100% {
+    transform: scaleY(1);
+  }
+  97% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes vet-lid {
+  0%,
+  4% {
+    transform: rotate(0deg);
+  }
+  14%,
+  88% {
+    transform: rotate(64deg);
+  }
+  97%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes vet-wrap {
+  0%,
+  12% {
+    stroke-dashoffset: 1;
+  }
+  30%,
+  94% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 1;
+  }
+}
+
+@keyframes vet-heart {
+  0%,
+  42% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0) scale(1.12);
+  }
+  56%,
+  82% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1);
+  }
+  94%,
+  100% {
+    opacity: 0;
+    transform: translateY(-34px) scale(0.9);
+  }
+}
+
+@keyframes vet-pulse {
+  from {
+    opacity: 0.9;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+}
+
+@keyframes vet-leaf {
+  0% {
+    opacity: 0;
+    transform: translate(0, -40px) rotate(0deg);
+  }
+  12% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-70px, 330px) rotate(300deg);
+  }
+}
+
+/*
+ * Opening loader. Only transform and opacity move, so it all runs apart from
+ * the page's own work and loading can't make it stutter. The sheet is larger
+ * than the screen so it can tilt as it lifts.
+ */
+.intro {
+  position: fixed;
+  inset: -19% -12%;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: #08335d;
+  will-change: transform;
+  animation: intro-lift 0.62s cubic-bezier(0.7, 0, 0.2, 1) 1.15s both;
+}
+
+.intro-crest {
+  position: relative;
+  width: clamp(150px, 15.2vw, 290px);
+  aspect-ratio: 424 / 482;
+}
+
+.intro-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: #f7b538;
+  stroke-width: 4.6;
+  stroke-linejoin: round;
+}
+
+.intro-half {
+  position: absolute;
+  top: -8%;
+  bottom: -8%;
+  width: 58%;
+  overflow: hidden;
+}
+
+.intro-half-left {
+  right: 50%;
+}
+
+.intro-half-right {
+  left: 50%;
+}
+
+.intro-half i {
+  position: absolute;
+  top: -30%;
+  bottom: -30%;
+  width: 130%;
+  background: #08335d;
+  will-change: transform;
+  animation: intro-sweep-right 0.85s cubic-bezier(0.5, 0, 0.2, 1) 0.05s both;
+}
+
+.intro-half-right i {
+  left: 0;
+  transform-origin: 0 50%;
+}
+
+.intro-half-left i {
+  right: 0;
+  transform-origin: 100% 50%;
+  animation-name: intro-sweep-left;
+}
+
+.intro-letters {
+  position: absolute;
+  inset: 26% 0 25%;
+  overflow: hidden;
+}
+
+.intro-letters .intro-lines {
+  inset: auto 0;
+  top: -53.06%; /* 26% of the crest, measured in this shorter box */
+  height: 204.08%;
+  will-change: transform;
+  animation: intro-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+}
+
+.intro-suit {
+  position: absolute;
+  inset: 0;
+  will-change: transform, opacity;
+  animation: intro-pop 0.4s cubic-bezier(0.34, 1.4, 0.64, 1) calc(0.55s + var(--i) * 0.06s) both;
+}
+
+@keyframes intro-sweep-right {
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes intro-sweep-left {
+  to {
+    transform: rotate(-180deg);
+  }
+}
+
+@keyframes intro-rise {
+  from {
+    transform: translateY(51%);
+  }
+}
+
+@keyframes intro-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+}
+
+@keyframes intro-lift {
+  to {
+    transform: translateY(-118%) rotate(-5deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro {
+    display: none;
+  }
+}

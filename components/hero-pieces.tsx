@@ -2,14 +2,18 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { buildPiece, disposeTree, type PieceKind } from "@/lib/pieces-3d";
+import { onIntroReady } from "@/lib/intro";
+import { buildPiece, DIE_TURNS, disposeTree, outlineWidth, uprightDie, type PieceKind } from "@/lib/pieces-3d";
 
 type Layer = "back" | "front";
 
 /**
  * Resting spot for each piece. x is % of the stage width, y and size are in vw
  * (the hero scales with the viewport width), tilt is the piece's own lean in
- * radians, drift is how much it lags the page scroll (more = closer).
+ * radians. `rise` is how much faster than the page it climbs while scrolling
+ * (0 moves with the page), `spin` is its endless slow turn in radians a second,
+ * `turn` is extra radians per 1000px of scroll, and `from` is the angle it
+ * starts at.
  */
 type Spot = {
   kind: PieceKind;
@@ -18,45 +22,73 @@ type Spot = {
   y: number;
   size: number;
   tilt: [number, number, number];
-  drift: number;
-  phone?: { x: number; y: number; size: number };
+  rise: number;
+  spin: number;
+  turn: number;
+  from: number;
+  phone: { x: number; y: number; size: number };
 };
 
-// Sized and placed from the reference at 1000px wide: its king stands about
-// 20vw tall, the pawn, rook and die about 12-13vw, the lower card about 15vw.
+// Places, sizes and speeds measured on the reference at 1440 x 900: the pieces
+// behind the figure travel with the page, the ones in front rise 1.3 to 1.7
+// times as fast, and every piece keeps turning slowly on its own axis.
 const SPOTS: Spot[] = [
-  { kind: "trophy", layer: "front", x: 12, y: 45, size: 17, tilt: [0.12, 0.5, 0.3], drift: 0.3, phone: { x: 13, y: 56, size: 20 } },
-  { kind: "medal", layer: "back", x: 23.5, y: 39, size: 11, tilt: [0.1, -0.5, -0.12], drift: 0.2, phone: { x: 27, y: 45, size: 14 } },
-  { kind: "coin", layer: "front", x: 17.5, y: 63, size: 8, tilt: [0.35, 0.6, 0.1], drift: 0.34 },
-  { kind: "card", layer: "back", x: 50, y: 21, size: 10, tilt: [0.1, 0.35, -0.2], drift: 0.16, phone: { x: 52, y: 20, size: 12 } },
-  { kind: "horseshoe", layer: "back", x: 79.5, y: 41, size: 12, tilt: [0.25, -0.55, 0.15], drift: 0.2, phone: { x: 75, y: 45, size: 14 } },
-  { kind: "stopwatch", layer: "front", x: 90.5, y: 43, size: 13, tilt: [0.15, -0.7, -0.15], drift: 0.3, phone: { x: 88, y: 57, size: 17 } },
-  { kind: "card", layer: "front", x: 82, y: 63, size: 14, tilt: [0.2, Math.PI + 0.4, 0.34], drift: 0.36 },
-  { kind: "bib", layer: "front", x: 9.5, y: 80, size: 11, tilt: [0.25, 0.55, -0.18], drift: 0.38 },
+  { kind: "trophy", layer: "front", x: 10.4, y: 52.6, size: 24.5, tilt: [0.3, 0, 0.17], rise: 0.57, spin: 0.1, turn: 0.4, from: -0.35, phone: { x: 12, y: 66, size: 28 } },
+  { kind: "medal", layer: "back", x: 21.6, y: 37.4, size: 12.2, tilt: [0.14, 0, 0.22], rise: 0, spin: 0.1, turn: 0.4, from: -0.3, phone: { x: 23, y: 56, size: 16 } },
+  { kind: "token", layer: "front", x: 17.0, y: 70.6, size: 5.2, tilt: [-0.1, 0.25, 0], rise: 0.45, spin: 0.12, turn: 0.5, from: -0.2, phone: { x: 9, y: 86, size: 7.5 } },
+  { kind: "coin", layer: "front", x: 8.6, y: 76.6, size: 7.3, tilt: [0.1, -0.2, 0], rise: 0.71, spin: -0.12, turn: -0.5, from: 0.15, phone: { x: 20, y: 93, size: 10.5 } },
+  { kind: "card", layer: "back", x: 47.4, y: 23.4, size: 10.2, tilt: [0.06, 0, 0.1], rise: 0, spin: 0.085, turn: 2.1, from: -0.5, phone: { x: 52.5, y: 38, size: 12.5 } },
+  { kind: "horseshoe", layer: "back", x: 77.2, y: 41.4, size: 11.8, tilt: [0.16, 0, -0.22], rise: 0, spin: -0.1, turn: -0.4, from: 0.35, phone: { x: 80, y: 55, size: 15 } },
+  { kind: "die", layer: "front", x: 91.2, y: 52.0, size: 10.6, tilt: [0.62, 0, 0.06], rise: 0.46, spin: 0.17, turn: 0.8, from: -0.75, phone: { x: 91.5, y: 71, size: 13.5 } },
+  { kind: "bib", layer: "front", x: 85.6, y: 71.2, size: 13.9, tilt: [0.08, 0, -0.16], rise: 0.38, spin: -0.085, turn: -1.4, from: 0.35, phone: { x: 87, y: 93, size: 18 } },
 ];
 
-const FLIP_SECONDS = 1.6;
-const INTRO_SECONDS = 1.6;
-const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-const easeOutExpo = (t: number) => (t >= 1 ? 1 : 1 - Math.pow(2, -10 * t));
+const ACTION_SECONDS = 1.6;
+const INTRO_SECONDS = 1.3;
+// Full speed at once, then a long slow-down: a thrown object losing its spin.
+const easeThrow = (t: number) => 1 - Math.pow(1 - t, 4);
+/** Shoots past the end by an amount set by `over`, then springs back. */
+const easeBurst = (t: number, over: number) => 1 + (over + 1) * Math.pow(t - 1, 3) + over * Math.pow(t - 1, 2);
+
+/** Full turns each piece makes when thrown, and how it comes to rest. */
+const THROWS: Record<PieceKind, { turns: number; lands: "same" | "other side" | "new face" }> = {
+  trophy: { turns: 1, lands: "same" },
+  medal: { turns: 1, lands: "other side" },
+  horseshoe: { turns: 1, lands: "same" },
+  token: { turns: 3, lands: "other side" },
+  coin: { turns: 3, lands: "other side" },
+  card: { turns: 2, lands: "other side" },
+  bib: { turns: 2, lands: "other side" },
+  die: { turns: 2, lands: "new face" },
+};
 
 type Piece = {
   spot: Spot;
   root: THREE.Group; // position and scale
-  lean: THREE.Group; // resting tilt plus idle sway
-  flip: THREE.Group; // turns half a turn per click
+  lean: THREE.Group; // resting tilt
+  act: THREE.Group; // the tumble: on load and when pressed
+  turn: THREE.Group; // the endless slow turn
+  face: THREE.Group; // which side or number is showing
   phase: number;
-  flipFrom: number;
-  flipTo: number;
-  flipStart: number;
-  scene: THREE.Scene;
+  start: number; // when the current throw began, -1 when at rest
+  axis: THREE.Vector3; // what it tumbles around
+  from: THREE.Quaternion;
+  to: THREE.Quaternion;
+  number: number; // the die's number, as an index
 };
+
+const OTHER_SIDE = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
+
+/** Mostly head over heels, a little sideways, either direction. */
+const throwAxis = (a: number, b: number) =>
+  new THREE.Vector3(Math.cos(a), b * 0.45, Math.sin(a)).normalize();
 
 /**
  * Two transparent WebGL canvases around the hero artwork: one behind it, one in
- * front. The pieces sway gently, lag the page as it scrolls, fly in from the
- * centre on load, and turn over when clicked or tapped. Fewer, larger pieces
- * on phones; no motion beyond the flip for reduced-motion visitors.
+ * front. On load the pieces burst out of the centre, tumbling, overshoot and
+ * spring back. They then turn slowly for ever, rise past the page as it
+ * scrolls, and spin as if thrown when pressed. Reduced-motion visitors get
+ * still pieces and an instant change of side.
  */
 export function HeroPieces() {
   const backRef = useRef<HTMLCanvasElement>(null);
@@ -84,51 +116,77 @@ export function HeroPieces() {
     const phone = window.matchMedia("(max-width: 640px)").matches;
 
     const scenes = { back: new THREE.Scene(), front: new THREE.Scene() };
-    for (const s of Object.values(scenes)) {
-      s.add(new THREE.HemisphereLight(0xfff6e0, 0x6b4a1e, 1.6));
-      const sun = new THREE.DirectionalLight(0xffffff, 2.4);
-      sun.position.set(-0.6, 0.9, 1);
-      s.add(sun);
-    }
 
     // A long lens keeps perspective gentle; the z = 0 plane maps one unit to one CSS pixel.
-    const camera = new THREE.PerspectiveCamera(18, 1, 1, 20000);
+    const camera = new THREE.PerspectiveCamera(18);
 
-    const pieces: Piece[] = SPOTS.filter((s) => !phone || s.phone).map((spot, i) => {
-      const mesh = buildPiece(spot.kind);
-      const flip = new THREE.Group();
-      flip.add(mesh);
-      const lean = new THREE.Group();
-      lean.add(flip);
-      const root = new THREE.Group();
+    const pieces: Piece[] = SPOTS.map((spot, i) => {
+      const [root, lean, act, turn, face] = [0, 1, 2, 3, 4].map(() => new THREE.Group());
       root.add(lean);
+      lean.add(act);
+      act.add(turn);
+      turn.add(face);
       scenes[spot.layer].add(root);
-      return { spot, root, lean, flip, phase: i * 1.7, flipFrom: 0, flipTo: 0, flipStart: -1, scene: scenes[spot.layer] };
+      const number = 5; // the die starts on 42 km
+      const at = () => (spot.kind === "die" ? DIE_TURNS[number].clone() : new THREE.Quaternion());
+      return { spot, root, lean, act, turn, face, phase: i * 1.7, start: -1, axis: throwAxis(i * 2.1, Math.sin(i * 5)), from: at(), to: at(), number };
     });
 
     let width = 0;
     let height = 0;
+    let quality = 1; // lowered if the machine can't keep up
+    let drawNow: (() => void) | null = null;
     const resize = () => {
       width = stage.clientWidth;
       height = stage.clientHeight;
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      outlineWidth.value = Math.max(1.6, Math.min(4.2, width * 0.0024));
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5) * quality;
       for (const r of Object.values(gl)) {
         r.setPixelRatio(dpr);
         r.setSize(width, height, false);
       }
       camera.aspect = width / height;
-      camera.position.set(0, 0, height / 2 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)));
+      const distance = height / 2 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+      camera.position.set(0, 0, distance);
+      // Near and far hug the pieces, so thin layers (stripes, grooves, faces) stay crisp.
+      camera.near = distance - width * 0.4;
+      camera.far = distance + width * 0.4;
       camera.updateProjectionMatrix();
       drawNow?.();
     };
-    let drawNow: (() => void) | null = null;
     resize();
     const ro = new ResizeObserver(resize);
     ro.observe(stage);
 
+    // The faces carry lettering, so the shapes are made once the title font is ready.
+    let gone = false;
+    const title = stage.querySelector(".caps");
+    const font = title ? getComputedStyle(title).fontFamily : "Georgia, serif";
+    // One piece per task, so the opening animation never stops for them.
+    const build = async () => {
+      for (const p of pieces) {
+        await new Promise((next) => setTimeout(next, 0));
+        if (gone) return;
+        p.face.add(buildPiece(p.spot.kind, font));
+        if (p.spot.kind === "die") uprightDie(p.face, p.number);
+      }
+      // One unseen draw, so shaders and pictures are ready before the pieces appear.
+      if (start < 0) {
+        for (const p of pieces) {
+          p.root.visible = true;
+          p.root.scale.setScalar(0.01);
+        }
+        gl.back.render(scenes.back, camera);
+        gl.front.render(scenes.front, camera);
+        for (const p of pieces) p.root.visible = false;
+      }
+      drawNow?.();
+    };
+    document.fonts.load(`600 40px ${font}`).then(build, build);
+
     // Where a piece rests, in world units (x right, y up, origin at the stage centre).
     const restOf = (p: Piece) => {
-      const s = phone && p.spot.phone ? p.spot.phone : p.spot;
+      const s = phone ? p.spot.phone : p.spot;
       return {
         x: (s.x / 100) * width - width / 2,
         y: height / 2 - (s.y / 100) * width,
@@ -136,51 +194,79 @@ export function HeroPieces() {
       };
     };
 
-    const start = performance.now();
-    let scrollY = window.scrollY;
-    const onScroll = () => {
-      scrollY = window.scrollY;
+    let busyUntil = 0; // full frame rate until this time
+    const stir = (ms: number) => {
+      busyUntil = Math.max(busyUntil, performance.now() + ms);
     };
+    // The clock starts when the opening loader lifts.
+    let start = -1;
+    const clock = () => (start < 0 ? 0 : (performance.now() - start) / 1000);
+    const offIntro = onIntroReady(() => {
+      start = performance.now();
+      stir(2200);
+    });
+    let scrollY = window.scrollY;
+    const onScroll = () => stir(250);
     window.addEventListener("scroll", onScroll, { passive: true });
 
-    // Hit-testing: the canvases ignore the pointer, so the stage listens and casts a ray.
-    const ray = new THREE.Raycaster();
-    const ndc = new THREE.Vector2();
+    // The canvases ignore the pointer, so the stage listens and compares places.
     const pick = (clientX: number, clientY: number) => {
       const rect = stage.getBoundingClientRect();
-      ndc.set(((clientX - rect.left) / rect.width) * 2 - 1, -((clientY - rect.top) / rect.height) * 2 + 1);
-      ray.setFromCamera(ndc, camera);
-      // Front layer first, it sits on top.
-      for (const layer of ["front", "back"] as const) {
-        const hits = ray.intersectObjects(
-          pieces.filter((p) => p.spot.layer === layer).map((p) => p.root),
-          true,
-        );
-        if (hits.length) return pieces.find((p) => p.root === findRoot(hits[0].object, pieces));
+      const x = clientX - rect.left - width / 2;
+      const y = height / 2 - (clientY - rect.top);
+      let best: Piece | undefined;
+      let nearest = 1;
+      for (const p of pieces) {
+        const size = p.root.scale.x;
+        const [hx, hy] = p.spot.kind === "trophy" ? [0.33, 0.5] : p.spot.kind === "die" ? [0.52, 0.56] : [0.45, 0.5];
+        const d = Math.hypot((x - p.root.position.x) / (hx * size), (y - p.root.position.y) / (hy * size));
+        // Pieces in front win over the ones behind.
+        const score = p.spot.layer === "front" ? d * 0.8 : d;
+        if (d < 1 && score < nearest) {
+          nearest = score;
+          best = p;
+        }
       }
-      return undefined;
+      return best;
     };
-    const onClick = (e: MouseEvent) => {
+    const onPress = (e: PointerEvent) => {
+      if (e.button !== 0) return;
       const p = pick(e.clientX, e.clientY);
       if (!p) return;
-      const now = (performance.now() - start) / 1000;
-      const current = currentFlip(p, now);
-      p.flipFrom = current;
-      p.flipTo = Math.round(p.flipTo / Math.PI + 1) * Math.PI;
-      p.flipStart = now;
+      const now = clock();
+      // A second press waits until the spin has nearly died away.
+      if (p.start >= 0 && now - p.start < ACTION_SECONDS * 0.5) return;
+      p.from.copy(p.to);
+      const { lands } = THROWS[p.spot.kind];
+      if (lands === "other side") p.to.multiply(OTHER_SIDE);
+      if (lands === "new face") {
+        p.number = (p.number + 1 + Math.floor(Math.random() * 5)) % 6;
+        p.to.copy(DIE_TURNS[p.number]);
+        uprightDie(p.face, p.number);
+      }
+      p.axis = throwAxis((Math.random() - 0.5) * 1.5 + (Math.random() < 0.5 ? Math.PI : 0), Math.random() * 2 - 1);
+      p.start = reduced ? -1 : now;
+      stir(ACTION_SECONDS * 1000 + 200);
     };
     const onMove = (e: PointerEvent) => {
       if (e.pointerType !== "mouse") return;
       stage.style.cursor = pick(e.clientX, e.clientY) ? "pointer" : "";
     };
-    stage.addEventListener("click", onClick);
+    stage.addEventListener("pointerdown", onPress);
     stage.addEventListener("pointermove", onMove);
 
-    const currentFlip = (p: Piece, now: number) => {
-      if (p.flipStart < 0) return p.flipTo;
-      const dur = reduced ? 0.3 : FLIP_SECONDS;
-      const t = Math.min(1, (now - p.flipStart) / dur);
-      return p.flipFrom + (p.flipTo - p.flipFrom) * easeInOut(t);
+    /** Tumble left in a piece, and the side it is turning to. */
+    const pose = (p: Piece, now: number, intro: number) => {
+      let left = intro < 1 ? (1 - easeThrow(intro)) * Math.PI * 4 : 0;
+      p.face.quaternion.copy(p.to);
+      if (p.start >= 0) {
+        const t = Math.min(1, (now - p.start) / ACTION_SECONDS);
+        const e = easeThrow(t);
+        left += (1 - e) * Math.PI * 2 * THROWS[p.spot.kind].turns;
+        p.face.quaternion.slerpQuaternions(p.from, p.to, e);
+        if (t >= 1) p.start = -1;
+      }
+      p.act.quaternion.setFromAxisAngle(p.axis, left);
     };
 
     // Only draw while the hero is on screen.
@@ -191,43 +277,60 @@ export function HeroPieces() {
     io.observe(stage);
 
     let raf = 0;
-    const frame = () => {
+    let lastFrame = 0;
+    let lastDraw = 0;
+    let slow = 0;
+    const frame = (time: number) => {
       raf = requestAnimationFrame(frame);
-      if (!visible || document.hidden) return;
+      if (!visible || document.hidden) {
+        lastFrame = 0;
+        return;
+      }
+      // Forty slow frames in a row: draw fewer pixels from here on.
+      const gap = lastFrame ? time - lastFrame : 0;
+      lastFrame = time;
+      slow = gap > 24 && gap < 200 ? slow + 1 : 0;
+      if (slow > 40 && quality > 0.5) {
+        quality -= 0.25;
+        slow = 0;
+        resize();
+      }
+      // The slow turning needs no more than about 48 frames a second, however fast the screen.
+      if (time > busyUntil && time - lastDraw < 20) return;
+      lastDraw = time;
       draw();
     };
     const draw = () => {
-      const now = (performance.now() - start) / 1000;
+      const now = clock();
+      // Read at draw time, so the pieces move in step with the page.
+      scrollY = window.scrollY;
 
       for (const [i, p] of pieces.entries()) {
         const rest = restOf(p);
-        // Fly in from just above the artwork's centre, one after another.
-        const intro = reduced ? 1 : easeOutExpo(Math.max(0, Math.min(1, (now - 0.6 - i * 0.07) / INTRO_SECONDS)));
+        // Burst out from behind the title's centre, past the resting place, and spring back.
+        const t = reduced ? 1 : Math.max(0, Math.min(1, (now - 0.3 - i * 0.03) / INTRO_SECONDS));
+        const burst = easeBurst(t, p.spot.layer === "front" ? 3.2 : 1.1);
         const fromX = 0;
-        const fromY = height / 2 - 0.42 * width;
-        const sway = reduced ? 0 : 1;
-        const drift = reduced ? 0 : scrollY * p.spot.drift;
+        const fromY = height / 2 - 0.27 * width;
+        const alive = reduced ? 0 : 1;
+        const scrolled = reduced ? 0 : scrollY;
+        const { kind, rise, spin, turn, tilt, from } = p.spot;
 
         p.root.position.set(
-          fromX + (rest.x - fromX) * intro + Math.sign(rest.x) * scrollY * 0.06 * sway,
-          fromY + (rest.y - fromY) * intro - drift + Math.sin(now * 0.7 + p.phase) * rest.size * 0.05 * sway,
+          fromX + (rest.x - fromX) * burst,
+          fromY + (rest.y - fromY) * burst + scrolled * rise + Math.sin(now * 0.66 + p.phase) * width * 0.008 * alive,
           0,
         );
-        p.root.scale.setScalar(rest.size * (0.25 + 0.75 * intro));
-        p.root.visible = intro > 0.001;
+        p.root.scale.setScalar(rest.size * Math.max(0.001, easeThrow(Math.min(1, t * 1.4))));
+        p.root.visible = t > 0;
 
-        const [tx, ty, tz] = p.spot.tilt;
-        p.lean.rotation.set(
-          tx + Math.sin(now * 0.55 + p.phase) * 0.12 * sway,
-          ty + Math.sin(now * 0.35 + p.phase * 0.6) * 0.18 * sway + (1 - intro) * 2.4,
-          tz + Math.sin(now * 0.45 + p.phase * 1.3) * 0.08 * sway,
-        );
-
-        const f = currentFlip(p, now);
-        p.flip.rotation.y = f;
-        // A small hop toward the viewer at the middle of a flip.
-        const mid = p.flipStart < 0 ? 0 : Math.sin(Math.min(1, (now - p.flipStart) / FLIP_SECONDS) * Math.PI);
-        p.flip.position.z = mid * 0.35;
+        pose(p, now, t);
+        const k = scrolled / 1000;
+        p.lean.rotation.set(tilt[0], tilt[1], tilt[2]);
+        // Coins spin about their own face, everything else about its upright axis.
+        const angle = from + now * spin * alive + k * turn;
+        if (kind === "coin" || kind === "token") p.turn.rotation.z = angle;
+        else p.turn.rotation.y = angle;
       }
 
       gl.back.render(scenes.back, camera);
@@ -237,11 +340,13 @@ export function HeroPieces() {
     raf = requestAnimationFrame(frame);
 
     return () => {
+      gone = true;
+      offIntro();
       cancelAnimationFrame(raf);
       ro.disconnect();
       io.disconnect();
       window.removeEventListener("scroll", onScroll);
-      stage.removeEventListener("click", onClick);
+      stage.removeEventListener("pointerdown", onPress);
       stage.removeEventListener("pointermove", onMove);
       stage.style.cursor = "";
       for (const s of Object.values(scenes)) disposeTree(s);
@@ -256,13 +361,4 @@ export function HeroPieces() {
       <canvas ref={frontRef} aria-hidden className="pointer-events-none absolute inset-0 z-30 h-full w-full" />
     </>
   );
-}
-
-function findRoot(obj: THREE.Object3D, pieces: Piece[]) {
-  let o: THREE.Object3D | null = obj;
-  while (o) {
-    if (pieces.some((p) => p.root === o)) return o;
-    o = o.parent;
-  }
-  return null;
 }

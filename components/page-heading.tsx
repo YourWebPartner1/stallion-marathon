@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 import { FitText } from "@/components/fit-text";
+import { useIntroReady } from "@/lib/intro";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -23,16 +24,17 @@ export function PageHeading({
   statement: string[];
   aside: ReactNode;
 }) {
+  const ready = useIntroReady();
   return (
     <header className="flex flex-col gap-10">
       <div className="flex flex-col gap-4">
         {label && (
-          <p className="m-0 overflow-y-clip text-center text-[clamp(0.7rem,1.188vw,1.07rem)] uppercase tracking-[0.1475em] text-gold">
+          <p className="m-0 overflow-y-clip text-center text-[clamp(0.75rem,1.188vw,1.07rem)] uppercase tracking-[0.1475em] text-gold">
             <motion.span
               className="block"
               initial={{ y: "100%" }}
-              animate={{ y: "0%" }}
-              transition={{ duration: 1, ease, delay: 0.1 }}
+              animate={{ y: ready ? "0%" : "100%" }}
+              transition={{ duration: 0.7, ease }}
             >
               {label}
             </motion.span>
@@ -53,7 +55,7 @@ export function PageHeading({
         <motion.p
           className="display m-0 text-[clamp(28px,2.31vw,44px)] leading-[1.12] tracking-[-0.02em] lg:col-span-5 lg:col-start-4"
           initial="hidden"
-          animate="show"
+          animate={ready ? "show" : "hidden"}
         >
           {statement.map((line, i) => (
             <span key={i} className="-my-[0.14em] block overflow-hidden py-[0.14em]">
@@ -61,7 +63,7 @@ export function PageHeading({
                 className="block"
                 variants={{
                   hidden: { y: "110%" },
-                  show: { y: "0%", transition: { duration: 1.1, ease, delay: 0.35 + i * 0.1 } },
+                  show: { y: "0%", transition: { duration: 0.8, ease, delay: 0.1 + i * 0.07 } },
                 }}
               >
                 {line}
@@ -73,8 +75,8 @@ export function PageHeading({
         <motion.div
           className="lg:col-span-3 lg:col-start-10"
           initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease, delay: 0.5 }}
+          animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+          transition={{ duration: 0.7, ease, delay: 0.15 }}
         >
           {aside}
         </motion.div>

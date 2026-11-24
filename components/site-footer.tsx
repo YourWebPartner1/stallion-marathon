@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import Image from "next/image";
+import { useRef } from "react";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { bookHref, heroArt, legalLinks, numberWord, site, workshopCount } from "@/lib/content";
+import { motion } from "framer-motion";
+import { bookHref, legalLinks, numberWord, site, workshopCount } from "@/lib/content";
+import { FooterScene } from "@/components/footer-scene";
 import { Crest } from "@/components/logo";
 import { Roll } from "@/components/roll";
 
@@ -29,91 +29,24 @@ const quickLinks = [
 /**
  * Footer in the reference layout: a giant title rising letter by letter, a
  * gold tagline, three cards with the four-colour hover curtain, a contact line
- * with quick links, the stallion artwork rising from the bottom edge, and a
- * small credits row.
+ * with quick links, the engraved race-day scene at the bottom edge, which the
+ * pointer brushes gold, and a small credits row.
  */
 export function SiteFooter() {
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end end"] });
-  // The artwork grows up from the bottom edge as the footer comes into view.
-  const artScale = useTransform(scrollYProgress, [0.3, 1], [0.86, 1]);
   const title = "Take your mark";
-
-  // Spotlight over the artwork: follows the pointer with a little lag, opens when
-  // the pointer is over the footer and closes when it leaves. Mouse and pen only.
-  const artRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const footer = ref.current;
-    const art = artRef.current;
-    if (!footer || !art || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-    const target = { x: 50, y: 30, r: 0 };
-    const cur = { x: 50, y: 30, r: 0 };
-    let raf = 0;
-    const tick = () => {
-      cur.x += (target.x - cur.x) * 0.12;
-      cur.y += (target.y - cur.y) * 0.12;
-      cur.r += (target.r - cur.r) * 0.1;
-      art.style.setProperty("--x", `${cur.x}%`);
-      art.style.setProperty("--y", `${cur.y}%`);
-      art.style.setProperty("--r", `${cur.r}px`);
-      const settled = Math.abs(target.x - cur.x) < 0.05 && Math.abs(target.y - cur.y) < 0.05 && Math.abs(target.r - cur.r) < 0.5;
-      raf = settled ? 0 : requestAnimationFrame(tick);
-    };
-    const kick = () => {
-      if (!raf) raf = requestAnimationFrame(tick);
-    };
-    const onMove = (e: PointerEvent) => {
-      const r = art.getBoundingClientRect();
-      target.x = ((e.clientX - r.left) / r.width) * 100;
-      target.y = ((e.clientY - r.top) / r.height) * 100;
-      target.r = Math.max(180, r.width * 0.16);
-      kick();
-    };
-    const onLeave = () => {
-      target.r = 0;
-      kick();
-    };
-    footer.addEventListener("pointermove", onMove);
-    footer.addEventListener("pointerleave", onLeave);
-    return () => {
-      cancelAnimationFrame(raf);
-      footer.removeEventListener("pointermove", onMove);
-      footer.removeEventListener("pointerleave", onLeave);
-    };
-  }, []);
 
   return (
     <footer
       ref={ref}
       className="relative flex flex-col gap-16 overflow-hidden bg-[#08335d] px-[max(20px,2.78vw)] pb-[clamp(16px,1.39vw,20px)] pt-[max(96px,8.33vw)] text-[#fdffff] [container-type:inline-size]"
     >
-      {heroArt && (
-        <motion.div
-          ref={artRef}
-          aria-hidden
-          className="pointer-events-none absolute bottom-[-46cqw] left-1/2 z-0 w-[72cqw] -translate-x-1/2 origin-bottom will-change-transform max-[760px]:bottom-[-40cqw]"
-          style={{ scale: artScale, "--x": "50%", "--y": "30%", "--r": "0px" } as unknown as React.CSSProperties}
-        >
-          {/* Dimmed, navy-toned version, so the footer text above it stays readable. */}
-          <Image
-            src={heroArt.src}
-            alt=""
-            width={heroArt.width}
-            height={heroArt.height}
-            sizes="72vw"
-            className="h-auto w-full opacity-[0.22] [filter:grayscale(1)_brightness(1.15)]"
-          />
-          {/* Full-colour version, revealed in a soft spotlight that follows the pointer. */}
-          <Image
-            src={heroArt.src}
-            alt=""
-            width={heroArt.width}
-            height={heroArt.height}
-            sizes="72vw"
-            className="absolute inset-0 h-auto w-full [mask-image:radial-gradient(circle_var(--r)_at_var(--x)_var(--y),#000_0%,#000_35%,transparent_100%)] [-webkit-mask-image:radial-gradient(circle_var(--r)_at_var(--x)_var(--y),#000_0%,#000_35%,transparent_100%)]"
-          />
-        </motion.div>
-      )}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute bottom-0 left-1/2 z-0 w-[74cqw] -translate-x-1/2 max-[760px]:[mask-image:linear-gradient(#000_88%,transparent)] max-[760px]:bottom-[174px] max-[760px]:w-[132cqw]"
+      >
+        <FooterScene area={ref} className="relative w-full" />
+      </div>
 
       <div className="relative z-[1] flex flex-col items-start gap-6">
         <Link href="/" aria-label="Stallion Marathon, home" className="group">
@@ -180,7 +113,7 @@ export function SiteFooter() {
           <p className="m-0 text-sm text-[#fdffff]/60">Call the team</p>
           <a
             href={`tel:+91${site.phone}`}
-            className="group display text-[clamp(30px,2.31vw,44px)] leading-[1.05] tracking-[-0.02em]"
+            className="group display max-[760px]:inline-flex max-[760px]:min-h-11 max-[760px]:items-center text-[clamp(30px,2.31vw,44px)] leading-[1.05] tracking-[-0.02em]"
           >
             <Roll text={site.phoneDisplay} under="text-[#f7b538]" />
           </a>
@@ -199,7 +132,7 @@ export function SiteFooter() {
           {quickLinks.map((l, i) => (
             <li key={l.href} className="flex items-center gap-4">
               {i > 0 && <span aria-hidden className="block size-1 rotate-45 bg-[#f7b538]" />}
-              <Link href={l.href} className="group text-[clamp(22px,1.57vw,30px)] font-light tracking-[-0.01em]">
+              <Link href={l.href} className="group inline-flex items-center text-[clamp(22px,1.57vw,30px)] max-[760px]:min-h-11 font-light tracking-[-0.01em]">
                 <Roll text={l.label} under="text-[#f7b538]" />
               </Link>
             </li>
@@ -208,16 +141,16 @@ export function SiteFooter() {
       </div>
 
       {/* Room for the artwork rising from the bottom edge. */}
-      <div aria-hidden className="h-[32cqw] max-[760px]:h-[44cqw]" />
+      <div aria-hidden className="h-[max(40px,calc(37cqw-250px))] max-[760px]:h-[66cqw]" />
 
       <div className="relative z-[1] flex flex-wrap items-end justify-between gap-3 text-sm font-light text-[#fdffff]/60">
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-          <p className="m-0">© 2026 {site.organiser}</p>
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-0 min-[761px]:max-w-[11.5rem] min-[761px]:flex-col min-[761px]:items-start min-[761px]:gap-y-1.5">
+          <p className="m-0 max-[760px]:w-full">© 2026 {site.organiser}</p>
           {legalLinks.map((l) => (
             <Link
               key={l.href}
               href={l.href}
-              className="underline decoration-1 underline-offset-[3px] transition-colors hover:text-[#f7b538]"
+              className="inline-flex min-h-11 items-center underline decoration-1 underline-offset-[3px] transition-colors hover:text-[#f7b538] min-[761px]:min-h-0"
             >
               {l.label}
             </Link>
@@ -229,7 +162,7 @@ export function SiteFooter() {
             href="https://www.mayaverse.business/"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline decoration-1 underline-offset-[3px] transition-colors hover:text-[#f7b538]"
+            className="inline-flex min-h-11 items-center underline decoration-1 underline-offset-[3px] transition-colors hover:text-[#f7b538] min-[761px]:min-h-0"
           >
             MAYAVERSE
           </a>

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CountLedger, PageHeading } from "@/components/page-heading";
 import { Roll } from "@/components/roll";
+import { VetScene } from "@/components/vet-scene";
 import { bookHref, deraPillars } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -45,6 +46,27 @@ export default function GivingBackPage() {
         </div>
       </section>
 
+      <section
+        aria-labelledby="care-title"
+        className="theme-dark overflow-hidden px-[max(20px,2.78vw)] pb-[max(56px,5vw)] pt-[max(64px,5.87vw)]"
+      >
+        <div className="mb-12 grid gap-y-5 lg:grid-cols-12 lg:gap-x-6">
+          <h2 id="care-title" className="display m-0 text-[clamp(36px,3.36vw,64px)] leading-[1.05] tracking-[-0.02em] lg:col-span-7">
+            Kind hands for the animals on our streets.
+          </h2>
+          <a
+            href="#animal-care"
+            className="group inline-flex w-fit items-baseline gap-2 self-end text-xl leading-[1.2] tracking-[-0.01em] lg:col-span-5 lg:justify-self-end"
+          >
+            <Roll text="Animal care" under="text-gold" />
+            <span aria-hidden className="inline-block transition-transform duration-500 group-hover:translate-y-1">
+              ↓
+            </span>
+          </a>
+        </div>
+        <VetScene className="mx-auto max-w-[1320px]" />
+      </section>
+
       <section aria-labelledby="dera-title" className="px-[max(20px,2.78vw)] py-16">
         <div className="mb-10 grid gap-y-4 border-b border-ink pb-10 lg:grid-cols-12 lg:gap-x-6">
           <h2 id="dera-title" className="display m-0 text-[clamp(40px,3.99vw,76px)] leading-none tracking-[-0.02em] lg:col-span-7">
@@ -61,7 +83,8 @@ export default function GivingBackPage() {
           {deraPillars.map((p, i) => (
             <li
               key={p.letter}
-              className="group relative isolate flex min-h-[clamp(420px,30vw,560px)] flex-col overflow-hidden bg-navy p-6 text-ink transition-colors duration-[250ms] [transition-delay:120ms] [container-type:inline-size] hover:text-[#f7b538]"
+              id={p.letter === "A" ? "animal-care" : undefined}
+              className="group relative isolate flex scroll-mt-24 min-h-[clamp(420px,30vw,560px)] flex-col overflow-hidden bg-navy p-6 text-ink transition-colors duration-[250ms] [transition-delay:120ms] [container-type:inline-size] hover:text-[#f7b538]"
             >
               {PAINT.map((color, j) => (
                 <span

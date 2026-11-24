@@ -14,7 +14,7 @@ const torn = (() => {
     return x - Math.floor(x);
   };
   const pts: string[] = [];
-  const N = 520; // points around the whole outline
+  const N = 260; // points around the whole outline
   const inset = 4; // % kept free for the fibres to reach into
   for (let i = 0; i < N; i++) {
     const t = i / N;
@@ -73,14 +73,14 @@ export function Interlude({ text }: { text: string }) {
     <section
       ref={ref}
       aria-label="Interlude"
-      className="relative h-[320svh] bg-navy max-[1000px]:h-auto max-[1000px]:py-24 motion-reduce:h-auto motion-reduce:py-24"
+      className="relative h-[230svh] bg-navy max-[1000px]:h-auto max-[1000px]:py-24 motion-reduce:h-auto motion-reduce:py-24"
     >
       <div className="sticky top-0 grid h-[100svh] place-items-center overflow-clip max-[1000px]:relative max-[1000px]:h-auto motion-reduce:relative motion-reduce:h-auto">
         {/* Torn paper behind the frame */}
         <motion.div
           aria-hidden
           className="pointer-events-none absolute aspect-[4/5] h-[min(68svh,calc((100vw-2*clamp(20px,2.78vw,64px))*1.25))] bg-paper will-change-transform max-[1000px]:hidden motion-reduce:hidden"
-          style={{ clipPath: torn, scale: paperScale, opacity: paperOpacity, filter: "blur(0.6px)" }}
+          style={{ clipPath: torn, scale: paperScale, opacity: paperOpacity }}
         />
 
         {/* The framed card: a drawn gold frame (border image) whose centre is the ivory card. */}

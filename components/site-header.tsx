@@ -101,7 +101,7 @@ export function SiteHeader() {
           <div className="flex items-center gap-4 sm:gap-6">
             <Link
               href={bookHref}
-              className="label group flex whitespace-nowrap bg-gold px-4 py-2.5 text-[0.62rem] text-on-gold transition-colors duration-500 hover:bg-ink hover:text-navy focus-visible:bg-ink focus-visible:text-navy sm:px-5"
+              className="label group flex whitespace-nowrap bg-gold px-4 py-2.5 text-xs tracking-[0.16em] text-on-gold transition-colors duration-500 hover:bg-ink hover:text-navy focus-visible:bg-ink focus-visible:text-navy sm:px-5"
             >
               <Roll text="Book now" under="text-navy" />
             </Link>
