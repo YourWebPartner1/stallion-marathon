@@ -2,6 +2,7 @@ import { HeroStage } from "@/components/hero";
 import { Interlude } from "@/components/interlude";
 import { StatTable } from "@/components/stat-table";
 import { StartLineArt } from "@/components/start-line-art";
+import { NgoPartners } from "@/components/ngo-partners";
 import { Roll } from "@/components/roll";
 import Link from "next/link";
 import { WhyStallion } from "@/components/why-stallion";
@@ -152,6 +153,7 @@ function GivingBackStrip() {
           </Link>
         </div>
       </div>
+      <NgoPartners className="mt-[max(56px,5vw)]" />
     </section>
   );
 }

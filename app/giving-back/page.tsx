@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { NgoPartners } from "@/components/ngo-partners";
 import { CountLedger, PageHeading } from "@/components/page-heading";
 import { Roll } from "@/components/roll";
 import { VetScene } from "@/components/vet-scene";
@@ -65,6 +66,7 @@ export default function GivingBackPage() {
           </a>
         </div>
         <VetScene className="mx-auto max-w-[1320px]" />
+        <NgoPartners className="mt-[max(48px,4.5vw)]" />
       </section>
 
       <section aria-labelledby="dera-title" className="px-[max(20px,2.78vw)] py-16">

@@ -154,6 +154,16 @@ export const pillars = [
   { title: "Run for something", body: "10% of profits go to NGOs doing good work." },
 ];
 
+/**
+ * NGO partners, in the order shown. To add one: put its logo in assets/ngo, prepare
+ * it with scripts/ngo-logos.mjs (it must read well on navy) and list it here. `url`
+ * is the NGO's website; while null the logo is not a link.
+ */
+export const ngoPartners: { name: string; logo: string; width: number; height: number; url: string | null }[] = [
+  { name: "Animal Warriors Conservation Society", logo: "/ngo/animal-warriors.webp", width: 900, height: 399, url: null },
+  { name: "Kacche Raaste Nature Awareness Center", logo: "/ngo/kacche-raaste.webp", width: 1024, height: 409, url: null },
+];
+
 export type Tier = {
   name: string;
   distance: string;
