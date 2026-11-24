@@ -71,15 +71,12 @@ export const booking = {
 };
 
 export const forms = {
-  // Volunteer registration form (the team has one; paste its link here).
-  volunteerUrl: null as string | null,
   // Sector Challenges registration form, [form link] in the content document.
   challengeUrl: null as string | null,
 };
 
-/** Until each form link is supplied, its buttons lead to the Contact page. */
-export const volunteerHref = forms.volunteerUrl ?? "/contact";
-export const challengeHref = forms.challengeUrl ?? "/contact";
+/** Until a separate form is supplied, challenges register on the Volunteers page. */
+export const challengeHref = forms.challengeUrl ?? "/volunteers#register-organisation";
 
 /** Where a "Book" button should go. */
 export const bookHref = "/book";
@@ -151,7 +148,7 @@ export const pillars = [
   { title: "Run your way", body: "Pick 5 km or go the full 42 km. Run it where you like." },
   { title: "More than a race", body: "Free workshops, from how to run to how to handle bullies." },
   { title: "Earn your place", body: "Win the virtual run and get a premium ticket to race day in any category." },
-  { title: "Run for something", body: "10% of profits go to NGOs doing good work." },
+  { title: "Run for something", body: "A share of our profits goes to NGOs doing good work." },
 ];
 
 /**
@@ -291,6 +288,26 @@ export const challengeSteps = [
   "Winners are announced at a date to be confirmed.",
 ];
 
+/** Educational institutions programme, from Maya's handwritten notes (24 November 2026). */
+export const schoolSteps = [
+  { label: "Register", value: "Register your school or college below. We confirm the visit by call and email." },
+  { label: "Visit", value: "A trainer visits your campus, and two flex boards stay up for one week." },
+  {
+    label: "Talk",
+    value: "The marathon and its workshops, why it is important to be physically fit, and why running is a habit worth taking up.",
+    note: "Students are also encouraged to get their parents running.",
+  },
+  { label: "Test", value: "A short revision test on what was covered." },
+];
+
+export const schoolRewards = [
+  { title: "Every student", body: "Everyone who attends gets a certificate." },
+  { title: "Top 10", body: "The top 10 in the revision test get a small gift, such as a badge." },
+  { title: "Top performer", body: "Complimentary access to any workshop they like." },
+  { title: "Lucky draw", body: "Any interested student gets a chance to volunteer at the marathon." },
+  { title: "Teachers", body: "Teachers who conduct the programme get a certificate and the option to volunteer for the marathon." },
+];
+
 export const deraPillars = [
   { letter: "D", title: "Delicious", body: "A thank-you meal for jawans (army, navy, air force) and police personnel." },
   { letter: "E", title: "Education", body: "Support for children: stationery, hygiene education, school fees." },
@@ -341,13 +358,15 @@ export const faqs: FaqGroup[] = [
     items: [
       { q: "Are the workshops free?", a: "Yes, for virtual run participants who can attend in Hyderabad." },
       { q: "Can my company take part?", a: "Yes, through the Sector Challenges for Corporate, Hospital, Pharmacy and Bank organisations. HR leads register their organisation." },
+      { q: "Can my school or college take part?", a: "Yes, through the Educational Institutions Programme. Register on the Volunteers page." },
+      { q: "Can I volunteer?", a: "Yes. Fill in the form on the Volunteers page." },
     ],
   },
   {
     group: "Money",
     items: [
       { q: "Can I get a refund?", a: "Tickets are non-refundable." },
-      { q: "Where does the money go?", a: "10% of profits go to NGOs working on causes aligned with our four pillars." },
+      { q: "Where does the money go?", a: "A share of our profits goes to NGOs working on causes aligned with our four pillars." },
     ],
   },
 ];

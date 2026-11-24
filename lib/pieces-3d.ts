@@ -420,6 +420,31 @@ const tokenFace = (text: string, font: string) =>
     word(c, text, w / 2, w * 0.5, w * 0.34, C.navy, font);
   });
 
+/** A pie with one slice drawn out: the share of profits that goes to NGOs. */
+const pieFace = () =>
+  decal((c, w) => {
+    c.strokeStyle = C.gold;
+    c.lineWidth = w * 0.03;
+    c.beginPath();
+    c.arc(w / 2, w / 2, w * 0.42, 0, Math.PI * 2);
+    c.stroke();
+    const slice = (from: number, to: number, out: number, fill: string) => {
+      const mid = (from + to) / 2;
+      const x = w / 2 + Math.cos(mid) * w * out;
+      const y = w / 2 + Math.sin(mid) * w * out;
+      c.fillStyle = fill;
+      c.beginPath();
+      c.moveTo(x, y);
+      c.arc(x, y, w * 0.27, from, to);
+      c.closePath();
+      c.fill();
+    };
+    const from = -1.2;
+    const to = from + Math.PI / 5;
+    slice(to, from + Math.PI * 2, 0.012, C.navy);
+    slice(from, to, 0.06, C.gold);
+  });
+
 /** The distances on the die, one per face. */
 const DISTANCES = ["5", "8", "10", "15", "21", "42"];
 
@@ -482,10 +507,10 @@ export function buildPiece(kind: PieceKind, font: string): THREE.Group {
       break;
     }
     case "token": {
-      // The share of profits given back, as a small ivory and gold token.
+      // The share of profits given back, as a pie on a small ivory and gold token.
       g.add(inked(discGeometry(0.5, 0.16), AMBER));
       g.add(inked(discGeometry(0.42, 0.19), IVORY, 0));
-      g.add(faces(0.8, 0.8, 0.19, tokenFace("10%", font), tokenFace("SM", font)));
+      g.add(faces(0.8, 0.8, 0.19, pieFace(), tokenFace("SM", font)));
       break;
     }
     case "medal": {

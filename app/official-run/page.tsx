@@ -131,7 +131,7 @@ export default function OfficialRunPage() {
               meta: ["Organisations compete for the most bookings"],
               href: "/volunteers#challenges",
             },
-            { label: "Of profits", mark: "10%", title: "Giving Back", meta: ["Supporting NGOs doing good work"], href: "/giving-back" },
+            { label: "A share of profits", mark: "NGO", title: "Giving Back", meta: ["Supporting NGOs doing good work"], href: "/giving-back" },
           ].map((c) => (
             <article key={c.title} className="flex">
               <FeaturedCardView card={c} />

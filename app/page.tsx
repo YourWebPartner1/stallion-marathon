@@ -2,6 +2,7 @@ import { HeroStage } from "@/components/hero";
 import { Interlude } from "@/components/interlude";
 import { StatTable } from "@/components/stat-table";
 import { StartLineArt } from "@/components/start-line-art";
+import { GivingPie } from "@/components/giving-pie";
 import { NgoPartners } from "@/components/ngo-partners";
 import { Roll } from "@/components/roll";
 import Link from "next/link";
@@ -128,21 +129,17 @@ function StartLine() {
   );
 }
 
-/** The document's giving-back strip: a navy band between the light sections, with the 10% in outline. */
+/** The giving-back strip: a navy band between the light sections, with the animated pie of profits. */
 function GivingBackStrip() {
   return (
     <section aria-labelledby="giving-strip" className="relative overflow-hidden bg-[#08335d] px-[max(20px,2.78vw)] py-[max(64px,5.87vw)] text-[#fdffff]">
       <div className="grid items-center gap-x-6 gap-y-8 lg:grid-cols-12">
-        <p
-          aria-hidden
-          className="caps m-0 text-[clamp(120px,14vw,270px)] leading-[0.8] lg:col-span-5"
-          style={{ color: "transparent", WebkitTextStroke: "1.5px #f7b538" }}
-        >
-          10%
-        </p>
+        <div className="lg:col-span-6">
+          <GivingPie className="max-w-[640px]" />
+        </div>
         <div className="flex flex-col gap-6 lg:col-span-6 lg:col-start-7">
-          <h2 id="giving-strip" className="display m-0 text-[clamp(32px,3.36vw,64px)] leading-[1.05] tracking-[-0.02em]">
-            <span className="block">10% of profits go to NGOs.</span>
+          <h2 id="giving-strip" className="display m-0 text-balance text-[clamp(32px,3.36vw,64px)] leading-[1.05] tracking-[-0.02em]">
+            <span className="block">A share of our profits goes to NGOs.</span>
             <span className="block text-[#f7b538]">Every run counts twice.</span>
           </h2>
           <Link href="/giving-back" className="group inline-flex w-fit items-baseline gap-2 text-xl leading-[1.2] tracking-[-0.01em]">
@@ -210,7 +207,7 @@ function Numbers() {
         { title: "Virtual from", value: "₹599", sub: "Medal shipped home" },
         { title: "Workshops", value: String(workshopCount.total), sub: "Free", caption: `${workshopCount.before} before · ${workshopCount.after} after` },
         { title: "HR prize", value: "₹50K", sub: "Sector Challenges" },
-        { title: "Given back", value: "10%", sub: "Of profits to NGOs" },
+        { title: "Given back", value: "NGOs", sub: "A share of our profits" },
         { title: "Virtual start", value: "19.01", sub: "2027", caption: "Run from anywhere" },
         { title: "Chapters", value: "2", sub: "One season" },
       ]}

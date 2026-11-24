@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { GivingPie } from "@/components/giving-pie";
 import { NgoPartners } from "@/components/ngo-partners";
 import { CountLedger, PageHeading } from "@/components/page-heading";
 import { Roll } from "@/components/roll";
@@ -10,7 +11,7 @@ import { bookHref, deraPillars } from "@/lib/content";
 export const metadata: Metadata = {
   alternates: { canonical: "/giving-back" },
   title: "Giving Back",
-  description: "10% of Stallion Marathon profits go to NGOs working on the four pillars of D.E.R.A. Every run counts twice.",
+  description: "A share of Stallion Marathon profits goes to NGOs working on the four pillars of D.E.R.A. Every run counts twice.",
 };
 
 const PAINT = ["#f7b538", "#c98f2e", "#145a86", "#08335d"];
@@ -29,8 +30,8 @@ export default function GivingBackPage() {
           statement={["Every run counts", "twice."]}
           aside={
             <CountLedger
-              count="10%"
-              caption="of profits to NGOs"
+              count={String(deraPillars.length)}
+              caption="causes our giving supports"
               rows={deraPillars.map((p) => ({ label: p.title, value: p.letter }))}
             />
           }
@@ -38,12 +39,17 @@ export default function GivingBackPage() {
       </section>
 
       <section aria-label="About giving back" className="px-[max(20px,2.78vw)] py-16">
-        <div className="grid gap-y-6 border-y border-ink py-14 lg:grid-cols-12 lg:gap-x-6">
-          <p className="m-0 text-sm text-ink/60 lg:col-span-3">Run for something</p>
-          <p className="display m-0 text-[clamp(24px,1.89vw,36px)] leading-[1.25] lg:col-span-6">
-            When you run Stallion Marathon, you also give. We donate 10% of our profits to NGOs whose work matches four
-            causes we care about.
-          </p>
+        <div className="theme-dark grid items-center gap-x-6 gap-y-10 px-[clamp(20px,4vw,72px)] py-[clamp(40px,4.5vw,80px)] lg:grid-cols-12">
+          <div className="lg:col-span-6">
+            <GivingPie className="max-w-[640px]" />
+          </div>
+          <div className="flex flex-col gap-5 lg:col-span-5 lg:col-start-8">
+            <p className="m-0 text-sm text-ink/70">Run for something</p>
+            <p className="display m-0 text-[clamp(26px,2.31vw,44px)] leading-[1.2] tracking-[-0.01em]">
+              When you run Stallion Marathon, you also give. A share of our profits goes to NGOs whose work matches four
+              causes we care about.
+            </p>
+          </div>
         </div>
       </section>
 

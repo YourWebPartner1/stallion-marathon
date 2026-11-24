@@ -1,15 +1,16 @@
+import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { ChallengeGrid, PrizePanel } from "@/components/challenges";
 import { FactLedger } from "@/components/official-run";
 import { CountLedger, PageHeading } from "@/components/page-heading";
-import { ButtonLink } from "@/components/ui";
-import { challengeHref, challengeSteps, challenges, volunteerHref } from "@/lib/content";
+import { RegisterForm } from "@/components/register-form";
+import { challengeHref, challengeSteps, challenges, schoolRewards, schoolSteps } from "@/lib/content";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/volunteers" },
-  title: { absolute: "Volunteer and Sector Challenges | Stallion Marathon" },
+  title: { absolute: "Volunteers, Challenges and Schools | Stallion Marathon" },
   description:
-    "Volunteer at Stallion Marathon, or enter your organisation in the Corporate, Hospital, Pharmacy or Bank Challenge. The HR lead with the most bookings wins ₹50,000.",
+    "Volunteer at Stallion Marathon, enter your organisation in the Corporate, Hospital, Pharmacy or Bank Challenge, or register your school or college.",
 };
 
 // Short labels for the four entry steps; the sentences are the confirmed wording.
@@ -17,8 +18,8 @@ const stepLabels = ["Register", "Book", "Count", "Announce"];
 
 /**
  * Volunteers, in the reference's inner-page layout: heading, the volunteer
- * sign-up band, then the Sector Challenges (prize panel, challenge cards and
- * how to enter).
+ * form, the Sector Challenges (prize panel, challenge cards, how to enter and
+ * their form), then the programme for schools and colleges with its form.
  */
 export default function VolunteersPage() {
   return (
@@ -30,37 +31,29 @@ export default function VolunteersPage() {
           aside={
             <CountLedger
               count={String(challenges.length)}
-              caption="sector challenges, and a place for every volunteer"
+              caption="sector challenges, a place for every volunteer, and a programme for schools and colleges"
               rows={[
                 { label: "Volunteers", value: "Register below" },
                 ...challenges.map((c) => ({
                   label: c.name.replace(" Challenge", ""),
                   value: c.banded ? "By headcount" : "One winner",
                 })),
+                { label: "Schools and colleges", value: "Register below" },
               ]}
             />
           }
         />
       </section>
 
-      <section aria-labelledby="volunteer-title" className="px-[max(20px,2.78vw)] py-16">
-        <div className="grid items-end gap-x-6 gap-y-8 border-y border-ink py-14 lg:grid-cols-12">
-          <div className="flex flex-col gap-3 lg:col-span-3">
-            <p className="m-0 text-sm text-ink/60">Volunteer with us</p>
-          </div>
-          <div className="flex flex-col gap-3 lg:col-span-6">
-            <h2 id="volunteer-title" className="display m-0 text-[clamp(32px,3.15vw,60px)] leading-[1.05] tracking-[-0.02em]">
-              Help bring Chapter I to life.
-            </h2>
-            <p className="m-0 text-lg leading-[1.35] text-ink/70">
-              Join the team behind Stallion Marathon. Register as a volunteer and we&rsquo;ll be in touch with roles and
-              timings.
-            </p>
-          </div>
-          <div className="lg:col-span-3 lg:justify-self-end">
-            <ButtonLink href={volunteerHref}>Register as a volunteer</ButtonLink>
-          </div>
-        </div>
+      <section id="volunteer" aria-labelledby="volunteer-title" className="scroll-mt-24 px-[max(20px,2.78vw)] py-16">
+        <FormBand
+          id="volunteer-title"
+          eyebrow="Volunteer with us"
+          title="Help bring Chapter I to life."
+          body="Join the team behind Stallion Marathon. Register as a volunteer and we’ll be in touch with roles and timings."
+        >
+          <RegisterForm kind="volunteer" />
+        </FormBand>
       </section>
 
       <section id="challenges" aria-label="About the challenges" className="scroll-mt-24 px-[max(20px,2.78vw)] py-16">
@@ -90,7 +83,7 @@ export default function VolunteersPage() {
         <ChallengeGrid />
       </section>
 
-      <section aria-label="How to enter" className="px-[max(20px,2.78vw)] pb-[max(96px,8.33vw)] pt-16">
+      <section aria-label="How to enter" className="px-[max(20px,2.78vw)] py-16">
         <FactLedger
           title="How to enter"
           aside={{
@@ -101,6 +94,108 @@ export default function VolunteersPage() {
           rows={challengeSteps.map((s, i) => ({ label: stepLabels[i] ?? `Step ${i + 1}`, value: s }))}
         />
       </section>
+
+      <section
+        id="register-organisation"
+        aria-labelledby="organisation-title"
+        className="scroll-mt-24 px-[max(20px,2.78vw)] pb-[max(80px,7vw)] pt-8"
+      >
+        <FormBand
+          id="organisation-title"
+          eyebrow="Sector Challenges"
+          title="Register your organisation."
+          body="For the HR lead of a company, hospital, pharmacy or bank."
+        >
+          <RegisterForm kind="organisation" />
+        </FormBand>
+      </section>
+
+      <section id="schools" aria-labelledby="schools-title" className="theme-dark scroll-mt-24 px-[max(20px,2.78vw)] py-[max(72px,7vw)]">
+        <div className="grid gap-x-6 gap-y-6 lg:grid-cols-12">
+          <p className="m-0 text-sm text-ink/70 lg:col-span-3">Educational Institutions Programme</p>
+          <div className="flex flex-col gap-5 lg:col-span-8">
+            <h2 id="schools-title" className="display m-0 text-[clamp(40px,3.99vw,76px)] leading-none tracking-[-0.02em]">
+              Bring Stallion to your campus.
+            </h2>
+            <p className="m-0 max-w-3xl text-lg leading-[1.4] text-ink/75">
+              A trainer visits your school or college to talk about the marathon, fitness and running as a habit.
+              Students and teachers both come away with something.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-14 grid gap-px bg-[#f7b538]/45 p-px sm:grid-cols-2 lg:grid-cols-6">
+          {schoolRewards.map((r, i) => (
+            <div
+              key={r.title}
+              className={`flex min-h-[clamp(190px,15vw,260px)] flex-col justify-between gap-8 bg-[#08335d] p-[clamp(20px,1.9vw,34px)] ${
+                i < 3 ? "lg:col-span-2" : "lg:col-span-3"
+              } ${i === schoolRewards.length - 1 ? "sm:col-span-2" : ""}`}
+            >
+              <h3 className="display m-0 text-[clamp(28px,2.4vw,46px)] leading-[1.05] tracking-[-0.015em] text-[#f7b538]">{r.title}</h3>
+              <p className="m-0 max-w-md text-base leading-[1.4] text-ink/80">{r.body}</p>
+            </div>
+          ))}
+        </div>
+        <p className="m-0 mt-6 max-w-3xl text-base leading-[1.4] text-ink/70">
+          The session goes live on Instagram and YouTube, so teachers brief students on conduct beforehand.
+        </p>
+      </section>
+
+      <section aria-label="How the programme works" className="px-[max(20px,2.78vw)] pb-16 pt-[max(72px,6vw)]">
+        <FactLedger
+          title="How it works"
+          aside={{
+            count: String(schoolSteps.length),
+            caption: "Steps",
+            link: { label: "Register your institution", href: "#register-school" },
+          }}
+          rows={schoolSteps}
+        />
+      </section>
+
+      <section
+        id="register-school"
+        aria-labelledby="school-form-title"
+        className="scroll-mt-24 px-[max(20px,2.78vw)] pb-[max(96px,8.33vw)] pt-8"
+      >
+        <FormBand
+          id="school-form-title"
+          eyebrow="Educational Institutions Programme"
+          title="Register your school or college."
+          body="For principals, management and teachers. We confirm the visit by call and email."
+        >
+          <RegisterForm kind="school" />
+        </FormBand>
+      </section>
+    </div>
+  );
+}
+
+/** A ruled band: what the form is for on the left, the form on the right. */
+function FormBand({
+  id,
+  eyebrow,
+  title,
+  body,
+  children,
+}: {
+  id: string;
+  eyebrow: string;
+  title: string;
+  body: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="grid gap-x-6 gap-y-10 border-y border-ink py-14 lg:grid-cols-12">
+      <div className="flex flex-col gap-4 lg:col-span-5">
+        <p className="m-0 text-sm text-ink/60">{eyebrow}</p>
+        <h2 id={id} className="display m-0 max-w-[12em] text-[clamp(32px,3.15vw,60px)] leading-[1.05] tracking-[-0.02em]">
+          {title}
+        </h2>
+        <p className="m-0 max-w-md text-lg leading-[1.35] text-ink/70">{body}</p>
+      </div>
+      <div className="lg:col-span-6 lg:col-start-7">{children}</div>
     </div>
   );
 }

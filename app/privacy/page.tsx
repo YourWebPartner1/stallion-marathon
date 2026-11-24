@@ -31,6 +31,12 @@ export default function PrivacyPage() {
           ],
         },
         {
+          heading: "Volunteer, challenge and school forms",
+          body: [
+            "The forms on the Volunteers page turn your answers into a WhatsApp message to us, which you send yourself. This website does not store them. We use them to contact you about volunteering, the Sector Challenges or the Educational Institutions Programme. WhatsApp's own privacy policy also applies.",
+          ],
+        },
+        {
           heading: "Booking partners",
           body: ["If you book through BookMyShow, their own privacy policy also applies to the details you give them."],
         },

@@ -14,7 +14,7 @@ const PAINT = ["#f7b538", "#c98f2e", "#145a86", "#08335d"];
 const places = [
   { href: bookHref, label: "Book your run", note: "Pick your distance and take your place." },
   { href: "/workshops", label: "Workshops", note: `${numberWord(workshopCount.total)} free sessions, before and after the run.` },
-  { href: "/giving-back", label: "Giving Back", note: "10% of profits go to NGOs doing good work." },
+  { href: "/giving-back", label: "Giving Back", note: "A share of our profits goes to NGOs doing good work." },
 ];
 
 // With the cards above, the crest (home) and the legal row, the footer links to every page.
