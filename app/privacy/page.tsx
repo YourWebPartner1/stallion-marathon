@@ -31,9 +31,9 @@ export default function PrivacyPage() {
           ],
         },
         {
-          heading: "Volunteer, challenge and school forms",
+          heading: "Forms and seat requests",
           body: [
-            "The forms on the Volunteers page turn your answers into a WhatsApp message to us, which you send yourself. This website does not store them. We use them to contact you about volunteering, the Sector Challenges or the Educational Institutions Programme. WhatsApp's own privacy policy also applies.",
+            "The volunteer, Sector Challenge and Schools & Colleges forms, and workshop seat requests, turn your answers into a WhatsApp message to us, which you send yourself. This website does not store them. We use them only to contact you about what you asked for. WhatsApp's own privacy policy also applies.",
           ],
         },
         {

@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type CSSProperties, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, X } from "lucide-react";
-import type { Workshop } from "@/lib/content";
+import { site, type Workshop } from "@/lib/content";
 
 const STORAGE_KEY = "stallion:reserved-workshops";
 const PAINT = ["#f2b705", "#c99400", "#ab71e3", "#3b1f8e"];
@@ -199,28 +199,27 @@ function ReserveForm({
   onClose: () => void;
   onReserved: () => void;
 }) {
-  const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
-  const [error, setError] = useState("");
+  const [link, setLink] = useState("");
 
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+  // No mailbox connection yet: the request becomes a WhatsApp message to the team,
+  // sent from the visitor's own phone. Nothing is stored on this website.
+  function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setState("sending");
-    setError("");
-    const data = Object.fromEntries(new FormData(e.currentTarget));
-    try {
-      const res = await fetch("/api/reservations", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, workshopId: workshop.id }),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json.error ?? "Something went wrong.");
-      setState("done");
-      onReserved();
-    } catch (err) {
-      setState("error");
-      setError(err instanceof Error ? err.message : "Something went wrong.");
-    }
+    const data = new FormData(e.currentTarget);
+    const get = (k: string) => String(data.get(k) ?? "").trim();
+    const message = [
+      "Stallion Marathon: workshop seat request",
+      "",
+      `Workshop: ${workshop.title}`,
+      `Name: ${get("name")}`,
+      `Email: ${get("email")}`,
+      ...(get("phone") ? [`Phone: ${get("phone")}`] : []),
+    ].join("\n");
+    const url = `https://wa.me/91${site.phone}?text=${encodeURIComponent(message)}`;
+    setLink(url);
+    onReserved();
+    const tab = window.open(url, "_blank");
+    if (tab) tab.opener = null;
   }
 
   const field =
@@ -240,10 +239,20 @@ function ReserveForm({
         </button>
       </div>
 
-      {state === "done" ? (
+      {link ? (
         <div className="mt-8">
           <p className="leading-relaxed text-muted">
-            Your seat request is in. We&rsquo;ll email you the date and joining details once the schedule is confirmed.
+            Your request is ready in WhatsApp: press send there to finish. We&rsquo;ll be in touch with the date and joining
+            details once the schedule is confirmed.
+          </p>
+          <p className="mt-4 text-sm text-muted">
+            <a href={link} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4">
+              Open WhatsApp again
+            </a>
+            {" · "}
+            <a href={`tel:+91${site.phone}`} className="underline underline-offset-4">
+              Call {site.phoneDisplay}
+            </a>
           </p>
           <button type="button" onClick={onClose} className="label mt-8 w-full bg-gold px-6 py-4 text-on-gold">
             Done
@@ -263,18 +272,13 @@ function ReserveForm({
             <span className="label text-muted">Phone (optional)</span>
             <input name="phone" type="tel" autoComplete="tel" inputMode="tel" className={field} />
           </label>
-          {state === "error" && (
-            <p role="alert" className="text-sm text-red-300">
-              {error}
-            </p>
-          )}
           <button
             type="submit"
-            disabled={state === "sending"}
-            className="label w-full bg-gold px-6 py-4 text-on-gold transition-colors hover:bg-ink hover:text-navy disabled:opacity-60"
+            className="label w-full bg-gold px-6 py-4 text-on-gold transition-colors hover:bg-ink hover:text-navy"
           >
-            {state === "sending" ? "Sending…" : "Request my seat"}
+            Request my seat
           </button>
+          <p className="text-sm text-muted">This opens WhatsApp with your request filled in. Press send there to finish.</p>
         </form>
       )}
     </div>
