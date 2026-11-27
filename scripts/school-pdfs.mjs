@@ -25,6 +25,7 @@ import {
 const ROOT = resolve(import.meta.dirname, "..");
 const URL_TEXT = "stallionmarathon.com/schools";
 const PHONE = "+91 98666 31658";
+const WHATSAPP = "+91 70757 01406";
 const EMAIL = "support@stallionmarathon.com";
 const asset = (p) => pathToFileURL(join(ROOT, "public", p)).href;
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -134,7 +135,7 @@ const brief = `<!doctype html><html><head><meta charset="utf-8"><style>${style}<
 
     <div class="band" style="margin:6mm 0 0">
       <p class="serif" style="font-size:16pt">Register your institution in about 3 minutes</p>
-      <p style="margin-top:1.5mm;font-size:11pt"><span class="gold">${URL_TEXT}</span> · Phone and WhatsApp ${PHONE} · ${EMAIL}</p>
+      <p style="margin-top:1.5mm;font-size:11pt"><span class="gold">${URL_TEXT}</span> · Phone ${PHONE} · WhatsApp ${WHATSAPP} · ${EMAIL}</p>
     </div>
     ${foot("2 of 2")}
   </section>
@@ -166,7 +167,7 @@ const flyer = `<!doctype html><html><head><meta charset="utf-8"><style>${style}
       <p class="label">For your teacher, principal or student coordinator</p>
       <p class="serif" style="font-size:19pt;margin-top:2mm;color:#3b1f8e">Your school or college can book a session for ${schoolFee}.</p>
       <p style="font-size:12pt;margin-top:3mm">Register in about 3 minutes at <b>${URL_TEXT}</b></p>
-      <p style="font-size:12pt;margin-top:1mm">Questions? Phone and WhatsApp ${PHONE} · ${EMAIL}</p>
+      <p style="font-size:12pt;margin-top:1mm">Questions? Phone ${PHONE} · WhatsApp ${WHATSAPP} · ${EMAIL}</p>
     </div>
     <p class="serif" style="font-size:16pt;color:#f2b705;margin-top:10mm;font-style:italic">How&rsquo;s your horsepower?</p>
     ${foot("")}

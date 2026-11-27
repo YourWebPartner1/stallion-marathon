@@ -215,7 +215,7 @@ function ReserveForm({
       `Email: ${get("email")}`,
       ...(get("phone") ? [`Phone: ${get("phone")}`] : []),
     ].join("\n");
-    const url = `https://wa.me/91${site.phone}?text=${encodeURIComponent(message)}`;
+    const url = `https://wa.me/91${site.whatsapp}?text=${encodeURIComponent(message)}`;
     setLink(url);
     onReserved();
     const tab = window.open(url, "_blank");

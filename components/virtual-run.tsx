@@ -311,8 +311,8 @@ export function StepsLedger() {
                     <div className="grid grid-cols-12 gap-x-[var(--g)] pb-12">
                       <div className="col-span-12 flex flex-col gap-4 min-[761px]:col-span-7 min-[761px]:col-start-6">
                         <p className="m-0 text-lg leading-[1.4]">{stepDetail[i]}</p>
-                        <Link href={bookHref} className="group inline-flex items-baseline gap-2 text-lg">
-                          <Roll text="Book virtual run" under="text-gold" />
+                        <Link href={bookHref} className="group inline-flex w-fit items-baseline gap-2 bg-[#c6f432] px-5 py-3 text-lg font-bold text-[#1e1146]">
+                          <Roll text="Book virtual run" under="text-[#3b1f8e]" />
                           <span aria-hidden className="transition-transform duration-500 group-hover:translate-x-1.5">
                             →
                           </span>

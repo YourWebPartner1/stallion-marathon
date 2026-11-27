@@ -11,7 +11,7 @@ const FRAME = "clamp(20px, 2.6vw, 36px)";
 /** Gold button to a booking channel; until its link exists it books by phone instead. */
 function ChannelButton({ url, label }: { url: string | null; label: string }) {
   const cls =
-    "group inline-flex w-full items-center justify-between gap-4 bg-[#f2b705] px-6 py-4 text-lg tracking-[-0.01em] text-[#3b1f8e] transition-colors duration-300 hover:bg-[#f8f3fe] sm:w-auto";
+    "group inline-flex w-full items-center justify-between gap-4 bg-[#c6f432] px-6 py-4 text-lg font-bold tracking-[-0.01em] text-[#1e1146] transition-colors duration-300 hover:bg-[#f8f3fe] sm:w-auto";
   const arrow = (
     <span aria-hidden className="transition-transform duration-500 group-hover:translate-x-1.5">
       →

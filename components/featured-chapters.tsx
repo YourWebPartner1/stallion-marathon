@@ -223,7 +223,7 @@ export function ChapterCardView({ card }: { card: ChapterCard }) {
           </div>
         ))}
       </dl>
-      <span className="relative mt-8 flex items-center justify-between gap-4 bg-[#f2b705] px-6 py-4 text-lg tracking-[-0.01em] text-[#3b1f8e]">
+      <span className="relative mt-8 flex items-center justify-between gap-4 bg-[#c6f432] px-6 py-4 text-lg font-bold tracking-[-0.01em] text-[#3b1f8e]">
         {card.cta}
         <span aria-hidden className="transition-transform duration-500 group-hover:translate-x-1.5">
           →

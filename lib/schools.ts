@@ -27,7 +27,7 @@ export const schoolSteps = [
   {
     label: "Confirm",
     value: "Our team calls or emails within 2 working days to confirm the date, time, student count and venue inside your campus.",
-    note: `Institutions that booked themselves pay ${schoolFee} per session, online or by invoice, to lock the date. Institutions invited by our team pay nothing.`,
+    note: `Institutions that booked themselves pay ${schoolFee} per session plus GST, online or by invoice, to lock the date. Institutions invited by our team pay nothing.`,
   },
   { label: "Workshop day", value: "Our team and a partner NGO arrive at your facility and conduct the workshop, followed by the quiz and brainstorming round." },
   { label: "Certificates and prizes", value: "Participation certificates are issued to students and the coordinator. Quiz winners receive their prize or souvenir on the spot." },
@@ -40,8 +40,8 @@ export const schoolTopics = [
 ];
 
 export const schoolWhoCanApply = [
-  "Schools in Hyderabad (classes 8 to 12)",
-  "Junior colleges, degree colleges, engineering colleges and universities in Hyderabad",
+  "Schools in Hyderabad, Secunderabad and Cyberabad (classes 8 to 12)",
+  "Junior colleges, degree colleges, engineering colleges and universities in Hyderabad, Secunderabad and Cyberabad",
   "Minimum group size: 30 students",
   "The institution provides a hall or open space and basic seating. Our team confirms requirements after registration.",
 ];
@@ -49,7 +49,7 @@ export const schoolWhoCanApply = [
 export const schoolFaqs: Faq[] = [
   {
     q: "Is there a fee for the institution?",
-    a: `If our team approached your institution, the session is free. If your institution books through this page, the fee is ${schoolFee} per session, paid online or by invoice.`,
+    a: `If our team approached your institution, the session is free. If your institution books through this page, the fee is ${schoolFee} per session plus GST (18% or as applicable), paid online or by invoice.`,
   },
   { q: "Where is the workshop held?", a: "At your school or college. Our team comes to you." },
   { q: "Who conducts the workshops?", a: "Partner NGOs working in animal care and wildlife conservation, together with the Stallion team." },
@@ -68,12 +68,9 @@ export const schoolShareMessage = (link: string) =>
 /** Blanks the brief left for later. */
 export const stillOpen = [
   "Which partner NGO runs which topic, a line about each, and any more topics",
-  "Whether the fee includes GST",
   "The quiz prize or souvenir",
   "Certificates printed on the day or emailed later",
   "Licensed handlers, safety distance and permissions for the live reptile and snake show",
-  "Whether Secunderabad, Cyberabad and nearby areas are included",
   "Any discount or invite for students to the 14 March 2027 run",
   "Office hours",
-  "The team email for registration alerts",
 ];

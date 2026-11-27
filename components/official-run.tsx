@@ -12,6 +12,7 @@ import {
   officialDistancePrices,
   officialTierInclusions,
   officialWorkshopNote,
+  priceNote,
   raceFacts,
   signaturePackages,
   site,
@@ -31,7 +32,7 @@ export function RacePanel() {
   // Every row of the document's race-facts table, plus the contact line.
   const facts = [
     ...raceFacts,
-    { label: "Contact", value: site.email ? `${site.phone}, ${site.email}` : site.phone },
+    { label: "Contact", value: site.email ? `${site.phoneDisplay} · ${site.email}` : site.phoneDisplay },
   ];
 
   return (
@@ -66,7 +67,7 @@ export function RacePanel() {
           {facts.map((f) => (
             <div key={f.label} className="grid grid-cols-[minmax(110px,40%)_1fr] gap-4 border-b border-[#f2b705]/80 py-4">
               <dt className="text-sm text-[#f8f3fe]/60">{f.label}</dt>
-              <dd className={`m-0 text-lg leading-[1.3] ${f.value === TBA ? "italic text-[#f8f3fe]/60" : ""}`}>{f.value}</dd>
+              <dd className={`m-0 text-lg leading-[1.3] [overflow-wrap:anywhere] ${f.value === TBA ? "italic text-[#f8f3fe]/60" : ""}`}>{f.value}</dd>
             </div>
           ))}
         </dl>
@@ -373,7 +374,7 @@ export function OfficialPackages() {
               </tbody>
             </table>
           </div>
-          <p className="m-0 text-sm italic text-ink/65">{officialWorkshopNote}</p>
+          <p className="m-0 text-sm italic text-ink/65">{officialWorkshopNote}{priceNote && <> {priceNote}</>}</p>
         </div>
       </div>
 
@@ -472,10 +473,8 @@ export function OfficialPackages() {
 
                 <Link
                   href={bookHref}
-                  className={`group flex items-center justify-between gap-4 px-5 py-4 text-base font-medium tracking-[-0.01em] transition-colors duration-300 ${
-                    dark
-                      ? "bg-[#f2b705] text-[#3b1f8e] hover:bg-[#f8f3fe]"
-                      : "bg-[#3b1f8e] text-[#f8f3fe] hover:bg-[#f2b705] hover:text-[#3b1f8e]"
+                  className={`group flex items-center justify-between gap-4 px-5 py-4 text-base font-bold tracking-[-0.01em] transition-colors duration-300 bg-[#c6f432] text-[#1e1146] ${
+                    dark ? "hover:bg-[#f8f3fe]" : "hover:bg-[#3b1f8e] hover:text-[#f8f3fe]"
                   }`}
                 >
                   <span>Book {pkg.name}</span>

@@ -35,7 +35,7 @@ const body = Hanken_Grotesk({
 const label = IBM_Plex_Mono({
   variable: "--font-label",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {

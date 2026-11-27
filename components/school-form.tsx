@@ -86,7 +86,7 @@ export function SchoolForm() {
       return v ? [`${LABELS[k]}: ${v === "on" ? "Yes" : v}`] : [];
     });
     const message = ["Stallion for Schools & Colleges: registration", "", ...lines].join("\n");
-    const link = `https://wa.me/91${site.phone}?text=${encodeURIComponent(message)}`;
+    const link = `https://wa.me/91${site.whatsapp}?text=${encodeURIComponent(message)}`;
     setDone({ name: String(data.get("coordinator") ?? "").trim(), link });
     const tab = window.open(link, "_blank");
     if (tab) tab.opener = null;

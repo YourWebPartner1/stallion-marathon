@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Roll } from "@/components/roll";
 
 /**
- * Call-to-action button, identical to the header's "Book now": gold, small
+ * Call-to-action button, identical to the header's "Book now": Electric Lime, bold small
  * spaced capitals, no arrow. On hover the letters roll up one by one while the
  * button fades to the page's ink colour (ivory on dark sections, navy on light
  * ones). The primary gold is always the bright brand gold. The ghost variant is
@@ -21,7 +21,7 @@ export function ButtonLink({
 }) {
   const look =
     variant === "primary"
-      ? "border border-[#f2b705] bg-[#f2b705] text-[#1e1146]"
+      ? "border border-[#c6f432] bg-[#c6f432] font-bold text-[#1e1146]"
       : "border border-gold text-gold";
   return (
     <Link

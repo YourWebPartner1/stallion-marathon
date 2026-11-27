@@ -61,7 +61,7 @@ export function ContactPanel() {
             {rows.map((r) => (
               <div key={r.label} className="grid grid-cols-[minmax(110px,35%)_1fr] gap-4 border-b border-[#f2b705]/80 py-4">
                 <dt className="text-sm text-[#f8f3fe]/60">{r.label}</dt>
-                <dd className="m-0 text-lg leading-[1.3]">{r.value}</dd>
+                <dd className="m-0 text-lg leading-[1.3] [overflow-wrap:anywhere]">{r.value}</dd>
               </div>
             ))}
           </dl>

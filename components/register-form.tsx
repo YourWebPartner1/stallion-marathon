@@ -62,7 +62,7 @@ export function RegisterForm({ kind }: { kind: keyof typeof forms }) {
       return v ? [`${f.label.replace(/\?$/, "")}: ${v}`] : [];
     });
     const message = [`Stallion Marathon: ${form.heading.toLowerCase()}`, "", ...lines].join("\n");
-    const url = `https://wa.me/91${site.phone}?text=${encodeURIComponent(message)}`;
+    const url = `https://wa.me/91${site.whatsapp}?text=${encodeURIComponent(message)}`;
     setLink(url);
     const tab = window.open(url, "_blank");
     if (tab) tab.opener = null;

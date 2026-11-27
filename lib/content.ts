@@ -28,6 +28,9 @@ export const site = {
   legalName: "Lemerian Workin Pvt. Ltd.",
   phone: "9866631658",
   phoneDisplay: "+91 98666 31658",
+  // Calls only on the number above; WhatsApp messages and the website forms go here (Maya, 28 November 2026).
+  whatsapp: "7075701406",
+  whatsappDisplay: "+91 70757 01406",
   email: "support@stallionmarathon.com" as string | null,
   // The live address, used for search engines and share links (connected 28 November 2026).
   // NEXT_PUBLIC_SITE_URL can override it, for example on a test copy.
@@ -197,8 +200,8 @@ export const tiers: Tier[] = [
 
 export const twoDayCopy = "Two days. 25 km each day. 50 km in total. For the runner who wants more than a marathon.";
 
-// [inclusive or extra]: hidden until confirmed.
-export const priceNote = null as string | null;
+// Confirmed by Maya (28 November 2026): no price includes GST.
+export const priceNote = "All prices exclude GST, charged at 18% or as applicable." as string | null;
 
 /**
  * Early-bird offers, one per event. While set and before its deadline, each
@@ -506,6 +509,8 @@ export const faqs: FaqGroup[] = [
     items: [
       { q: "Where and when is the official race?", a: "Sunday 14 March 2027 at GMC Balayogi Gachibowli Stadium, Hyderabad. Start time to be announced." },
       { q: "How many runners are expected?", a: "Up to 30,000." },
+      { q: "Who can take part?", a: "Anyone from Hyderabad, Secunderabad, Cyberabad or anywhere in India can join the run." },
+      { q: "Do prices include GST?", a: "No. GST is added at 18%, or as applicable, on every package." },
       {
         q: "What distances and packages are available?",
         a: "Stud kids fun runs (under 12) for 1 km (₹455), 2 km (₹599) and 3 km (₹649); 5, 8, 10, 12, 15 and 21 km in Basic, Standard and Premium tiers (₹799 to ₹2,999); plus Clydesdale (₹9,999), Mustang (₹25,000) and Black Stallion VIP (₹50,000, limited to 20–30 spots).",

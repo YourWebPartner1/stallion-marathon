@@ -292,9 +292,15 @@ export default function SchoolsPage() {
           </h2>
           <div className="flex flex-col gap-2 self-end text-lg lg:col-span-5 lg:col-start-8">
             <p className="m-0">
-              Phone and WhatsApp:{" "}
+              Phone:{" "}
               <a href={`tel:+91${site.phone}`} className="underline underline-offset-4 hover:text-gold">
                 {site.phoneDisplay}
+              </a>
+            </p>
+            <p className="m-0">
+              WhatsApp:{" "}
+              <a href={`https://wa.me/91${site.whatsapp}`} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-gold">
+                {site.whatsappDisplay}
               </a>
             </p>
             {site.email && (
