@@ -42,7 +42,7 @@ export default function PrivacyPage() {
         },
         {
           heading: "Contact",
-          body: [`For questions about your information, call ${site.legalName} on ${site.phone}.`],
+          body: [`For questions about your information, call ${site.legalName} on ${site.phoneDisplay} or email ${site.email}.`],
         },
       ]}
     />

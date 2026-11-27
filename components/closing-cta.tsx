@@ -24,8 +24,16 @@ export function ClosingCta() {
       <p className="m-0 text-base text-ink/70">
         Questions?{" "}
         <a href={`tel:+91${site.phone}`} className="underline underline-offset-4 hover:text-gold">
-          +91 70757 01406
+          {site.phoneDisplay}
         </a>
+        {site.email && (
+          <>
+            {" · "}
+            <a href={`mailto:${site.email}`} className="underline underline-offset-4 hover:text-gold">
+              {site.email}
+            </a>
+          </>
+        )}
       </p>
     </section>
   );

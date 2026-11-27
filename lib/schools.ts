@@ -5,7 +5,7 @@ import type { Faq } from "@/lib/content";
  * Her [bracketed] suggestions are used as final (approved 27 November 2026).
  * `stillOpen` lists the blanks the brief left for later.
  */
-export const schoolFee = "₹1,999";
+export const schoolFee = "₹9,999";
 
 export const schoolTrust = [
   "Open to schools and colleges across Hyderabad",
@@ -74,6 +74,6 @@ export const stillOpen = [
   "Licensed handlers, safety distance and permissions for the live reptile and snake show",
   "Whether Secunderabad, Cyberabad and nearby areas are included",
   "Any discount or invite for students to the 14 March 2027 run",
-  "A schools email address and office hours",
+  "Office hours",
   "The team email for registration alerts",
 ];

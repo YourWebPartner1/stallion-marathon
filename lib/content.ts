@@ -26,10 +26,9 @@ export const site = {
   organiser: "Stallion Marathon Organising Team",
   // The company that takes payments (redesign brief, 25 November 2026).
   legalName: "Lemerian Workin Pvt. Ltd.",
-  phone: "7075701406",
-  phoneDisplay: "7075701406",
-  // Not yet supplied: a dedicated Stallion Marathon address. Hidden until set.
-  email: null as string | null,
+  phone: "9866631658",
+  phoneDisplay: "+91 98666 31658",
+  email: "support@stallionmarathon.com" as string | null,
   // The live address, used for search engines and share links. Set
   // NEXT_PUBLIC_SITE_URL in Vercel once the own domain is connected.
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://stallion-marathon.vercel.app").replace(/\/$/, ""),
@@ -488,7 +487,7 @@ export const faqs: FaqGroup[] = [
     items: [
       { q: "What is Stallion Marathon?", a: "A two-part running festival in Hyderabad: a virtual run for Republic Day 2027 and the official race on 14 March 2027 at Gachibowli Stadium." },
       { q: "Where can I book?", a: "On this website and on BookMyShow." },
-      { q: "Who do I contact?", a: `Call ${site.phone}.` },
+      { q: "Who do I contact?", a: `Call ${site.phoneDisplay} or email ${site.email}.` },
     ],
   },
   {

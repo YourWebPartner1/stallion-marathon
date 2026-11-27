@@ -54,7 +54,7 @@ export default function TermsPage() {
         },
         {
           heading: "Contact",
-          body: [`Questions about these terms: call ${site.phone}.`],
+          body: [`Questions about these terms: call ${site.phoneDisplay} or email ${site.email}.`],
         },
       ]}
     />

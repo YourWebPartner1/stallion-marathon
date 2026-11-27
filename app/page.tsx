@@ -35,7 +35,7 @@ export default function Home() {
       />
       <TeaserBand
         id="schools-teaser"
-        figure="₹1,999"
+        figure="₹9,999"
         figureCaption="per session, or free if our team invited you"
         lines={["Bring Stallion", "to your campus."]}
         note="Animal care and wildlife workshops at your school or college, led by partner NGOs. Certificates for everyone, prizes for quiz winners."

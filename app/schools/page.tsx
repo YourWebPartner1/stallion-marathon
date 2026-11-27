@@ -294,9 +294,17 @@ export default function SchoolsPage() {
             <p className="m-0">
               Phone and WhatsApp:{" "}
               <a href={`tel:+91${site.phone}`} className="underline underline-offset-4 hover:text-gold">
-                +91 70757 01406
+                {site.phoneDisplay}
               </a>
             </p>
+            {site.email && (
+              <p className="m-0">
+                Email:{" "}
+                <a href={`mailto:${site.email}`} className="underline underline-offset-4 hover:text-gold">
+                  {site.email}
+                </a>
+              </p>
+            )}
             <p className="m-0 text-base text-ink/70">Organised by Lemerian Workin Pvt Ltd, Banjara Hills, Hyderabad.</p>
           </div>
         </div>

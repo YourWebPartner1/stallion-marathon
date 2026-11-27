@@ -8,7 +8,7 @@ import { bookHref, challenges, faqs, site, tiers } from "@/lib/content";
 export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
   title: "Contact",
-  description: `Contact the ${site.organiser} on ${site.phone}.`,
+  description: `Contact the ${site.organiser} on ${site.phoneDisplay} or at ${site.email}.`,
 };
 
 /**
@@ -33,7 +33,7 @@ export default function ContactPage() {
               <dl className="m-0 mt-4 flex flex-col border-t border-ink/20">
                 {[
                   { label: "Organiser", value: site.organiser },
-                  { label: "Email", value: site.email ?? "To be announced" },
+                  { label: "Email", value: site.email ? <a href={`mailto:${site.email}`} className="underline underline-offset-4 hover:text-gold">{site.email}</a> : "To be announced" },
                   { label: "Bookings", value: "Website, BookMyShow" },
                 ].map((r) => (
                   <div key={r.label} className="flex justify-between gap-4 border-b border-ink/20 py-2 text-base leading-[1.25]">

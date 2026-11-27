@@ -24,7 +24,7 @@ export default function RefundPolicyPage() {
         },
         {
           heading: "Questions",
-          body: [`If you have a question about your booking, call ${site.legalName} on ${site.phone}.`],
+          body: [`If you have a question about your booking, call ${site.legalName} on ${site.phoneDisplay} or email ${site.email}.`],
         },
       ]}
     />
