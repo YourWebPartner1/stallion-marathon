@@ -23,7 +23,7 @@ import {
 } from "../lib/schools.ts";
 
 const ROOT = resolve(import.meta.dirname, "..");
-const URL_TEXT = "stallion-marathon.vercel.app/schools";
+const URL_TEXT = "stallionmarathon.com/schools";
 const PHONE = "+91 98666 31658";
 const EMAIL = "support@stallionmarathon.com";
 const asset = (p) => pathToFileURL(join(ROOT, "public", p)).href;

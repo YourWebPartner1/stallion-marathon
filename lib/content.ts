@@ -29,9 +29,9 @@ export const site = {
   phone: "9866631658",
   phoneDisplay: "+91 98666 31658",
   email: "support@stallionmarathon.com" as string | null,
-  // The live address, used for search engines and share links. Set
-  // NEXT_PUBLIC_SITE_URL in Vercel once the own domain is connected.
-  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://stallion-marathon.vercel.app").replace(/\/$/, ""),
+  // The live address, used for search engines and share links (connected 28 November 2026).
+  // NEXT_PUBLIC_SITE_URL can override it, for example on a test copy.
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://stallionmarathon.com").replace(/\/$/, ""),
 };
 
 /** Every public page, for the sitemap. */
