@@ -26,7 +26,7 @@ export function ButtonLink({
   return (
     <Link
       href={href}
-      className={`label group flex whitespace-nowrap px-8 py-[18px] text-[0.8rem] transition-colors duration-500 hover:border-ink hover:bg-ink hover:text-navy focus-visible:border-ink focus-visible:bg-ink focus-visible:text-navy sm:px-10 ${look} ${className}`}
+      className={`label group flex whitespace-nowrap px-8 py-[18px] text-[0.8rem] transition-colors duration-500 max-[420px]:px-5 max-[420px]:tracking-[0.14em] hover:border-ink hover:bg-ink hover:text-navy focus-visible:border-ink focus-visible:bg-ink focus-visible:text-navy sm:px-10 ${look} ${className}`}
     >
       <Roll text={children} under="text-navy" />
     </Link>
