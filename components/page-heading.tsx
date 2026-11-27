@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { motion } from "framer-motion";
 import { FitText } from "@/components/fit-text";
 import { useIntroReady } from "@/lib/intro";
+import { ChessKnight } from "@/components/chess-knight";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -48,7 +49,7 @@ export function PageHeading({
       <div className="grid gap-y-10 pt-6 lg:grid-cols-12 lg:gap-x-6">
         <div aria-hidden className="flex items-center gap-4 self-start pt-[0.9em] lg:col-span-2">
           <span className="h-px flex-1 bg-gold/40" />
-          <span className="size-2.5 rotate-45 bg-gold" />
+          <ChessKnight className="text-[22px] text-gold" />
           <span className="h-px flex-1 bg-gold/40" />
         </div>
 

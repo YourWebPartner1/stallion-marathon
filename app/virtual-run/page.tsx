@@ -17,7 +17,7 @@ const virtualRules = [
 export const metadata: Metadata = {
   alternates: { canonical: "/virtual-run" },
   title: { absolute: "Virtual Run Republic Day 2027 | Stallion Marathon" },
-  description: "Run 5 to 42 km anywhere from 19 January 2027. Medal and goodie bag delivered home. From ₹599.",
+  description: "Run 5 to 50 km anywhere, 19 to 26 January 2027. Medal and goodie bag delivered home. From ₹599.",
 };
 
 /**
@@ -46,8 +46,8 @@ export default function VirtualRunPage() {
         <div className="grid gap-y-6 border-y border-ink py-14 lg:grid-cols-12 lg:gap-x-6">
           <p className="m-0 text-sm text-ink/60 lg:col-span-3">Republic Day Edition</p>
           <p className="display m-0 text-[clamp(24px,1.89vw,36px)] leading-[1.25] lg:col-span-7">
-            Starting 19 January 2027, run your chosen distance, anywhere, at your own pace. On Republic Day, 26 January, we
-            announce the winners. Every runner receives a finisher&rsquo;s medal and a goodie bag at home. Winners take home a
+            Between 19 and 26 January 2027, run your chosen distance, anywhere, at your own pace. On Republic Day, 26 January,
+            we announce the winners. Every runner receives a finisher&rsquo;s medal and a goodie bag at home. Winners take home a
             prize, recognition and a trophy, and a premium ticket to the official Stallion Marathon on 14 March 2027.
           </p>
         </div>
@@ -61,10 +61,10 @@ export default function VirtualRunPage() {
       <section id="packages" aria-labelledby="packages-title" className="scroll-mt-32 px-[max(20px,2.78vw)] py-16">
         <div className="mb-10 grid gap-y-4 border-b border-ink pb-10 lg:grid-cols-12 lg:gap-x-6">
           <h2 id="packages-title" className="display m-0 text-[clamp(40px,3.99vw,76px)] leading-none tracking-[-0.02em] lg:col-span-7">
-            Choose your gait
+            Find your gait
           </h2>
           <p className="m-0 self-end text-base leading-[1.3] text-ink/60 lg:col-span-5 lg:col-start-8 lg:text-right">
-            Every package includes a finisher&rsquo;s medal and a goodie bag shipped to your home.
+            Every runner has a pace. Find yours. Every package includes a finisher&rsquo;s medal and a goodie bag shipped to your home.
             {priceNote && <> {priceNote}</>}
           </p>
         </div>

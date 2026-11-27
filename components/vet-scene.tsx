@@ -1,7 +1,7 @@
 /**
- * Vets caring for stray animals, drawn in the hero stallion's palette: brown ink,
- * cream, marigold and olive. Two drawings share one ground line. They sit side by
- * side on wide screens and stack on phones so the figures stay readable.
+ * Vets caring for street animals and wildlife, drawn in the hero stallion's
+ * palette: brown ink, cream, marigold and olive. Three drawings share one ground
+ * line: two side by side and the wildlife below on wide screens, stacked on phones.
  */
 import type { CSSProperties, ReactNode } from "react";
 import { SceneStage } from "@/components/scene-stage";
@@ -13,15 +13,20 @@ const C = {
   tanDark: "#b98345",
   coat: "#fdf8ec",
   coatShade: "#e6d6b4",
-  gold: "#f7b538",
+  gold: "#f2b705",
   marigold: "#ec9a1f",
   marigoldDark: "#c9741a",
   olive: "#7d7a3f",
   oliveDark: "#5f5c2c",
-  teal: "#5f97ad",
+  teal: "#ab71e3",
   skin: "#b87a4b",
   hair: "#24150c",
   rose: "#d8695c",
+  red: "#d8453a",
+  blue: "#2f6fb5",
+  green: "#5fae4a",
+  greenDark: "#3f8a36",
+  deer: "#c9803a",
 };
 
 const line = { stroke: C.ink, strokeWidth: 3, strokeLinejoin: "round", strokeLinecap: "round" } as const;
@@ -398,6 +403,103 @@ function Cow() {
   );
 }
 
+/** A scarlet macaw perched on the vet's hand, facing the vet. */
+function Macaw() {
+  return (
+    <g>
+      <path d="M340 400 L362 474 Q356 480 348 476 L332 404 Z" fill={C.red} {...line} strokeWidth={2.2} />
+      <path d="M352 444 L362 474 Q356 480 348 476 L344 448 Z" fill={C.blue} />
+      <path d="M326 394 Q310 362 320 334 Q330 316 348 320 Q362 334 358 362 Q354 388 342 400 Z" fill={C.red} {...line} strokeWidth={2.4} />
+      <path d="M336 338 Q360 342 360 372 Q354 396 342 404 Q336 372 336 338 Z" fill={C.blue} {...line} strokeWidth={2.2} />
+      <path d="M338 348 Q354 350 356 364 Q344 362 338 358 Z" fill={C.gold} />
+      <circle cx={330} cy={316} r={17} fill={C.red} {...line} strokeWidth={2.4} />
+      <ellipse cx={321} cy={316} rx={7.5} ry={9.5} fill={C.coat} />
+      <circle cx={321} cy={314} r={2.8} fill={C.hair} />
+      <path d="M314 308 Q296 308 296 324 Q298 334 306 334 Q306 324 314 322 Z" fill={C.cream} {...line} strokeWidth={2} />
+      <path d="M314 324 Q308 330 312 336 L318 330 Z" fill={C.hair} />
+      <path d="M326 398 L322 406 M334 400 L332 408" {...line} strokeWidth={2.4} fill="none" />
+    </g>
+  );
+}
+
+/** A parakeet in flight, wings beating. */
+function Flyer({ x, y, size = 1, delay = 0, flip = false }: { x: number; y: number; size?: number; delay?: number; flip?: boolean }) {
+  return (
+    <g transform={`translate(${x} ${y}) scale(${flip ? -size : size} ${size})`}>
+      <path d="M-30 4 L-58 14 L-54 4 L-58 -4 Z" fill={C.green} {...line} strokeWidth={2} />
+      <path d="M-30 0 Q-10 -12 14 -6 Q26 -2 24 6 Q10 14 -30 8 Z" fill={C.green} {...line} strokeWidth={2.2} />
+      <circle cx={18} cy={-2} r={2} fill={C.hair} />
+      <path d="M24 0 Q32 2 28 8 L23 6 Z" fill={C.red} {...line} strokeWidth={1.6} />
+      <Part x={-4} y={-4} motion="flap" delay={delay}>
+        <path d="M-12 -4 Q-20 -34 4 -46 Q8 -22 4 -4 Z" fill={C.greenDark} {...line} strokeWidth={2} />
+      </Part>
+    </g>
+  );
+}
+
+/** A spotted deer, facing left. */
+function Deer() {
+  return (
+    <g>
+      <path d="M640 424 L638 526 L654 526 L658 424 Z M770 420 L774 526 L790 526 L786 420 Z" fill={C.tanDark} {...line} strokeWidth={2.4} />
+      <path d="M636 522 L656 522 L658 540 L634 540 Z M772 522 L792 522 L794 540 L770 540 Z" fill={C.hair} {...line} strokeWidth={2} />
+      <Part x={810} y={356} motion="flick" delay={1.2}>
+        <path d="M806 352 Q826 352 828 376 Q816 380 806 368 Z" fill={C.coat} {...line} strokeWidth={2.2} />
+      </Part>
+      <Part x={700} y={430} motion="breathe" delay={0.3}>
+        <path
+          d="M612 352 Q628 322 690 326 Q770 322 800 346 Q822 372 810 410 Q794 432 750 430 Q700 438 650 430 Q614 422 606 392 Q604 370 612 352 Z"
+          fill={C.deer}
+          {...line}
+        />
+        <path d="M630 420 Q700 438 780 428 Q770 440 700 442 Q650 440 630 420 Z" fill={C.cream} />
+        {[
+          [652, 356], [680, 348], [710, 352], [740, 346], [768, 356], [664, 380], [696, 374], [728, 378], [760, 380], [786, 372], [712, 400], [680, 402], [748, 404],
+        ].map(([cx, cy]) => (
+          <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r={5.5} fill={C.coat} />
+        ))}
+      </Part>
+      <path d="M622 420 Q620 470 626 526 L644 526 Q646 470 650 428 M792 404 Q790 466 800 526 L818 526 Q820 466 812 396" fill={C.deer} {...line} strokeWidth={2.4} />
+      <path d="M622 522 L646 522 L648 540 L620 540 Z M798 522 L820 522 L822 540 L796 540 Z" fill={C.hair} {...line} strokeWidth={2} />
+      <Part x={620} y={340} motion="nod" delay={0.6}>
+        <path d="M612 364 Q596 320 576 288 L606 270 Q628 312 646 344 Z" fill={C.deer} {...line} />
+        {[0, 16].map((dx) => (
+          <g key={dx}>
+            <path d={`M${590 + dx} 250 Q${582 + dx} 212 ${594 + dx} 180 M${588 + dx} 226 Q${570 + dx} 216 ${564 + dx} 200 M${592 + dx} 202 Q${608 + dx} 192 ${610 + dx} 176`} fill="none" stroke={C.ink} strokeWidth={9} strokeLinecap="round" />
+            <path d={`M${590 + dx} 250 Q${582 + dx} 212 ${594 + dx} 180 M${588 + dx} 226 Q${570 + dx} 216 ${564 + dx} 200 M${592 + dx} 202 Q${608 + dx} 192 ${610 + dx} 176`} fill="none" stroke={C.coatShade} strokeWidth={4.5} strokeLinecap="round" />
+          </g>
+        ))}
+        <Part x={606} y={252} motion="flick" delay={2}>
+          <path d="M600 252 Q628 232 642 246 Q628 264 606 262 Z" fill={C.deer} {...line} strokeWidth={2.4} />
+        </Part>
+        <path d="M576 248 Q604 240 616 264 Q612 284 594 292 Q576 298 552 304 Q534 306 530 296 Q530 284 544 276 Q560 256 576 248 Z" fill={C.deer} {...line} />
+        <path d="M552 304 Q534 306 530 296 Q536 290 548 292 Z" fill={C.cream} />
+        <ellipse cx={533} cy={292} rx={4.5} ry={3.6} fill={C.hair} />
+        <Part x={580} y={266} motion="blink" delay={1.4}>
+          <ellipse cx={580} cy={266} rx={5} ry={6.5} fill={C.hair} />
+          <circle cx={578} cy={263} r={1.8} fill={C.coat} />
+        </Part>
+      </Part>
+    </g>
+  );
+}
+
+/** A tortoise on its way somewhere. */
+function Tortoise({ x }: { x: number }) {
+  return (
+    <g transform={`translate(${x} 0)`}>
+      <path d="M22 530 L16 540 L40 540 L38 528 Z M104 530 L100 540 L124 540 L120 528 Z" fill={C.olive} {...line} strokeWidth={2.2} />
+      <Part x={136} y={520} motion="nod" delay={0.8}>
+        <path d="M128 520 Q146 500 164 508 Q170 522 154 528 Q140 532 128 528 Z" fill={C.olive} {...line} strokeWidth={2.4} />
+        <circle cx={154} cy={514} r={2.6} fill={C.hair} />
+      </Part>
+      <path d="M8 532 Q14 468 72 462 Q130 468 138 532 Z" fill={C.tanDark} {...line} />
+      <path d="M40 532 Q44 494 72 490 Q100 494 106 532 M72 464 L72 490 M26 500 L46 506 M118 500 L98 506" {...thin} opacity={0.75} />
+      <path d="M4 532 L142 532" {...line} strokeWidth={4} />
+    </g>
+  );
+}
+
 export function VetScene({ className = "" }: { className?: string }) {
   return (
     <SceneStage className={`vet-stage ${className}`}>
@@ -447,6 +549,22 @@ export function VetScene({ className = "" }: { className?: string }) {
           </g>
           <Heart x={166} y={304} delay={-3} />
           <Posy x={640} flip />
+        </svg>
+
+        <svg viewBox="0 0 900 560" className="block h-auto w-full overflow-visible lg:col-span-2 lg:mx-auto lg:w-[76%]" role="img" aria-labelledby="vet-wild-title">
+          <title id="vet-wild-title">A vet holds a scarlet macaw on her hand while a spotted deer and a tortoise look on and parakeets fly overhead</title>
+          <Halo x={450} y={310} r={222} />
+          <Flyer x={250} y={96} size={0.9} delay={0.2} />
+          <Flyer x={640} y={70} size={0.75} delay={0.45} flip />
+          <Flyer x={760} y={150} size={0.6} delay={0.1} flip />
+          <Ground width={900} />
+          <Tortoise x={28} />
+          <Deer />
+          <g transform="translate(150 0)">
+            <Vet look="bun" workDelay={0.3} held={<Macaw />} />
+          </g>
+          <Heart x={470} y={250} delay={-5} />
+          <Posy x={840} flip />
         </svg>
       </div>
     </SceneStage>

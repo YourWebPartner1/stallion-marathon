@@ -6,7 +6,7 @@ import { Check, X } from "lucide-react";
 import type { Workshop } from "@/lib/content";
 
 const STORAGE_KEY = "stallion:reserved-workshops";
-const PAINT = ["#f7b538", "#c98f2e", "#145a86", "#08335d"];
+const PAINT = ["#f2b705", "#c99400", "#ab71e3", "#3b1f8e"];
 
 const filters = [
   { id: "all", label: "All" },
@@ -94,7 +94,7 @@ export function WorkshopGrid({ workshops }: { workshops: Workshop[] }) {
               {f.label} {f.id === "all" ? count : String(count).padStart(2, "0")}
               <span
                 aria-hidden
-                className={`absolute inset-x-0 -bottom-[25px] h-[3px] origin-left bg-[#f7b538] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                className={`absolute inset-x-0 -bottom-[25px] h-[3px] origin-left bg-[#f2b705] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
                   on ? "scale-x-100" : "scale-x-0"
                 }`}
               />
@@ -103,7 +103,7 @@ export function WorkshopGrid({ workshops }: { workshops: Workshop[] }) {
         })}
       </div>
 
-      <motion.ul layout className="m-0 mt-10 grid list-none gap-px bg-[#08335d] p-px sm:grid-cols-2 lg:grid-cols-3">
+      <motion.ul layout className="m-0 mt-10 grid list-none gap-px bg-[#3b1f8e] p-px sm:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="popLayout">
           {shown.map((w) => {
             const number = workshops.indexOf(w) + 1;
@@ -116,7 +116,7 @@ export function WorkshopGrid({ workshops }: { workshops: Workshop[] }) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="group relative isolate flex min-h-[clamp(320px,22vw,420px)] flex-col overflow-hidden bg-navy p-6 text-ink transition-colors duration-[250ms] [transition-delay:120ms] hover:text-[#f7b538]"
+                className="group relative isolate flex min-h-[clamp(320px,22vw,420px)] flex-col overflow-hidden bg-navy p-6 text-ink transition-colors duration-[250ms] [transition-delay:120ms] hover:text-[#f2b705]"
               >
                 {PAINT.map((color, i) => (
                   <span

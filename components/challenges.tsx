@@ -4,16 +4,17 @@ import type { CSSProperties } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { challengeHref, challengePrizes, challenges, headcountBands } from "@/lib/content";
+import { ChessKnight } from "@/components/chess-knight";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 const FRAME = "clamp(20px, 2.6vw, 36px)";
-const PAINT = ["#f7b538", "#c98f2e", "#145a86", "#08335d"];
+const PAINT = ["#f2b705", "#c99400", "#ab71e3", "#3b1f8e"];
 
 /** Gold-framed navy panel: the ₹50,000 HR prize on the left, what's at stake on the right. */
 export function PrizePanel() {
   return (
     <motion.div
-      className="notch bg-[#f7b538]"
+      className="notch bg-[#f2b705]"
       style={{ "--n": "26px", "--o": "0px", padding: FRAME } as unknown as CSSProperties}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -21,31 +22,31 @@ export function PrizePanel() {
       transition={{ duration: 1, ease }}
     >
       <div
-        className="notch flex items-center gap-[clamp(20px,2.94vw,40px)] bg-[#08335d] px-[clamp(20px,2.94vw,40px)] py-[clamp(40px,5.88vw,80px)] text-[#fdffff] max-[900px]:flex-col"
+        className="notch flex items-center gap-[clamp(20px,2.94vw,40px)] bg-[#3b1f8e] px-[clamp(20px,2.94vw,40px)] py-[clamp(40px,5.88vw,80px)] text-[#f8f3fe] max-[900px]:flex-col"
         style={{ "--n": "26px", "--o": FRAME } as CSSProperties}
       >
         <div className="flex flex-1 flex-col items-center gap-5 text-center">
-          <p className="m-0 text-xs uppercase tracking-[0.14em] text-[#fdffff]/60">HR Champion</p>
-          <p className="caps m-0 text-[clamp(64px,6.7vw,128px)] leading-[0.9] text-[#f7b538]">₹50,000</p>
+          <p className="m-0 text-xs uppercase tracking-[0.14em] text-[#f8f3fe]/60">HR Champion</p>
+          <p className="caps m-0 text-[clamp(64px,6.7vw,128px)] leading-[0.9] text-[#f2b705]">₹50,000</p>
           <span aria-hidden className="flex w-[clamp(140px,15.5vw,220px)] items-center gap-3">
-            <span className="h-px flex-1 bg-[#f7b538]/50" />
-            <span className="size-2 rotate-45 bg-[#f7b538]" />
-            <span className="h-px flex-1 bg-[#f7b538]/50" />
+            <span className="h-px flex-1 bg-[#f2b705]/50" />
+            <ChessKnight className="text-[20px] text-[#f2b705]" />
+            <span className="h-px flex-1 bg-[#f2b705]/50" />
           </span>
-          <p className="m-0 max-w-sm text-base leading-[1.3] text-[#fdffff]/60">
+          <p className="m-0 max-w-sm text-base leading-[1.3] text-[#f8f3fe]/60">
             Cash and a public mention for the HR lead who brings the most bookings.
           </p>
         </div>
 
-        <span aria-hidden className="w-px self-stretch bg-[#fdffff]/20 max-[900px]:h-px max-[900px]:w-full" />
+        <span aria-hidden className="w-px self-stretch bg-[#f8f3fe]/20 max-[900px]:h-px max-[900px]:w-full" />
 
         <div className="flex w-full flex-1 flex-col">
-          <p className="m-0 pb-2 text-sm text-[#fdffff]/60">What&rsquo;s at stake</p>
+          <p className="m-0 pb-2 text-sm text-[#f8f3fe]/60">What&rsquo;s at stake</p>
           <ul className="m-0 flex list-none flex-col p-0">
             {challengePrizes.map((p) => (
-              <li key={p.title} className="flex flex-col gap-2 border-b border-[#f7b538]/80 py-5">
+              <li key={p.title} className="flex flex-col gap-2 border-b border-[#f2b705]/80 py-5">
                 <span className="display text-[clamp(24px,1.68vw,32px)] leading-[1.15]">{p.title}</span>
-                <span className="text-base leading-[1.35] text-[#fdffff]/70">{p.body}</span>
+                <span className="text-base leading-[1.35] text-[#f8f3fe]/70">{p.body}</span>
               </li>
             ))}
           </ul>
@@ -59,7 +60,7 @@ export function PrizePanel() {
 export function ChallengeGrid() {
   return (
     <motion.div
-      className="grid gap-px bg-[#08335d] p-px lg:grid-cols-2"
+      className="grid gap-px bg-[#3b1f8e] p-px lg:grid-cols-2"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true, amount: 0.1 }}
@@ -69,7 +70,7 @@ export function ChallengeGrid() {
         <Link
           key={c.name}
           href={challengeHref}
-          className="group relative isolate flex min-h-[clamp(360px,26vw,500px)] flex-col overflow-hidden bg-navy p-[clamp(24px,2.1vw,40px)] text-ink transition-colors duration-[250ms] [transition-delay:120ms] hover:text-[#f7b538]"
+          className="group relative isolate flex min-h-[clamp(360px,26vw,500px)] flex-col overflow-hidden bg-navy p-[clamp(24px,2.1vw,40px)] text-ink transition-colors duration-[250ms] [transition-delay:120ms] hover:text-[#f2b705]"
         >
           {PAINT.map((color, j) => (
             <span

@@ -21,7 +21,7 @@ export function ButtonLink({
 }) {
   const look =
     variant === "primary"
-      ? "border border-[#f7b538] bg-[#f7b538] text-[#041d36]"
+      ? "border border-[#f2b705] bg-[#f2b705] text-[#1e1146]"
       : "border border-gold text-gold";
   return (
     <Link

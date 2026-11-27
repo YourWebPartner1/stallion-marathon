@@ -23,7 +23,7 @@ export function TeaserBand({
   return (
     <section
       aria-labelledby={id}
-      className="theme-light relative -mt-px bg-navy px-[max(20px,2.78vw)] pb-[max(64px,5.87vw)] text-ink"
+      className="teaser-band theme-light relative -mt-px bg-navy px-[max(20px,2.78vw)] pb-[max(64px,5.87vw)] text-ink"
     >
       <div className="grid items-end gap-x-6 gap-y-8 border-y border-ink py-14 lg:grid-cols-12">
         <div className="flex flex-col gap-2 lg:col-span-3">

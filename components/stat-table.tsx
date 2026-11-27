@@ -1,13 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { ChessKnight } from "@/components/chess-knight";
 import { cubicBezier, motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 
 export type Stat = { title: string; value: string; sub?: string; extra?: string; caption?: string };
 
 const easeOut = cubicBezier(0.16, 1, 0.3, 1);
-const NAVY = "#08335d";
-const GOLD = "#f7b538";
+const NAVY = "#3b1f8e";
+const GOLD = "#f2b705";
 
 // Resting spots for the eight small cards, in landing order (right side first,
 // working left), sampled from the reference: centre x %, centre y %, final tilt,
@@ -179,7 +180,7 @@ function Dropped({
 function Card({ stat, big = false }: { stat: Stat; big?: boolean }) {
   const line = big ? GOLD : NAVY;
   return (
-    <div className="relative aspect-[277/349] h-full w-full bg-navy text-center text-[#08335d] shadow-[0_20px_40px_-24px_rgba(8,51,93,0.55)] [container-type:size]">
+    <div className="relative aspect-[277/349] h-full w-full bg-navy text-center text-[#3b1f8e] shadow-[0_20px_40px_-24px_rgba(30,17,70,0.55)] [container-type:size]">
       <span aria-hidden className="pointer-events-none absolute inset-[3.5cqh] border" style={{ borderColor: line }} />
       <span
         aria-hidden
@@ -191,12 +192,12 @@ function Card({ stat, big = false }: { stat: Stat; big?: boolean }) {
         <p className="m-0 text-[max(12px,3.5cqh)] leading-tight tracking-[-0.01em]">{stat.title}</p>
         <span aria-hidden className="flex w-[34cqw] items-center gap-[2cqw]">
           <span className="h-px flex-1 bg-current opacity-40" />
-          <span className="size-[1.6cqh] rotate-45" style={{ background: GOLD }} />
+          <span style={{ color: GOLD }} className="flex"><ChessKnight className="text-[4.2cqh]" /></span>
           <span className="h-px flex-1 bg-current opacity-40" />
         </span>
         <p className="caps m-0 whitespace-nowrap text-[12.7cqh] leading-[0.9]">{stat.value}</p>
-        {stat.sub && <p className="caps m-0 text-[max(13px,5.5cqh)] leading-[0.95]">{stat.sub}</p>}
-        {stat.extra && <p className="caps m-0 text-[5.5cqh] leading-[0.95] text-[#f7b538]">{stat.extra}</p>}
+        {stat.sub && <p className="m-0 text-[max(13px,4.2cqh)] leading-snug">{stat.sub}</p>}
+        {stat.extra && <p className="m-0 text-[max(12px,3.8cqh)] leading-snug text-[#8a6500]">{stat.extra}</p>}
         {stat.caption && <p className="m-0 text-[max(12px,2.9cqh)] leading-snug opacity-70">{stat.caption}</p>}
       </div>
     </div>

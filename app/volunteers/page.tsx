@@ -4,7 +4,8 @@ import { ChallengeGrid, PrizePanel } from "@/components/challenges";
 import { FactLedger } from "@/components/official-run";
 import { CountLedger, PageHeading } from "@/components/page-heading";
 import { RegisterForm } from "@/components/register-form";
-import { challengeHref, challengeSteps, challenges, schoolRewards, schoolSteps } from "@/lib/content";
+import { ButtonLink } from "@/components/button-link";
+import { challengeHref, challengeSteps, challenges } from "@/lib/content";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/volunteers" },
@@ -38,7 +39,7 @@ export default function VolunteersPage() {
                   label: c.name.replace(" Challenge", ""),
                   value: c.banded ? "By headcount" : "One winner",
                 })),
-                { label: "Schools and colleges", value: "Register below" },
+                { label: "Schools and colleges", value: "See their page" },
               ]}
             />
           }
@@ -110,63 +111,22 @@ export default function VolunteersPage() {
         </FormBand>
       </section>
 
-      <section id="schools" aria-labelledby="schools-title" className="theme-dark scroll-mt-24 px-[max(20px,2.78vw)] py-[max(72px,7vw)]">
-        <div className="grid gap-x-6 gap-y-6 lg:grid-cols-12">
-          <p className="m-0 text-sm text-ink/70 lg:col-span-3">Educational Institutions Programme</p>
-          <div className="flex flex-col gap-5 lg:col-span-8">
-            <h2 id="schools-title" className="display m-0 text-[clamp(40px,3.99vw,76px)] leading-none tracking-[-0.02em]">
+      <section id="schools" aria-labelledby="schools-title" className="scroll-mt-24 px-[max(20px,2.78vw)] pb-[max(96px,8.33vw)] pt-8">
+        <div className="grid items-end gap-x-6 gap-y-8 border-y border-ink py-14 lg:grid-cols-12">
+          <div className="flex flex-col gap-3 lg:col-span-8">
+            <p className="m-0 text-sm text-ink/60">Stallion for Schools &amp; Colleges</p>
+            <h2 id="schools-title" className="display m-0 text-[clamp(32px,3.15vw,60px)] leading-[1.05] tracking-[-0.02em]">
               Bring Stallion to your campus.
             </h2>
-            <p className="m-0 max-w-3xl text-lg leading-[1.4] text-ink/75">
-              A trainer visits your school or college to talk about the marathon, fitness and running as a habit.
-              Students and teachers both come away with something.
+            <p className="m-0 max-w-2xl text-lg leading-[1.35] text-ink/70">
+              Animal care and wildlife workshops at your school or college, led by partner NGOs, with certificates and quiz
+              prizes. Everything about it, and its registration form, is on its own page.
             </p>
           </div>
+          <div className="lg:col-span-3 lg:col-start-10 lg:justify-self-end">
+            <ButtonLink href="/schools">Schools &amp; Colleges</ButtonLink>
+          </div>
         </div>
-
-        <div className="mt-14 grid gap-px bg-[#f7b538]/45 p-px sm:grid-cols-2 lg:grid-cols-6">
-          {schoolRewards.map((r, i) => (
-            <div
-              key={r.title}
-              className={`flex min-h-[clamp(190px,15vw,260px)] flex-col justify-between gap-8 bg-[#08335d] p-[clamp(20px,1.9vw,34px)] ${
-                i < 3 ? "lg:col-span-2" : "lg:col-span-3"
-              } ${i === schoolRewards.length - 1 ? "sm:col-span-2" : ""}`}
-            >
-              <h3 className="display m-0 text-[clamp(28px,2.4vw,46px)] leading-[1.05] tracking-[-0.015em] text-[#f7b538]">{r.title}</h3>
-              <p className="m-0 max-w-md text-base leading-[1.4] text-ink/80">{r.body}</p>
-            </div>
-          ))}
-        </div>
-        <p className="m-0 mt-6 max-w-3xl text-base leading-[1.4] text-ink/70">
-          The session goes live on Instagram and YouTube, so teachers brief students on conduct beforehand.
-        </p>
-      </section>
-
-      <section aria-label="How the programme works" className="px-[max(20px,2.78vw)] pb-16 pt-[max(72px,6vw)]">
-        <FactLedger
-          title="How it works"
-          aside={{
-            count: String(schoolSteps.length),
-            caption: "Steps",
-            link: { label: "Register your institution", href: "#register-school" },
-          }}
-          rows={schoolSteps}
-        />
-      </section>
-
-      <section
-        id="register-school"
-        aria-labelledby="school-form-title"
-        className="scroll-mt-24 px-[max(20px,2.78vw)] pb-[max(96px,8.33vw)] pt-8"
-      >
-        <FormBand
-          id="school-form-title"
-          eyebrow="Educational Institutions Programme"
-          title="Register your school or college."
-          body="For principals, management and teachers. We confirm the visit by call and email."
-        >
-          <RegisterForm kind="school" />
-        </FormBand>
       </section>
     </div>
   );

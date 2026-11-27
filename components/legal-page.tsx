@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CountLedger, PageHeading } from "@/components/page-heading";
 import { Roll } from "@/components/roll";
-import { legalLinks } from "@/lib/content";
+import { legalLinks, site } from "@/lib/content";
 
 export type LegalSection = { heading: string; body: string[] };
 
@@ -49,6 +49,8 @@ export function LegalPage({
         <div className="grid gap-y-6 border-y border-ink py-14 lg:grid-cols-12 lg:gap-x-6">
           <p className="m-0 text-sm text-ink/60 lg:col-span-3">
             {eyebrow} · Last updated {updated}
+            <br />
+            {site.legalName}
           </p>
           <p className="display m-0 text-[clamp(24px,1.89vw,36px)] leading-[1.25] lg:col-span-6">{intro}</p>
         </div>

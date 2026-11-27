@@ -7,7 +7,7 @@
  * them in as they are confirmed. Open items from the document:
  *  - Official race: distances, prices, early-bird prices, inclusions, premium
  *    ticket details, start time, written venue approval.
- *  - Virtual run: close date, proof-of-run method, how winners are chosen,
+ *  - Virtual run: proof-of-run method, how winners are chosen,
  *    prize details, which days count for the Two-Day Stallion, delivery,
  *    GST/fees.
  *  - Workshops: dates, venue, speakers, seat booking.
@@ -24,6 +24,8 @@ export const site = {
   tagline: "How's your horsepower?",
   pitch: "Run your distance, your way, then take the start line behind a stallion.",
   organiser: "Stallion Marathon Organising Team",
+  // The company that takes payments (redesign brief, 25 November 2026).
+  legalName: "Lemerian Workin Pvt. Ltd.",
   phone: "7075701406",
   phoneDisplay: "7075701406",
   // Not yet supplied: a dedicated Stallion Marathon address. Hidden until set.
@@ -39,6 +41,7 @@ export const pages = [
   "/virtual-run",
   "/official-run",
   "/workshops",
+  "/schools",
   "/volunteers",
   "/giving-back",
   "/book",
@@ -83,7 +86,7 @@ export const bookHref = "/book";
 
 export const dates = {
   virtualStart: "2027-01-19T00:00:00+05:30",
-  virtualClose: null as string | null, // [close date]
+  virtualClose: "2027-01-26T23:59:59+05:30" as string | null, // confirmed 27 November 2026: 19 to 26 January 2027
   winners: "2027-01-26T00:00:00+05:30",
   // Targets midnight until the flag-off time is announced.
   raceDay: "2027-03-14T00:00:00+05:30",
@@ -125,6 +128,7 @@ export const nav = [
   { href: "/virtual-run", label: "Virtual Run" },
   { href: "/official-run", label: "Official Run" },
   { href: "/workshops", label: "Workshops" },
+  { href: "/schools", label: "Schools & Colleges" },
   { href: "/volunteers", label: "Volunteers" },
   { href: "/giving-back", label: "Giving Back" },
   { href: "/faq", label: "FAQ" },
@@ -144,11 +148,18 @@ export const legalLinks = [
   { href: "/privacy", label: "Privacy Policy" },
 ];
 
+/** Redesign brief, scene 3: for the ones who run on deadlines. */
+export const deadlineLines = [
+  "You answer at midnight. You reply before the alarm.",
+  "You’ve hit every target this year except one: you.",
+  "Stallion is one Sunday that belongs to your body, not your calendar.",
+];
+
 export const pillars = [
-  { title: "Run your way", body: "Pick 5 km or go the full 42 km. Run it where you like." },
-  { title: "More than a race", body: "Free workshops, from how to run to how to handle bullies." },
-  { title: "Earn your place", body: "Win the virtual run and get a premium ticket to race day in any category." },
-  { title: "Run for something", body: "A share of our profits goes to NGOs doing good work." },
+  { title: "Run on your schedule", body: "The virtual run fits around meetings, anywhere in India." },
+  { title: "Learn, then recover", body: "14 free workshops, before and after." },
+  { title: "Earn your place", body: "The fastest virtual runners win a premium Race Day place." },
+  { title: "Run for something", body: "Profits support animal care, children’s schooling and the NGOs who do this work." },
 ];
 
 /**
@@ -170,18 +181,18 @@ export type Tier = {
 };
 
 export const tiers: Tier[] = [
-  { name: "Trot", distance: "5 km", km: 5, price: 599, bestFor: "First-timers, families, easy starts" },
-  { name: "Canter", distance: "8 km", km: 8, price: 699, bestFor: "Stepping up from 5 km" },
-  { name: "Gallop", distance: "10 km", km: 10, price: 799, bestFor: "The classic benchmark distance" },
-  { name: "Charge", distance: "15 km", km: 15, price: 899, bestFor: "Building toward a half marathon" },
-  { name: "Half Stallion", distance: "21 km", km: 21, price: 1199, bestFor: "Half marathon runners" },
-  { name: "Full Stallion", distance: "42 km", km: 42, price: 1299, bestFor: "Full marathon runners" },
+  { name: "Trot", distance: "5 km", km: 5, price: 599, bestFor: "Your first step back to yourself." },
+  { name: "Canter", distance: "8 km", km: 8, price: 699, bestFor: "A little further than last time." },
+  { name: "Gallop", distance: "10 km", km: 10, price: 799, bestFor: "The classic benchmark, the one you’ll talk about." },
+  { name: "Charge", distance: "15 km", km: 15, price: 899, bestFor: "For when 10 stopped being enough." },
+  { name: "Half Stallion", distance: "21 km", km: 21, price: 1199, bestFor: "Half the distance, all the pride." },
+  { name: "Full Stallion", distance: "42 km", km: 42, price: 1299, bestFor: "The whole race. The whole you." },
   {
     name: "Two-Day Stallion",
     distance: "25 km a day for two days (50 km total)",
     km: 50,
     price: 1599,
-    bestFor: "Passionate endurance runners",
+    bestFor: "25 km today, 25 km tomorrow. Stamina, proven.",
   },
 ];
 
@@ -218,7 +229,7 @@ export const winnersGet = [
 
 export const virtualSteps = [
   { title: "Book", body: "Book your distance on this website or on BookMyShow." },
-  { title: "Run", body: "Run from 19 January 2027, anywhere you like. The closing date will be announced." },
+  { title: "Run", body: "Run between 19 and 26 January 2027, anywhere you like." },
   { title: "Submit", body: "Submit your run. How to submit will be announced before the start." },
   { title: "Results", body: "Watch for results on Republic Day, 26 January 2027." },
   { title: "Receive", body: "Receive your medal and goodie bag at home. Winners also receive their trophy and prize." },
@@ -238,10 +249,167 @@ export const raceFacts = [
   { label: "Venue", value: venue.address },
   { label: "Start time and flag-off", value: TBA },
   { label: "Expected participation", value: "Up to 30,000 runners" },
-  { label: "Distances and prices", value: TBA },
+  { label: "Distances and prices", value: "1–3 km Kids (from ₹455) · 5–21 km (from ₹799) · VIP up to ₹50,000" },
   { label: "Bookings", value: "Official website and BookMyShow" },
   { label: "Organiser", value: site.organiser },
 ];
+
+/* ---------- Official Run Packages (Chapter I, Hyderabad) ---------- */
+
+export type StudPackage = {
+  distance: string;
+  km: number;
+  price: number;
+};
+
+export const studPackages: StudPackage[] = [
+  { distance: "1 km", km: 1, price: 455 },
+  { distance: "2 km", km: 2, price: 599 },
+  { distance: "3 km", km: 3, price: 649 },
+];
+
+export const studInclusions: { label: string; value: string | boolean }[] = [
+  { label: "Breakfast", value: true },
+  { label: "T-shirt", value: true },
+  { label: "BIB ticket", value: true },
+  { label: "Refreshments", value: true },
+  { label: "Run type", value: "Fun run" },
+  { label: "Certificate", value: "Certificate (no medal)" },
+  { label: "Finisher medal", value: false },
+];
+
+export type OfficialDistancePrice = {
+  distance: string;
+  km: number;
+  basic: number;
+  standard: number;
+  premium: number;
+};
+
+export const officialDistancePrices: OfficialDistancePrice[] = [
+  { distance: "5 km", km: 5, basic: 799, standard: 1299, premium: 1499 },
+  { distance: "8 km", km: 8, basic: 999, standard: 1499, premium: 1899 },
+  { distance: "10 km", km: 10, basic: 1299, standard: 1899, premium: 2299 },
+  { distance: "12 km", km: 12, basic: 1499, standard: 2199, premium: 2499 },
+  { distance: "15 km", km: 15, basic: 1699, standard: 2399, premium: 2699 },
+  { distance: "21 km", km: 21, basic: 1899, standard: 2599, premium: 2999 },
+];
+
+export type TierInclusionRow = {
+  label: string;
+  basic: string | boolean;
+  standard: string | boolean;
+  premium: string | boolean;
+};
+
+export const officialTierInclusions: TierInclusionRow[] = [
+  { label: "Breakfast", basic: true, standard: true, premium: "Buffet breakfast" },
+  { label: "T-shirt", basic: true, standard: true, premium: true },
+  { label: "BIB ticket", basic: true, standard: true, premium: true },
+  { label: "Refreshments", basic: true, standard: true, premium: true },
+  { label: "Run type", basic: "Fun run (untimed)", standard: "Timed", premium: "Timed" },
+  { label: "Certificate", basic: "Participation e-certificate", standard: "Finisher certificate", premium: "Finisher certificate" },
+  { label: "Finisher medal", basic: false, standard: true, premium: true },
+  { label: "Health check", basic: false, standard: "Vitals / BP and BMI", premium: "General health check-up: diabetes / blood sugar" },
+  { label: "Goodie bag", basic: false, standard: true, premium: true },
+  { label: "Workshop", basic: false, standard: true, premium: "Any one" },
+  { label: "BIB delivery at home", basic: false, standard: false, premium: true },
+  { label: "Weekly membership", basic: false, standard: false, premium: true },
+  { label: "Special edition key chain", basic: false, standard: true, premium: true },
+  { label: "Special edition wrist band", basic: false, standard: true, premium: true },
+  { label: "Metal-engraved water bottle", basic: false, standard: false, premium: true },
+];
+
+export type SignaturePackage = {
+  id: string;
+  name: string;
+  price: number;
+  badge: string;
+  subtitle: string;
+  featured?: boolean;
+  groups: { title: string; items: string[] }[];
+};
+
+export const signaturePackages: SignaturePackage[] = [
+  {
+    id: "clydesdale",
+    name: "Clydesdale",
+    price: 9999,
+    badge: "All-in race package",
+    subtitle: "Any race category with timed chip, home BIB delivery, pick-up & drop, and 127-test health checkup.",
+    groups: [
+      {
+        title: "Inclusions",
+        items: ["Any race category", "Timed chip", "BIB ticket", "Refreshments", "Breakfast buffet", "Finisher medal", "Finisher certificate"],
+      },
+      {
+        title: "Event gear",
+        items: ["Event T-shirt", "Laser-engraved key & bottle", "Special edition", "Surprise goodie bag"],
+      },
+      {
+        title: "Convenience",
+        items: ["BIB delivered at home", "Pick-up and drop service", "Professional photos"],
+      },
+      {
+        title: "Health & community",
+        items: ["127 tests health checkup", "Weekly membership", "Any 2 workshops"],
+      },
+    ],
+  },
+  {
+    id: "mustang",
+    name: "Mustang",
+    price: 25000,
+    badge: "Elite experience",
+    subtitle: "Separate start, special-edition kit, blood test at home, monthly membership, and all workshops.",
+    groups: [
+      {
+        title: "Inclusions",
+        items: ["Any race category", "Separate start", "Timed chip", "BIB ticket", "Refreshments", "Breakfast buffet", "Finisher medal", "Finisher certificate"],
+      },
+      {
+        title: "Gear",
+        items: ["Special edition T-shirt / shorts", "Laser-engraved key / bottle", "Surprise goodie bag"],
+      },
+      {
+        title: "Convenience",
+        items: ["BIB delivered at home", "Pick-up and drop", "Professional photos"],
+      },
+      {
+        title: "Health & community",
+        items: ["Blood test at home", "Monthly membership", "All workshops"],
+      },
+    ],
+  },
+  {
+    id: "black-stallion-vip",
+    name: "Black Stallion VIP",
+    price: 50000,
+    badge: "Limited 20–30 spots",
+    subtitle: "Private lounge, flag-off host invitation, personal assistant, Founder / HNI networking, and custom merch.",
+    featured: true,
+    groups: [
+      {
+        title: "VIP experience",
+        items: ["Private lounge access", "Flag-off host invitation", "Separate start", "Personal assistant", "Wake-up call"],
+      },
+      {
+        title: "Network & impact",
+        items: ["Founder / HNI networking", "Think Tank community", "NGO access"],
+      },
+      {
+        title: "Gear",
+        items: ["Custom race merch"],
+      },
+      {
+        title: "Convenience & health",
+        items: ["Pick-up & drop", "Full blood checkup at home", "Lemerian monthly pass"],
+      },
+    ],
+  },
+];
+
+export const officialWorkshopNote = "Workshops are held separately from race day and can be booked as an add-on at checkout.";
 
 export type Workshop = {
   id: string;
@@ -288,25 +456,13 @@ export const challengeSteps = [
   "Winners are announced at a date to be confirmed.",
 ];
 
-/** Educational institutions programme, from Maya's handwritten notes (24 November 2026). */
-export const schoolSteps = [
-  { label: "Register", value: "Register your school or college below. We confirm the visit by call and email." },
-  { label: "Visit", value: "A trainer visits your campus, and two flex boards stay up for one week." },
-  {
-    label: "Talk",
-    value: "The marathon and its workshops, why it is important to be physically fit, and why running is a habit worth taking up.",
-    note: "Students are also encouraged to get their parents running.",
-  },
-  { label: "Test", value: "A short revision test on what was covered." },
-];
-
-export const schoolRewards = [
-  { title: "Every student", body: "Everyone who attends gets a certificate." },
-  { title: "Top 10", body: "The top 10 in the revision test get a small gift, such as a badge." },
-  { title: "Top performer", body: "Complimentary access to any workshop they like." },
-  { title: "Lucky draw", body: "Any interested student gets a chance to volunteer at the marathon." },
-  { title: "Teachers", body: "Teachers who conduct the programme get a certificate and the option to volunteer for the marathon." },
-];
+/** Redesign brief, scene 8: the four causes. A partner is shown once it is confirmed. */
+export const causes = [
+  { id: "animal-care", title: "Animal care", body: "Food, medicine and rescue for animals who can’t ask for help.", partner: "Animal Warriors Conservation Society" },
+  { id: "schooling", title: "Children’s schooling", body: "A school year, a uniform, a reason to keep going.", partner: null },
+  { id: "nature", title: "Nature", body: "Teaching children to love the wild while it’s still here.", partner: "Kacche Raaste Nature Awareness Center" },
+  { id: "cemetery", title: "The animal cemetery", body: "A resting place with dignity for the companions who gave us everything.", partner: null },
+] as { id: string; title: string; body: string; partner: string | null }[];
 
 export const deraPillars = [
   { letter: "D", title: "Delicious", body: "A thank-you meal for jawans (army, navy, air force) and police personnel." },
@@ -338,7 +494,7 @@ export const faqs: FaqGroup[] = [
   {
     group: "Virtual Run",
     items: [
-      { q: "When does the virtual run start and end?", a: "It starts on 19 January 2027, one week before Republic Day. The submission closing date will be announced. Winners are announced on 26 January 2027." },
+      { q: "When does the virtual run start and end?", a: "It runs from 19 to 26 January 2027, ending on Republic Day. Winners are announced on 26 January 2027." },
       { q: "Where do I run the virtual run?", a: "Anywhere you like." },
       { q: "What distances can I choose?", a: "5 km, 8 km, 10 km, 15 km, 21 km and 42 km, or the Two-Day Stallion: 25 km a day for two days, 50 km in total." },
       { q: "How much does it cost?", a: "5 km ₹599, 8 km ₹699, 10 km ₹799, 15 km ₹899, 21 km ₹1,199, 42 km ₹1,299, Two-Day Stallion ₹1,599." },
@@ -351,6 +507,14 @@ export const faqs: FaqGroup[] = [
     items: [
       { q: "Where and when is the official race?", a: "Sunday 14 March 2027 at GMC Balayogi Gachibowli Stadium, Hyderabad. Start time to be announced." },
       { q: "How many runners are expected?", a: "Up to 30,000." },
+      {
+        q: "What distances and packages are available?",
+        a: "Stud kids fun runs (under 12) for 1 km (₹455), 2 km (₹599) and 3 km (₹649); 5, 8, 10, 12, 15 and 21 km in Basic, Standard and Premium tiers (₹799 to ₹2,999); plus Clydesdale (₹9,999), Mustang (₹25,000) and Black Stallion VIP (₹50,000, limited to 20–30 spots).",
+      },
+      {
+        q: "Are workshops held on race day?",
+        a: "No. Workshops are held separately from race day and can be booked as an add-on at checkout (or included in eligible packages).",
+      },
     ],
   },
   {
@@ -358,7 +522,7 @@ export const faqs: FaqGroup[] = [
     items: [
       { q: "Are the workshops free?", a: "Yes, for virtual run participants who can attend in Hyderabad." },
       { q: "Can my company take part?", a: "Yes, through the Sector Challenges for Corporate, Hospital, Pharmacy and Bank organisations. HR leads register their organisation." },
-      { q: "Can my school or college take part?", a: "Yes, through the Educational Institutions Programme. Register on the Volunteers page." },
+      { q: "Can my school or college take part?", a: "Yes. Stallion for Schools & Colleges brings an animal care and wildlife workshop to your campus. Register on the Schools & Colleges page." },
       { q: "Can I volunteer?", a: "Yes. Fill in the form on the Volunteers page." },
     ],
   },

@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { jsonLd, officialRunEvent } from "@/lib/structured-data";
 import Link from "next/link";
 import { FeaturedCardView } from "@/components/featured-chapters";
-import { FactLedger, RacePanel } from "@/components/official-run";
+import { OfficialPackages, RacePanel } from "@/components/official-run";
 import { CountLedger, PageHeading } from "@/components/page-heading";
 import { Roll } from "@/components/roll";
 import { StartLineArt } from "@/components/start-line-art";
-import { bookHref, challenges, TBA, venue, workshopCount } from "@/lib/content";
+import { challenges, TBA, venue, workshopCount } from "@/lib/content";
+import { ChessKnight } from "@/components/chess-knight";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/official-run" },
@@ -65,7 +66,7 @@ export default function OfficialRunPage() {
           <div className="flex flex-col gap-6 lg:col-span-5 lg:col-start-8">
             <span aria-hidden className="flex w-[clamp(140px,15.5vw,220px)] items-center gap-3">
               <span className="h-px flex-1 bg-gold/40" />
-              <span className="size-2.5 rotate-45 bg-gold" />
+              <ChessKnight className="text-[22px] text-gold" />
               <span className="h-px flex-1 bg-gold/40" />
             </span>
             <h2 id="start-title" className="display m-0 text-[clamp(40px,3.99vw,76px)] leading-none tracking-[-0.02em]">
@@ -79,17 +80,8 @@ export default function OfficialRunPage() {
         </div>
       </section>
 
-      <section aria-label="Race categories" className="px-[max(20px,2.78vw)] py-16">
-        <FactLedger
-          title="The race card"
-          aside={{ count: "Soon", caption: "Categories announced", link: { label: "Book race day", href: bookHref } }}
-          rows={[
-            { label: "Categories", value: TBA },
-            { label: "Prices", value: TBA },
-            { label: "Early-bird deadlines", value: TBA },
-            { label: "Bookings", value: "Official website and BookMyShow" },
-          ]}
-        />
+      <section id="packages" aria-label="Race categories and packages" className="scroll-mt-32 px-[max(20px,2.78vw)] py-16">
+        <OfficialPackages />
       </section>
 
       {/* Premium ticket */}
@@ -101,8 +93,9 @@ export default function OfficialRunPage() {
               The premium ticket
             </h2>
             <p className="m-0 text-[clamp(18px,1.26vw,24px)] leading-[1.35] text-ink/80">
-              Virtual run winners receive a premium ticket to this race and can choose any race category. Full details of
-              what the premium ticket includes will be announced.
+              Virtual run winners receive a Premium package ticket to this race and can choose any race category—including
+              timed chip, buffet breakfast, home BIB delivery, general health check-up, metal-engraved water bottle, and
+              any one workshop.
             </p>
           </div>
           <div className="self-end lg:col-span-3 lg:justify-self-end">
@@ -121,7 +114,7 @@ export default function OfficialRunPage() {
         <h2 id="more-title" className="display m-0 mb-10 border-b border-ink pb-10 text-[clamp(40px,3.99vw,76px)] leading-none tracking-[-0.02em]">
           More than a morning
         </h2>
-        <div className="grid gap-px bg-[#08335d] p-px lg:grid-cols-3">
+        <div className="grid gap-px bg-[#3b1f8e] p-px lg:grid-cols-3">
           {[
             { label: "Free sessions", mark: String(workshopCount.total), title: "Workshops", meta: ["Before and after the run"], href: "/workshops" },
             {

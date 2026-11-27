@@ -6,7 +6,7 @@ import { NgoPartners } from "@/components/ngo-partners";
 import { CountLedger, PageHeading } from "@/components/page-heading";
 import { Roll } from "@/components/roll";
 import { VetScene } from "@/components/vet-scene";
-import { bookHref, deraPillars } from "@/lib/content";
+import { bookHref, causes } from "@/lib/content";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/giving-back" },
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: "A share of Stallion Marathon profits goes to NGOs working on the four pillars of D.E.R.A. Every run counts twice.",
 };
 
-const PAINT = ["#f7b538", "#c98f2e", "#145a86", "#08335d"];
+const PAINT = ["#f2b705", "#c99400", "#ab71e3", "#3b1f8e"];
 
 /**
  * Giving Back, in the reference's inner-page layout: heading with the four
@@ -27,12 +27,12 @@ export default function GivingBackPage() {
       <section className="px-[max(20px,2.78vw)] pb-16 pt-[max(120px,9.44vw)]">
         <PageHeading
           title="Giving Back"
-          statement={["Every run counts", "twice."]}
+          statement={["Your feet carry you.", "Your entry carries them."]}
           aside={
             <CountLedger
-              count={String(deraPillars.length)}
+              count={String(causes.length)}
               caption="causes our giving supports"
-              rows={deraPillars.map((p) => ({ label: p.title, value: p.letter }))}
+              rows={causes.map((c, i) => ({ label: c.title, value: String(i + 1).padStart(2, "0") }))}
             />
           }
         />
@@ -46,8 +46,8 @@ export default function GivingBackPage() {
           <div className="flex flex-col gap-5 lg:col-span-5 lg:col-start-8">
             <p className="m-0 text-sm text-ink/70">Run for something</p>
             <p className="display m-0 text-[clamp(26px,2.31vw,44px)] leading-[1.2] tracking-[-0.01em]">
-              When you run Stallion Marathon, you also give. A share of our profits goes to NGOs whose work matches four
-              causes we care about.
+              Stallion&rsquo;s profits go to animal care, children&rsquo;s schooling and the NGOs who do this work every
+              day. Every booking, every kilometre.
             </p>
           </div>
         </div>
@@ -59,7 +59,7 @@ export default function GivingBackPage() {
       >
         <div className="mb-12 grid gap-y-5 lg:grid-cols-12 lg:gap-x-6">
           <h2 id="care-title" className="display m-0 text-[clamp(36px,3.36vw,64px)] leading-[1.05] tracking-[-0.02em] lg:col-span-7">
-            Kind hands for the animals on our streets.
+            Kind hands for the animals on our streets and in the wild.
           </h2>
           <a
             href="#animal-care"
@@ -75,24 +75,22 @@ export default function GivingBackPage() {
         <NgoPartners className="mt-[max(48px,4.5vw)]" />
       </section>
 
-      <section aria-labelledby="dera-title" className="px-[max(20px,2.78vw)] py-16">
+      <section id="causes" aria-labelledby="dera-title" className="scroll-mt-24 px-[max(20px,2.78vw)] py-16">
         <div className="mb-10 grid gap-y-4 border-b border-ink pb-10 lg:grid-cols-12 lg:gap-x-6">
           <h2 id="dera-title" className="display m-0 text-[clamp(40px,3.99vw,76px)] leading-none tracking-[-0.02em] lg:col-span-7">
-            D<span className="text-gold">.</span>E<span className="text-gold">.</span>R<span className="text-gold">.</span>A
-            <span className="text-gold">.</span>
-            <span className="sr-only"> The four pillars</span>
+            Our causes
           </h2>
           <p className="m-0 self-end text-base leading-[1.3] text-ink/60 lg:col-span-5 lg:col-start-8 lg:text-right">
-            The four pillars our giving supports.
+            Where your entry goes, and who does the work.
           </p>
         </div>
 
-        <ul className="m-0 grid list-none gap-px bg-[#08335d] p-px sm:grid-cols-2 lg:grid-cols-4">
-          {deraPillars.map((p, i) => (
+        <ul className="m-0 grid list-none gap-px bg-[#3b1f8e] p-px sm:grid-cols-2 lg:grid-cols-4">
+          {causes.map((p, i) => (
             <li
-              key={p.letter}
-              id={p.letter === "A" ? "animal-care" : undefined}
-              className="group relative isolate flex scroll-mt-24 min-h-[clamp(420px,30vw,560px)] flex-col overflow-hidden bg-navy p-6 text-ink transition-colors duration-[250ms] [transition-delay:120ms] [container-type:inline-size] hover:text-[#f7b538]"
+              key={p.id}
+              id={p.id}
+              className="group relative isolate flex scroll-mt-24 min-h-[clamp(420px,30vw,560px)] flex-col overflow-hidden bg-navy p-6 text-ink transition-colors duration-[250ms] [transition-delay:120ms] [container-type:inline-size] hover:text-[#f2b705]"
             >
               {PAINT.map((color, j) => (
                 <span
@@ -102,13 +100,14 @@ export default function GivingBackPage() {
                   style={{ background: color, "--in": `${j * 70}ms`, "--out": `${(3 - j) * 70}ms` } as CSSProperties}
                 />
               ))}
-              <span className="label opacity-60">Pillar {String(i + 1).padStart(2, "0")}</span>
-              <span aria-hidden className="caps grid flex-1 place-items-center text-[62cqw] leading-none">
-                {p.letter}
+              <span className="label opacity-60">Cause {String(i + 1).padStart(2, "0")}</span>
+              <span aria-hidden className="caps grid flex-1 place-items-center text-[44cqw] leading-none">
+                {String(i + 1).padStart(2, "0")}
               </span>
               <h3 className="display m-0 text-[clamp(26px,2.1vw,40px)] leading-[1.05] tracking-[-0.015em]">{p.title}</h3>
               <span aria-hidden className="mt-4 block h-px w-10 bg-current opacity-60" />
               <p className="m-0 mt-4 text-sm leading-[1.45] opacity-75">{p.body}</p>
+              {p.partner && <p className="m-0 mt-3 text-sm leading-[1.35]">With {p.partner}</p>}
             </li>
           ))}
         </ul>
@@ -118,7 +117,7 @@ export default function GivingBackPage() {
         <div className="grid gap-y-8 border-y border-ink py-14 lg:grid-cols-12 lg:gap-x-6">
           <p className="m-0 text-sm text-ink/60 lg:col-span-3">Every registration counts</p>
           <p className="display m-0 text-[clamp(24px,1.89vw,36px)] leading-[1.25] lg:col-span-6">
-            Every registration supports this work. We&rsquo;ll name our partner NGOs and share an update after race day.
+            Every registration supports this work. We&rsquo;ll share an update after race day.
           </p>
           <div className="self-end lg:col-span-3 lg:justify-self-end">
             <Link href={bookHref} className="group inline-flex items-baseline gap-2 text-xl leading-[1.2] tracking-[-0.01em]">

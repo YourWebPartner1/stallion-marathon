@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { FitText } from "@/components/fit-text";
 import { Roll } from "@/components/roll";
+import { ChessKnight } from "@/components/chess-knight";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
@@ -21,13 +22,15 @@ export type ChapterCard = {
   label: string;
   mark: string;
   title: string;
+  /** One line under the title. */
+  lead?: string;
   rows: { k: string; v: string; pending?: boolean }[];
   cta: string;
   href: string;
 };
 
 // Curtain colours, the same four as the menu: gold, ochre, teal, then navy on top.
-const PAINT = ["#f7b538", "#c98f2e", "#145a86", "#08335d"];
+const PAINT = ["#f2b705", "#c99400", "#ab71e3", "#3b1f8e"];
 
 /**
  * Featured section in the reference layout: an edge-to-edge title, a 12-column
@@ -42,6 +45,7 @@ export function FeaturedChapters({
   action,
   cards = [],
   chapters,
+  footnote,
 }: {
   title: string;
   statement: string[];
@@ -51,6 +55,8 @@ export function FeaturedChapters({
   cards?: FeaturedCard[];
   /** Large chapter cards, shown two across instead of the three-up grid. */
   chapters?: ChapterCard[];
+  /** A line under the cards. */
+  footnote?: string;
 }) {
   return (
     <section
@@ -66,7 +72,7 @@ export function FeaturedChapters({
           {/* Ornament: rule, diamond, rule */}
           <div aria-hidden className="flex items-center gap-4 self-start pt-[0.9em] lg:col-span-2">
             <span className="h-px flex-1 bg-gold/40" />
-            <span className="size-2.5 rotate-45 bg-gold" />
+            <ChessKnight className="text-[22px] text-gold" />
             <span className="h-px flex-1 bg-gold/40" />
           </div>
 
@@ -117,11 +123,11 @@ export function FeaturedChapters({
 
       {/* The grid fades in as one piece so the navy rules never show through moving cards. */}
       <motion.div
-        className={`grid gap-px bg-[#08335d] p-px ${chapters ? "lg:grid-cols-2" : "lg:grid-cols-3"}`}
+        className={`grid gap-px bg-[#3b1f8e] p-px ${chapters ? "lg:grid-cols-2" : "lg:grid-cols-3"}`}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, amount: 0.15 }}
-        transition={{ duration: 1, ease }}
+        transition={{ duration: 0.55, ease }}
       >
         {chapters
           ? chapters.map((c) => (
@@ -135,6 +141,7 @@ export function FeaturedChapters({
               </article>
             ))}
       </motion.div>
+      {footnote && <p className="m-0 -mt-8 text-center text-lg text-ink/70">{footnote}</p>}
     </section>
   );
 }
@@ -143,7 +150,7 @@ export function FeaturedCardView({ card }: { card: FeaturedCard }) {
   return (
     <Link
       href={card.href}
-      className="group relative flex w-full flex-col justify-between overflow-hidden bg-navy p-6 text-ink [container-type:inline-size] focus-visible:outline-2 focus-visible:-outline-offset-[6px] focus-visible:outline-[#f7b538]"
+      className="group relative flex w-full flex-col justify-between overflow-hidden bg-navy p-6 text-ink [container-type:inline-size] focus-visible:outline-2 focus-visible:-outline-offset-[6px] focus-visible:outline-[#f2b705]"
     >
       {PAINT.map((color, i) => (
         <span
@@ -155,19 +162,19 @@ export function FeaturedCardView({ card }: { card: FeaturedCard }) {
       ))}
 
       {/* Picture area: square, a large numeral stands in until artwork exists. */}
-      <div className="relative grid aspect-square w-full place-items-center">
-        <span className="label absolute left-0 top-0 text-ink/60 transition-colors duration-500 group-hover:text-[#f7b538]">
+      <div className="relative grid aspect-[16/9] w-full place-items-center">
+        <span className="label absolute left-0 top-0 text-ink/60 transition-colors duration-500 group-hover:text-[#f2b705]">
           {card.label}
         </span>
         <span
           aria-hidden
-          className="caps text-[46cqw] leading-none text-ink transition-colors duration-500 group-hover:text-[#f7b538]"
+          className="caps text-[30cqw] leading-none text-ink transition-colors duration-500 group-hover:text-[#f2b705]"
         >
           {card.mark}
         </span>
       </div>
 
-      <div className="relative mt-6 flex flex-col gap-2 transition-colors duration-500 group-hover:text-[#f7b538]">
+      <div className="relative mt-6 flex flex-col gap-2 transition-colors duration-500 group-hover:text-[#f2b705]">
         <h3 className="display m-0 -my-[0.14em] overflow-hidden text-ellipsis whitespace-nowrap py-[0.14em] text-[clamp(20px,6.4cqw,52px)] leading-[1.05] tracking-[-0.015em]">
           {card.title}
         </h3>
@@ -188,7 +195,7 @@ export function ChapterCardView({ card }: { card: ChapterCard }) {
   return (
     <Link
       href={card.href}
-      className="group relative flex w-full flex-col overflow-hidden bg-navy p-[clamp(24px,2.5vw,48px)] text-ink transition-colors duration-500 hover:text-[#f7b538] focus-visible:outline-2 focus-visible:-outline-offset-[6px] focus-visible:outline-[#f7b538]"
+      className="group relative flex w-full flex-col overflow-hidden bg-navy p-[clamp(24px,2.5vw,48px)] text-ink transition-colors duration-500 hover:text-[#f2b705] focus-visible:outline-2 focus-visible:-outline-offset-[6px] focus-visible:outline-[#f2b705]"
     >
       {PAINT.map((color, i) => (
         <span
@@ -207,6 +214,7 @@ export function ChapterCardView({ card }: { card: ChapterCard }) {
       <h3 className="display relative m-0 mt-[clamp(24px,3vw,56px)] text-[clamp(32px,3.15vw,60px)] leading-[1.02] tracking-[-0.02em]">
         {card.title}
       </h3>
+      {card.lead && <p className="display relative m-0 mt-3 text-[clamp(20px,1.47vw,28px)] leading-[1.2] opacity-80">{card.lead}</p>}
       <dl className="relative m-0 mt-8 flex flex-1 flex-col border-t border-current/25">
         {card.rows.map((r) => (
           <div key={r.k} className="grid grid-cols-[minmax(96px,28%)_1fr] gap-4 border-b border-current/25 py-4">
@@ -215,7 +223,7 @@ export function ChapterCardView({ card }: { card: ChapterCard }) {
           </div>
         ))}
       </dl>
-      <span className="relative mt-8 flex items-center justify-between gap-4 bg-[#f7b538] px-6 py-4 text-lg tracking-[-0.01em] text-[#08335d]">
+      <span className="relative mt-8 flex items-center justify-between gap-4 bg-[#f2b705] px-6 py-4 text-lg tracking-[-0.01em] text-[#3b1f8e]">
         {card.cta}
         <span aria-hidden className="transition-transform duration-500 group-hover:translate-x-1.5">
           →

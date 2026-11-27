@@ -55,7 +55,7 @@ export default function ContactPage() {
         <h2 id="help-title" className="display m-0 mb-10 border-b border-ink pb-10 text-[clamp(40px,3.99vw,76px)] leading-none tracking-[-0.02em]">
           Find it faster
         </h2>
-        <div className="grid gap-px bg-[#08335d] p-px lg:grid-cols-3">
+        <div className="grid gap-px bg-[#3b1f8e] p-px lg:grid-cols-3">
           {[
             {
               label: "Questions answered",

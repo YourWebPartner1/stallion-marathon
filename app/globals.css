@@ -1,39 +1,39 @@
 @import "tailwindcss";
 
 /*
- * Two themes share one set of colour names. Dark is the default (navy #08335D
+ * Two themes share one set of colour names. Dark is the default (navy #3b1f8e
  * from the brief). Wrap a section in .theme-light to flip it to ivory paper;
  * every utility that uses these names follows automatically.
  */
 :root,
 .theme-dark {
-  --navy-950: #041d36;
-  --navy-900: #062b4f;
-  --navy: #08335d;
-  --navy-800: #0e3f6e;
-  --navy-700: #145a86;
-  --gold: #f7b538;
-  --gold-soft: #f6cd80;
-  --beige: #efe4cf;
-  --ink: #fdffff;
-  --muted: rgba(253, 255, 255, 0.64);
-  --line: rgba(247, 181, 56, 0.32);
+  --navy-950: #1e1146;
+  --navy-900: #2c1670;
+  --navy: #3b1f8e;
+  --navy-800: #4a2ba3;
+  --navy-700: #ab71e3;
+  --gold: #f2b705;
+  --gold-soft: #f7d35c;
+  --beige: #ebddfb;
+  --ink: #f8f3fe;
+  --muted: rgba(248, 243, 254, 0.68);
+  --line: rgba(242, 183, 5, 0.34);
   --paper: #fbf7ee;
-  --on-gold: #041d36;
+  --on-gold: #1e1146;
 }
 
 .theme-light {
-  --navy-900: #f3ecdd;
-  --navy: #fbf7ee;
-  --navy-800: #efe6d2;
-  --navy-700: #e6dac0;
-  --gold: #946414;
-  --gold-soft: #b07a1e;
-  --beige: #0e3f6e;
-  --ink: #08335d;
-  --muted: rgba(8, 51, 93, 0.7);
-  --line: rgba(8, 51, 93, 0.2);
-  --on-gold: #fbf7ee;
+  --navy-900: #efe5fc;
+  --navy: #f8f3fe;
+  --navy-800: #ebddfb;
+  --navy-700: #dfcdf7;
+  --gold: #8a6500;
+  --gold-soft: #a07800;
+  --beige: #4a2ba3;
+  --ink: #1e1146;
+  --muted: rgba(30, 17, 70, 0.72);
+  --line: rgba(30, 17, 70, 0.2);
+  --on-gold: #f8f3fe;
 }
 
 @layer base {
@@ -98,7 +98,7 @@ body {
   outline-offset: 3px;
 }
 
-/* Kept as a hook for texture; flat for now so the navy stays exactly #08335D. */
+/* Kept as a hook for texture; flat for now so the navy stays exactly #3b1f8e. */
 .grain {
   background-image: none;
 }
@@ -223,6 +223,9 @@ body {
   .vet-flick {
     animation: vet-flick 4.6s ease-in-out infinite;
   }
+  .vet-flap {
+    animation: vet-flap 0.34s ease-in-out infinite alternate;
+  }
   .vet-breathe {
     animation: vet-breathe 2.8s ease-in-out infinite alternate;
   }
@@ -265,6 +268,15 @@ body {
   }
   to {
     transform: rotate(var(--to));
+  }
+}
+
+@keyframes vet-flap {
+  from {
+    transform: scaleY(1);
+  }
+  to {
+    transform: scaleY(-0.55);
   }
 }
 
@@ -394,7 +406,7 @@ body {
   z-index: 100;
   display: grid;
   place-items: center;
-  background: #08335d;
+  background: #3b1f8e;
   will-change: transform;
   animation: intro-lift 0.62s cubic-bezier(0.7, 0, 0.2, 1) 1.15s both;
 }
@@ -412,7 +424,7 @@ body {
   height: 100%;
   overflow: visible;
   fill: none;
-  stroke: #f7b538;
+  stroke: #f2b705;
   stroke-width: 4.6;
   stroke-linejoin: round;
 }
@@ -438,7 +450,7 @@ body {
   top: -30%;
   bottom: -30%;
   width: 130%;
-  background: #08335d;
+  background: #3b1f8e;
   will-change: transform;
   animation: intro-sweep-right 0.85s cubic-bezier(0.5, 0, 0.2, 1) 0.05s both;
 }
@@ -509,5 +521,18 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .intro {
     display: none;
+  }
+}
+
+/* Two teaser bands in a row share one rule instead of leaving an empty strip between them. */
+.teaser-band + .teaser-band {
+  margin-top: calc(-1px - max(64px, 5.87vw));
+}
+
+/* Redesign brief: body text at 18px or larger on desktop, 16px on phones. */
+@media (min-width: 1024px) {
+  :root {
+    --text-base: 1.125rem;
+    --text-base--line-height: 1.6;
   }
 }

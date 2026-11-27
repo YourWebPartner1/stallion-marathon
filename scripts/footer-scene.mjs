@@ -1,6 +1,6 @@
 /**
  * Draws the footer picture: a stadium track seen like a table, set with race-day
- * things, hurdles around it. Engraved look: flat fills, ink outlines, hatching.
+ * things, a finish arch, medals and bibs around it. Engraved look: flat fills, ink outlines, hatching.
  *
  *   node scripts/footer-scene.mjs
  *
@@ -13,8 +13,8 @@ import sharp from "sharp";
 const W = 1600;
 const H = 1000;
 const PALETTES = {
-  blue: { dark: "#081629", ground: "#0b1c33", lane: "#0e2440", mid: "#24568d", light: "#3b76b5", paper: "#4080bf", hi: "#6aa2da", ink: "#061120", thread: "#285a92" },
-  gold: { dark: "#8a6a24", ground: "#a67f2b", lane: "#a67c24", mid: "#d99a2b", light: "#f7b538", paper: "#fbd37c", hi: "#ffe7ae", ink: "#2a1904", thread: "#5b4314" },
+  blue: { dark: "#150b38", ground: "#1b0f45", lane: "#231352", mid: "#4a2ba3", light: "#6c48c9", paper: "#7652d2", hi: "#ab71e3", ink: "#0f0828", thread: "#4f2f9e" },
+  gold: { dark: "#8a6a24", ground: "#a67f2b", lane: "#a67c24", mid: "#d99a2b", light: "#f2b705", paper: "#fbd37c", hi: "#ffe7ae", ink: "#2a1904", thread: "#5b4314" },
 };
 
 let seed = 7;
@@ -58,8 +58,8 @@ function shape(d, box, { fill = C.mid, hatch = [], line = 2.6, stroke = C.ink, e
   // Dense lines fade in toward the lower right, pale ones toward the upper left.
   const shade = tone
     ? `<mask id="m${id}"><rect ${area} fill="url(#toDark)"/></mask><mask id="h${id}"><rect ${area} fill="url(#toLight)"/></mask>` +
-      `<g mask="url(#m${id})">${rules(box, 52, 3.1, C.ink, 1.25 * tone, 0.06, 0.6)}${rules(box, -24, 4.6, C.ink, 0.9 * tone, 0.2, 0.6)}</g>` +
-      `<g mask="url(#h${id})">${rules(box, 18, 4.4, C.hi, 1, 0.35, 0.6)}</g>`
+    `<g mask="url(#m${id})">${rules(box, 52, 3.1, C.ink, 1.25 * tone, 0.06, 0.6)}${rules(box, -24, 4.6, C.ink, 0.9 * tone, 0.2, 0.6)}</g>` +
+    `<g mask="url(#h${id})">${rules(box, 18, 4.4, C.hi, 1, 0.35, 0.6)}</g>`
     : "";
   const shadow = cast ? `<path d="${d}" transform="translate(${f(cast)} ${f(cast * 0.8)})" fill="${C.ink}" opacity="0.6"/>` : "";
   return `${shadow}<path d="${d}" fill="${fill}"/><clipPath id="${id}"><path d="${d}"/></clipPath><g clip-path="url(#${id})">${inner}${shade}${extra}</g><path d="${d}" fill="none" stroke="${stroke}" stroke-width="${line}" stroke-linejoin="round"/>`;
@@ -70,29 +70,6 @@ const ell = (cx, cy, rx, ry) => `M${cx - rx} ${cy}a${rx} ${ry} 0 1 0 ${rx * 2} 0
 const stroke = (d, w = 2, color = C.ink) => `<path d="${d}" fill="none" stroke="${color}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
 
 /* ---------- things on the track ---------- */
-
-/** A track hurdle: striped board on two metal posts, feet reaching toward the viewer. */
-function hurdle() {
-  const tube = (x0, y0, x1, y1, r) => {
-    const a = Math.atan2(y1 - y0, x1 - x0) + Math.PI / 2, dx = Math.cos(a) * r, dy = Math.sin(a) * r;
-    return shape(poly([x0 + dx, y0 + dy], [x1 + dx, y1 + dy], [x1 - dx, y1 - dy], [x0 - dx, y0 - dy]), [Math.min(x0, x1) - r, Math.min(y0, y1) - r, Math.max(x0, x1) + r, Math.max(y0, y1) + r], {
-      fill: C.mid,
-      hatch: [[(Math.atan2(y1 - y0, x1 - x0) * 180) / Math.PI, 4.5, C.ink, 1.3, 0.15], [(Math.atan2(y1 - y0, x1 - x0) * 180) / Math.PI, 11, C.hi, 1.2, 0.5]],
-      line: 2.8,
-    });
-  };
-  const foot = (x, out) => tube(x, 150, x + out * 46, 192, 7) + `<circle cx="${x + out * 46}" cy="192" r="9" fill="${C.light}" stroke="${C.ink}" stroke-width="2.6"/>`;
-  const post = (x) => tube(x, -34, x, 152, 8.5) + shape(poly([x - 15, 20], [x + 15, 20], [x + 15, 42], [x - 15, 42]), [x - 16, 18, x + 16, 44], { fill: C.light, hatch: [[90, 4, C.ink, 1.1]], line: 2.4 });
-  // Board with a little thickness on top, striped toward both ends.
-  const top = shape(poly([-138, -94], [138, -94], [146, -84], [-146, -84]), [-146, -96, 146, -82], { fill: C.hi, line: 2.6 });
-  const face = poly([-146, -84], [146, -84], [146, -26], [-146, -26]);
-  const stripes = [-1, 1]
-    .map((k) => [0, 1].map((n) => `<path d="${poly([k * (138 - n * 34), -84], [k * (120 - n * 34), -84], [k * (106 - n * 34), -26], [k * (124 - n * 34), -26])}" fill="${C.ink}" opacity="0.82"/>`).join(""))
-    .join("");
-  const board = shape(face, [-146, -84, 146, -26], { fill: C.light, hatch: [[0, 6.5, C.ink, 1.5, 0.2, 1.6], [1, 21, C.hi, 1.2, 0.5, 1.6]], extra: stripes, line: 3.4 });
-  const marks = [-42, 0, 42].map((x) => `<path d="${poly([x, -75], [x + 13, -55], [x, -35], [x - 13, -55])}" fill="${C.hi}" stroke="${C.ink}" stroke-width="2.4"/>`).join("");
-  return tube(-112, 118, 112, 118, 6) + post(-112) + post(112) + foot(-112, -1) + foot(112, 1) + top + board + marks;
-}
 
 function pencil(len = 150) {
   return (
@@ -126,32 +103,30 @@ function bibs(n, label) {
       (i
         ? ""
         : shape("M4 4H152V30H4Z", [4, 4, 152, 30], { fill: C.mid, tone: 0.8, line: 2 }) +
-          `<text x="78" y="25" text-anchor="middle" font-family="Georgia, serif" font-weight="700" font-size="19" letter-spacing="3" fill="${C.hi}">STALLION</text>` +
-          `<text x="78" y="82" text-anchor="middle" font-family="Georgia, serif" font-weight="700" font-size="52" fill="${C.ink}">${label}</text>` +
-          stroke("M22 90H134", 1.4) +
-          [[12, 42], [144, 42], [12, 91], [144, 91]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="3.4" fill="${C.ink}"/><circle cx="${x - 1}" cy="${y - 1}" r="1" fill="${C.hi}"/>`).join(""));
+        `<text x="78" y="25" text-anchor="middle" font-family="Georgia, serif" font-weight="700" font-size="19" letter-spacing="3" fill="${C.hi}">STALLION</text>` +
+        `<text x="78" y="82" text-anchor="middle" font-family="Georgia, serif" font-weight="700" font-size="52" fill="${C.ink}">${label}</text>` +
+        stroke("M22 90H134", 1.4) +
+        [[12, 42], [144, 42], [12, 91], [144, 91]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="3.4" fill="${C.ink}"/><circle cx="${x - 1}" cy="${y - 1}" r="1" fill="${C.hi}"/>`).join(""));
     s += g(`translate(${i * 3} ${i * 13}) rotate(${turn} 78 50)`, one);
   }
   return s;
 }
 
-/** Lidded trophy with a horseshoe on top, as in the hero. */
-function cup() {
-  const band = (y, rx, h, fill) => shape(`M${-rx} ${y}Q0 ${y + 9} ${rx} ${y}L${rx} ${y + h}Q0 ${y + h + 9} ${-rx} ${y + h}Z`, [-rx, y - 2, rx, y + h + 10], { fill, line: 2 });
-  const handle = (k) => `M${k * 25} -104C${k * 50} -110 ${k * 52} -66 ${k * 17} -62`;
+/** The finish arch: two banded pillars and a chequered FINISH banner. */
+function arch() {
+  const pillar = (x) =>
+    shape(poly([x - 18, -6], [x + 18, -6], [x + 18, 206], [x - 18, 206]), [x - 19, -8, x + 19, 208], { fill: C.mid, hatch: [[90, 5, C.ink, 1.3, 0.2], [0, 26, C.hi, 1.6, 0.4]], line: 3, cast: 6 }) +
+    shape(poly([x - 26, 192], [x + 26, 192], [x + 26, 210], [x - 26, 210]), [x - 27, 190, x + 27, 212], { fill: C.light, line: 2.6 });
+  let checks = "";
+  for (let i = 0; i < 30; i++)
+    for (const y of [-64, -10])
+      if ((i + (y < 0 && y < -30 ? 0 : 1)) % 2 === 0) checks += `<rect x="${-270 + i * 18}" y="${y}" width="18" height="16" fill="${C.hi}" opacity="0.9"/>`;
+  const banner = shape(poly([-276, -70], [276, -70], [276, 12], [-276, 12]), [-277, -72, 277, 14], { fill: C.dark, hatch: [[0, 9, C.thread, 1, 0.4]], extra: checks, line: 3.4, cast: 8 });
   return (
-    `<ellipse cx="16" cy="8" rx="46" ry="13" fill="${C.ink}" opacity="0.65"/>` +
-    shape("M-31 -2C-31 -18 31 -18 31 -2L33 8Q0 23 -33 8Z", [-34, -16, 34, 22], { fill: C.mid }) +
-    band(-18, 24, 7, C.light) +
-    shape("M-19 -16C-8 -22 -7 -36 -5 -50L5 -50C7 -36 8 -22 19 -16Q0 -8 -19 -16Z", [-20, -52, 20, -8], { fill: C.light }) +
-    shape(ell(0, -50, 12, 6), [-13, -57, 13, -43], { fill: C.hi, line: 2 }) +
-    [-1, 1].map((k) => stroke(handle(k), 10) + stroke(handle(k), 5.4, C.light) + stroke(handle(k), 1.2, C.hi)).join("") +
-    shape("M-29 -112Q0 -103 29 -112C31 -74 18 -56 0 -52C-18 -56 -31 -74 -29 -112Z", [-31, -114, 31, -50], { fill: C.light, line: 2.8 }) +
-    band(-93, 28, 4, C.hi) +
-    shape("M-31 -114Q0 -104 31 -114C28 -132 14 -140 0 -141C-14 -140 -28 -132 -31 -114Z", [-33, -143, 33, -104], { fill: C.mid }) +
-    shape(ell(0, -146, 7, 5), [-8, -152, 8, -140], { fill: C.hi, line: 2 }) +
-    stroke("M-9 -172C-17 -160 -10 -150 0 -150C10 -150 17 -160 9 -172", 7) +
-    stroke("M-9 -172C-17 -160 -10 -150 0 -150C10 -150 17 -160 9 -172", 3.6, C.hi)
+    pillar(-240) +
+    pillar(240) +
+    banner +
+    `<text x="0" y="-15" text-anchor="middle" font-family="Georgia, serif" font-weight="700" font-size="40" letter-spacing="14" fill="${C.hi}">FINISH</text>`
   );
 }
 
@@ -294,10 +269,10 @@ function board() {
 function scene() {
   const cx = 800, cy = 780;
   let s = "";
-  // Hurdles behind the track.
-  s += g("translate(800 236) scale(0.9)", hurdle());
-  s += g("translate(410 306) rotate(-13) scale(0.94)", hurdle());
-  s += g("translate(1190 306) rotate(13) scale(0.94)", hurdle());
+  // The finish arch behind the track, a medal hanging either side.
+  s += g("translate(800 136)", arch());
+  s += g("translate(392 286) rotate(-8) scale(0.92)", medal());
+  s += g("translate(1206 286) rotate(8) scale(0.92)", medal());
 
   // The track: six lanes round a mown infield.
   s += `<path d="${ell(cx, cy, 724, 466)}" fill="${C.ink}"/><path d="${ell(cx, cy, 719, 462)}" fill="${C.mid}"/><path d="${ell(cx, cy, 710, 454)}" fill="${C.ink}"/>`;
@@ -328,27 +303,27 @@ function scene() {
   [1, 2, 3, 4, 5].forEach((n, i) => (s += g(`translate(${f(684 + i * 3.2)} ${f(351 + i * 12.2)}) scale(1 0.72)`, `<text text-anchor="middle" y="5" font-family="Georgia, serif" font-weight="700" font-size="13" fill="${C.hi}">${6 - n}</text>`)));
 
   s += board();
-  s += g("translate(462 462) rotate(-9) skewX(-16) scale(0.84 0.6)", bibs(4, "21"));
+  s += g("translate(462 462) rotate(-9) skewX(-16) scale(0.84 0.6)", bibs(4, "22"));
   s += g("translate(1030 444) rotate(6) skewX(8) scale(0.9 0.72)", sheet(176, 138, "Splits", 5));
   s += g("translate(1252 512) rotate(137) scale(0.86)", pencil(150));
-  s += g("translate(366 586) scale(0.94)", cup());
-  s += g("translate(1270 640) scale(0.94)", cup());
+  s += g("translate(318 540) rotate(-11) skewX(-10) scale(0.62 0.5)", bibs(3, "8"));
+  s += g("translate(1214 596) rotate(9) skewX(8) scale(0.62 0.5)", bibs(3, "15"));
   s += g("translate(448 664) scale(0.78)", bottle());
   s += g("translate(304 694) rotate(-15) skewX(14) scale(1.02 0.8)", sheet(206, 206, "Results", 8));
   s += g("translate(392 896) rotate(15) scale(1)", pencil(170));
   s += g("translate(1142 664) scale(0.82 0.72)", stopwatch());
   s += g("translate(1084 776) rotate(9) skewX(-12) scale(1.02 0.74)", bibs(4, "42"));
-  s += g("translate(566 796) rotate(-5) scale(0.86 0.84)", shoe());
-  s += g("translate(706 846) rotate(4) scale(0.94 0.92)", shoe());
+  s += g("translate(520 790) rotate(-5) scale(0.86 0.84)", shoe());
+  s += g("translate(632 860) rotate(4) scale(0.94 0.92)", shoe());
   s += g("translate(556 636) rotate(-14) scale(0.56 0.44)", horseshoe());
   s += g("translate(1026 934) scale(0.8 0.66)", medal());
-  s += g("translate(902 800) scale(0.84)", stallion());
+  s += g("translate(838 812) scale(1.28)", stallion());
   s += g("translate(1424 700) scale(0.72)", cone());
   s += g("translate(180 700) scale(0.72)", cone());
 
-  // Hurdles in front, half out of the picture.
-  s += g("translate(186 858) rotate(-15) scale(1.14)", hurdle());
-  s += g("translate(1414 858) rotate(15) scale(1.14)", hurdle());
+  // Race bibs in front, half out of the picture.
+  s += g("translate(70 870) rotate(-16) scale(1.3)", bibs(3, "5"));
+  s += g("translate(1330 830) rotate(14) scale(1.3)", bibs(3, "10"));
   return s;
 }
 

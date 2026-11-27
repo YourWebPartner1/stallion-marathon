@@ -14,7 +14,7 @@ type Paint = { light: string; mid: string; shade: string; shine: string };
 const CREAM: Paint = { light: "#fcf0cc", mid: "#f0cc84", shade: "#b4783c", shine: "#ffffff" };
 const GOLD: Paint = { light: "#f0c078", mid: "#cc9030", shade: "#904818", shine: "#fff3d8" };
 const AMBER: Paint = { light: "#fcd08a", mid: "#ea9f33", shade: "#a8621c", shine: "#fff3d8" };
-const NAVY: Paint = { light: "#1f5c92", mid: "#0f4474", shade: "#082a4d", shine: "#8fb7d9" };
+const NAVY: Paint = { light: "#5b3bb8", mid: "#3b1f8e", shade: "#25135f", shine: "#c9a6f0" };
 const IVORY: Paint = { light: "#ffffff", mid: "#f0d8a8", shade: "#b49060", shine: "#ffffff" };
 
 /** Outline thickness in world units (the hero maps one unit to one CSS pixel). Set on resize. */
@@ -202,7 +202,7 @@ function discGeometry(radius: number, depth: number) {
 /* ---------- Face artwork ---------- */
 
 type Ctx = CanvasRenderingContext2D;
-const C = { navy: "#08335d", navyDeep: "#062747", gold: "#f7b538", ochre: "#c98f2e", brown: "#94551a", ivory: "#fffaf0", cream: "#f3dcae" };
+const C = { navy: "#3b1f8e", navyDeep: "#2c1670", gold: "#f2b705", ochre: "#c99400", brown: "#94551a", ivory: "#fffaf0", cream: "#f3dcae" };
 
 /** A picture drawn on a 2D canvas, `ratio` = width / height. */
 function decal(draw: (c: Ctx, w: number, h: number) => void, ratio = 1, height = 448) {

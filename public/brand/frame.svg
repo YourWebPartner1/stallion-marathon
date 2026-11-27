@@ -2,11 +2,11 @@
   <!-- Stallion frame: ochre base, gold face with a light bevel, cut corners, ivory centre.
        Used as a border-image (slice 50 fill), so the 50-unit edge band is the frame. -->
   <!-- Ochre base, full outline with concave corners -->
-  <path fill="#c98f2e" d="M30 0H370Q371 22 386 27Q393 29 400 30V470Q384 471 379 482Q375 490 370 500H30Q29 482 17 476Q9 471 0 470V30Q20 29 25 15Q28 8 30 0Z"/>
+  <path fill="#c99400" d="M30 0H370Q371 22 386 27Q393 29 400 30V470Q384 471 379 482Q375 490 370 500H30Q29 482 17 476Q9 471 0 470V30Q20 29 25 15Q28 8 30 0Z"/>
   <!-- Gold face, nudged up and left so the ochre shows as a bevel on the lower right -->
-  <path fill="#f7b538" d="M30 0H368Q369 21 383 26Q390 28 397 29V467Q382 468 377 479Q373 487 368 497H30Q29 480 17 474Q9 469 0 468V30Q20 29 25 15Q28 8 30 0Z"/>
+  <path fill="#f2b705" d="M30 0H368Q369 21 383 26Q390 28 397 29V467Q382 468 377 479Q373 487 368 497H30Q29 480 17 474Q9 469 0 468V30Q20 29 25 15Q28 8 30 0Z"/>
   <!-- Inner shadow band -->
-  <path fill="#c98f2e" d="M60 38H340Q342 50 353 54Q358 56 362 57V443Q352 445 348 452Q345 458 340 462H60Q58 452 50 448Q45 445 38 444V57Q49 55 53 48Q56 44 60 38Z"/>
+  <path fill="#c99400" d="M60 38H340Q342 50 353 54Q358 56 362 57V443Q352 445 348 452Q345 458 340 462H60Q58 452 50 448Q45 445 38 444V57Q49 55 53 48Q56 44 60 38Z"/>
   <!-- Ivory centre with a thin light-gold rule -->
-  <path fill="#fbf7ee" stroke="#f6cd80" stroke-width="2" d="M62 50H338Q340 58 347 61Q350 62 350 64V436Q345 437 342 441Q340 446 338 450H62Q60 444 55 441Q52 439 50 438V64Q57 62 59 58Q61 55 62 50Z"/>
+  <path fill="#fbf7ee" stroke="#f7d35c" stroke-width="2" d="M62 50H338Q340 58 347 61Q350 62 350 64V436Q345 437 342 441Q340 446 338 450H62Q60 444 55 441Q52 439 50 438V64Q57 62 59 58Q61 55 62 50Z"/>
 </svg>

@@ -36,15 +36,15 @@ export function Accordion({ items, startIndex = 0 }: { items: Faq[]; startIndex?
                   {String(startIndex + i + 1).padStart(2, "0")}
                 </span>
                 <span
-                  className={`display col-span-10 text-[clamp(22px,1.89vw,36px)] leading-[1.15] tracking-[-0.01em] transition-[color,transform] duration-[250ms,800ms] ease-[cubic-bezier(0.16,1,0.3,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:translate-x-2.5 [@media(hover:hover)_and_(pointer:fine)]:group-hover:text-[#f7b538] group-focus-visible:translate-x-2.5 group-focus-visible:text-[#f7b538] ${
-                    isOpen ? "translate-x-2.5 text-[#f7b538]" : ""
+                  className={`display col-span-10 text-[clamp(22px,1.89vw,36px)] leading-[1.15] tracking-[-0.01em] transition-[color,transform] duration-[250ms,800ms] ease-[cubic-bezier(0.16,1,0.3,1)] [@media(hover:hover)_and_(pointer:fine)]:group-hover:translate-x-2.5 [@media(hover:hover)_and_(pointer:fine)]:group-hover:text-gold group-focus-visible:translate-x-2.5 group-focus-visible:text-gold ${
+                    isOpen ? "translate-x-2.5 text-gold" : ""
                   }`}
                 >
                   {item.q}
                 </span>
                 <span
                   aria-hidden
-                  className={`col-span-1 justify-self-end text-2xl leading-none text-[#f7b538] transition-transform duration-500 ${isOpen ? "rotate-45" : ""}`}
+                  className={`col-span-1 justify-self-end text-2xl leading-none text-gold transition-transform duration-500 ${isOpen ? "rotate-45" : ""}`}
                 >
                   +
                 </span>

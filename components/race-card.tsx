@@ -5,6 +5,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Roll } from "@/components/roll";
 import { bookHref, dates, everyRunnerGets, tiers } from "@/lib/content";
+import { ChessKnight } from "@/components/chess-knight";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 const FRAME = "clamp(20px, 2.6vw, 36px)";
@@ -49,7 +50,7 @@ function NextUp() {
   const furthest = days ? Math.max(...days, 1) : 1;
   return (
     <motion.div
-      className="notch bg-[#f7b538]"
+      className="notch bg-[#f2b705]"
       style={{ "--n": "26px", "--o": "0px", padding: FRAME } as unknown as CSSProperties}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -57,22 +58,22 @@ function NextUp() {
       transition={{ duration: 1, ease }}
     >
       <div
-        className="notch flex items-center gap-[clamp(20px,2.94vw,40px)] bg-[#08335d] px-[clamp(20px,2.94vw,40px)] py-[clamp(40px,5.88vw,80px)] text-[#fdffff] max-[900px]:flex-col"
+        className="notch flex items-center gap-[clamp(20px,2.94vw,40px)] bg-[#3b1f8e] px-[clamp(20px,2.94vw,40px)] py-[clamp(40px,5.88vw,80px)] text-[#f8f3fe] max-[900px]:flex-col"
         style={{ "--n": "26px", "--o": FRAME } as CSSProperties}
       >
         <div className="flex flex-1 flex-col items-center gap-5 text-center">
-          <p className="m-0 text-xs uppercase tracking-[0.14em] text-[#fdffff]/60">Next on the calendar</p>
+          <p className="m-0 text-xs uppercase tracking-[0.14em] text-[#f8f3fe]/60">Next on the calendar</p>
           <p className="display m-0 text-[clamp(48px,5.03vw,96px)] leading-none tracking-[-0.02em]">19 Jan 2027</p>
           <span aria-hidden className="flex w-[clamp(140px,15.5vw,220px)] items-center gap-3">
-            <span className="h-px flex-1 bg-[#f7b538]/50" />
-            <span className="size-2 rotate-45 bg-[#f7b538]" />
-            <span className="h-px flex-1 bg-[#f7b538]/50" />
+            <span className="h-px flex-1 bg-[#f2b705]/50" />
+            <ChessKnight className="text-[20px] text-[#f2b705]" />
+            <span className="h-px flex-1 bg-[#f2b705]/50" />
           </span>
-          <p className="m-0 text-xl text-[#f7b538]">Virtual Run / Republic Day Edition</p>
-          <p className="m-0 text-base leading-[1.2] text-[#fdffff]/60">Run from anywhere. Winners named on Republic Day.</p>
+          <p className="m-0 text-xl text-[#f2b705]">Virtual Run / Republic Day Edition</p>
+          <p className="m-0 text-base leading-[1.2] text-[#f8f3fe]/60">Run from anywhere. Winners named on Republic Day.</p>
         </div>
 
-        <span aria-hidden className="w-px self-stretch bg-[#fdffff]/20 max-[900px]:h-px max-[900px]:w-full" />
+        <span aria-hidden className="w-px self-stretch bg-[#f8f3fe]/20 max-[900px]:h-px max-[900px]:w-full" />
 
         <ul className="m-0 flex w-full flex-1 list-none flex-col gap-10 p-0">
           {milestones.map((m, i) => {
@@ -80,26 +81,26 @@ function NextUp() {
             // Closer dates fill more of the bar.
             const fill = d == null ? 0 : 1 - d / (furthest * 1.05);
             return (
-              <li key={m.title} className="flex flex-col gap-5 border-b border-[#f7b538]/80 py-5">
+              <li key={m.title} className="flex flex-col gap-5 border-b border-[#f2b705]/80 py-5">
                 <div className="flex items-baseline gap-3.5">
                   <p className="display m-0 min-w-0 flex-1 truncate text-[clamp(24px,1.68vw,32px)] leading-[1.15]">
                     {m.title}
                   </p>
-                  <p className="m-0 hidden flex-1 truncate text-xl text-[#f7b538] sm:block">{m.where}</p>
+                  <p className="m-0 hidden flex-1 truncate text-xl text-[#f2b705] sm:block">{m.where}</p>
                   <p className="m-0 whitespace-nowrap text-right text-xl tabular-nums">
                     {d == null ? m.short : d === 0 ? "Today" : `${d} days`}
                   </p>
                 </div>
                 <div aria-hidden className="flex h-[3px]">
                   <motion.span
-                    className="block h-full origin-left bg-[#f7b538]"
+                    className="block h-full origin-left bg-[#f2b705]"
                     style={{ width: `${Math.max(fill, 0.02) * 100}%` }}
                     initial={{ scaleX: 0 }}
                     whileInView={{ scaleX: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 1.2, ease, delay: 0.2 + i * 0.1 }}
                   />
-                  <span className="block h-full flex-1 bg-[#fdffff]/20" />
+                  <span className="block h-full flex-1 bg-[#f8f3fe]/20" />
                 </div>
               </li>
             );
@@ -164,7 +165,7 @@ function Ledger() {
               >
                 <span className="col-span-1 text-sm tabular-nums text-ink/60">{String(i + 1).padStart(2, "0")}</span>
                 <span
-                  className={`display col-span-4 -my-[0.2em] overflow-hidden text-ellipsis whitespace-nowrap py-[0.2em] text-[clamp(32px,3.33vw,64px)] leading-none tracking-[-0.02em] tabular-nums transition-[color,transform] duration-[250ms,800ms] ease-[cubic-bezier(0.16,1,0.3,1)] min-[1081px]:col-span-3 [@media(hover:hover)_and_(pointer:fine)]:group-hover:translate-x-2.5 [@media(hover:hover)_and_(pointer:fine)]:group-hover:text-[#f7b538] group-focus-visible:translate-x-2.5 group-focus-visible:text-[#f7b538] ${isOpen ? "translate-x-2.5 text-[#f7b538]" : ""}`}
+                  className={`display col-span-4 -my-[0.2em] overflow-hidden text-ellipsis whitespace-nowrap py-[0.2em] text-[clamp(32px,3.33vw,64px)] leading-none tracking-[-0.02em] tabular-nums transition-[color,transform] duration-[250ms,800ms] ease-[cubic-bezier(0.16,1,0.3,1)] min-[1081px]:col-span-3 [@media(hover:hover)_and_(pointer:fine)]:group-hover:translate-x-2.5 [@media(hover:hover)_and_(pointer:fine)]:group-hover:text-gold group-focus-visible:translate-x-2.5 group-focus-visible:text-gold ${isOpen ? "translate-x-2.5 text-[#f2b705]" : ""}`}
                 >
                   {twoDay ? "50 km" : t.distance}
                 </span>
@@ -187,7 +188,7 @@ function Ledger() {
                 <span aria-hidden className="pointer-events-none absolute bottom-[-1px] left-[calc((100%+var(--g))/12)] right-0 h-[3px]">
                   <span className="absolute inset-x-0 top-[1px] h-px bg-ink/15" />
                   <motion.span
-                    className="relative block h-full origin-left bg-[#f7b538]"
+                    className="relative block h-full origin-left bg-[#f2b705]"
                     style={{ width: `${(t.km / maxKm) * 100}%` }}
                     initial={{ scaleX: 0 }}
                     whileInView={{ scaleX: 1 }}

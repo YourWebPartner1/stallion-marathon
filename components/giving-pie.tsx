@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 const ease = [0.16, 1, 0.3, 1] as const;
-const GOLD = "#f7b538";
+const GOLD = "#f2b705";
 const CX = 240;
 const CY = 250;
 const R = 190;
@@ -20,9 +20,9 @@ const at = (deg: number, r: number) => {
 const wedge = (from: number, to: number, r: number) =>
   `M${CX} ${CY}L${at(from, r)}A${r} ${r} 0 ${to - from > 180 ? 1 : 0} 1 ${at(to, r)}Z`;
 
-// Engraved rays across the rest of the pie.
+// Engraved rays across the rest of the pie, leaving a clear patch for its label.
 const rays = Array.from({ length: 80 }, (_, i) => TO + 4.05 + i * 4.05)
-  .filter((d) => d < FROM + 360 - 3)
+  .filter((d) => d < FROM + 360 - 3 && (d < 92 || d > 142))
   .map((d, i) => `M${at(d, i % 2 ? R * 0.5 : R * 0.22)}L${at(d, R * 0.9)}`)
   .join("");
 
@@ -51,7 +51,7 @@ export function GivingPie({ className = "" }: { className?: string }) {
       {/* The rest of the profits */}
       <motion.path
         d={wedge(TO, FROM + 360, R)}
-        fill="#0e3f6e"
+        fill="#4a2ba3"
         stroke={GOLD}
         strokeWidth={3}
         strokeLinejoin="round"
@@ -74,10 +74,7 @@ export function GivingPie({ className = "" }: { className?: string }) {
         x={CX - 46}
         y={CY + 88}
         textAnchor="middle"
-        fill="#fdffff"
-        stroke="#0e3f6e"
-        strokeWidth={12}
-        paintOrder="stroke"
+        fill="#f8f3fe"
         className="display"
         fontSize={34}
         variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: show(1) } }}
@@ -104,7 +101,7 @@ export function GivingPie({ className = "" }: { className?: string }) {
           <path
             transform={`translate(${at(MID, R * 0.74)}) scale(1.25)`}
             d="M0 13C-16 2-19-6-16-12C-12-19-3-18 0-10C3-18 12-19 16-12C19-6 16 2 0 13Z"
-            fill="#08335d"
+            fill="#3b1f8e"
           >
             {!still && (
               <animateTransform

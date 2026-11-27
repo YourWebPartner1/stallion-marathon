@@ -2,7 +2,7 @@
 
 import { FitText } from "@/components/fit-text";
 import { ButtonLink } from "@/components/button-link";
-import { bookHref } from "@/lib/content";
+import { bookHref, site } from "@/lib/content";
 
 /**
  * The document's final call to action, last before the footer: "Chapter I
@@ -20,7 +20,13 @@ export function ClosingCta() {
       <p className="display m-0 text-[clamp(28px,2.83vw,54px)] leading-[1.1] tracking-[-0.02em] text-gold">
         How&rsquo;s your horsepower?
       </p>
-      <ButtonLink href={bookHref}>Book your run</ButtonLink>
+      <ButtonLink href={bookHref}>Book your run, from ₹599</ButtonLink>
+      <p className="m-0 text-base text-ink/70">
+        Questions?{" "}
+        <a href={`tel:+91${site.phone}`} className="underline underline-offset-4 hover:text-gold">
+          +91 70757 01406
+        </a>
+      </p>
     </section>
   );
 }

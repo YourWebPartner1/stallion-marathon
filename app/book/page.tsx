@@ -4,7 +4,7 @@ import { BookPanel } from "@/components/book-panel";
 import { FeaturedCardView } from "@/components/featured-chapters";
 import { FactLedger } from "@/components/official-run";
 import { CountLedger, PageHeading } from "@/components/page-heading";
-import { bookingSteps, TBA } from "@/lib/content";
+import { bookingSteps } from "@/lib/content";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/book" },
@@ -30,12 +30,10 @@ export default function BookPage() {
           aside={
             <CountLedger
               count="2"
-              caption="chapters, two channels, same prices"
+              caption="chapters. Book here or on BookMyShow, same price."
               rows={[
                 { label: "Virtual Run", value: "From ₹599" },
-                { label: "Official Run", value: TBA },
-                { label: "Official website", value: "Primary" },
-                { label: "BookMyShow", value: "Also on" },
+                { label: "Official Run", value: "From ₹455" },
               ]}
             />
           }
@@ -52,21 +50,21 @@ export default function BookPage() {
             distances and prices.
           </p>
         </div>
-        <div className="grid gap-px bg-[#08335d] p-px md:grid-cols-2">
+        <div className="grid gap-px bg-[#3b1f8e] p-px md:grid-cols-2">
           {[
             {
               label: "Part one",
               mark: "I",
               title: "Virtual Run",
-              meta: ["Starts 19 January 2027", "From ₹599", "See packages"],
+              meta: ["19 to 26 January 2027", "From ₹599", "See packages"],
               href: "/virtual-run#packages",
             },
             {
               label: "Part two",
               mark: "II",
               title: "Official Run",
-              meta: ["Sunday 14 March 2027", `Prices ${TBA.toLowerCase()}`, "See race day"],
-              href: "/official-run",
+              meta: ["Sunday 14 March 2027", "From ₹455 · 1 to 21 km", "See packages"],
+              href: "/official-run#packages",
             },
           ].map((c) => (
             <article key={c.title} className="flex">

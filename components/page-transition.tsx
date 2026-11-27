@@ -7,10 +7,10 @@ import { holdIntro, markIntroReady } from "@/lib/intro";
 
 // The site's four curtain colours, each sheet arriving at its own tilt, navy last.
 const SHEETS = [
-  { color: "#f7b538", tilt: -8 },
-  { color: "#c98f2e", tilt: 6 },
-  { color: "#145a86", tilt: -4 },
-  { color: "#08335d", tilt: 2 },
+  { color: "#f2b705", tilt: -8 },
+  { color: "#c99400", tilt: 6 },
+  { color: "#ab71e3", tilt: -4 },
+  { color: "#3b1f8e", tilt: 2 },
 ];
 const EASE = "cubic-bezier(0.76, 0, 0.24, 1)";
 const COVER = { duration: 300, step: 28 };
@@ -131,7 +131,7 @@ export function PageTransition() {
         >
           {i === SHEETS.length - 1 && (
             <span data-mark className="block" style={{ clipPath: "inset(100% 0 0 0)" }}>
-              <Crest height={170} className="bg-[#f7b538]" />
+              <Crest height={170} className="bg-[#f2b705]" />
             </span>
           )}
         </div>

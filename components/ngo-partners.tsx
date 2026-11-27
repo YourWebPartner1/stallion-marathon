@@ -7,8 +7,8 @@ import { ngoPartners } from "@/lib/content";
  */
 export function NgoPartners({ className = "" }: { className?: string }) {
   return (
-    <div className={`border-t border-[#fdffff]/25 pt-8 text-[#fdffff] lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-6 ${className}`}>
-      <h3 className="m-0 mb-7 text-base font-normal leading-[1.3] text-[#fdffff]/70 lg:col-span-3 lg:mb-0">Our NGO partners</h3>
+    <div id="partners" className={`scroll-mt-24 border-t border-[#f8f3fe]/25 pt-8 text-[#f8f3fe] lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-6 ${className}`}>
+      <h3 className="m-0 mb-7 text-base font-normal leading-[1.3] text-[#f8f3fe]/70 lg:col-span-3 lg:mb-0">Our NGO partners</h3>
       <ul className="m-0 flex list-none flex-wrap items-center gap-x-[clamp(32px,4.4vw,84px)] gap-y-9 p-0 lg:col-span-9 lg:justify-end">
         {ngoPartners.map((p) => {
           const logo = (

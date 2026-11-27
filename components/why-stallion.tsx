@@ -3,16 +3,17 @@
 import type { CSSProperties } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { pillars } from "@/lib/content";
+import { deadlineLines, pillars } from "@/lib/content";
 
 const ease = [0.16, 1, 0.3, 1] as const;
-const PAINT = ["#f7b538", "#c98f2e", "#145a86", "#08335d"];
+const PAINT = ["#f2b705", "#c99400", "#ab71e3", "#3b1f8e"];
 
 // Where each pillar leads for more.
 const pillarLinks = ["/virtual-run", "/workshops", "/official-run#premium", "/giving-back"];
 
 /**
- * "Why Stallion": the four message pillars from the content document as ruled
+ * For the ones who run on deadlines (redesign brief, scene 3): the headline, three
+ * short lines that fade in one after another, then the supporting points as ruled
  * tiles with the hover curtain, each leading to the page that says more.
  */
 export function WhyStallion() {
@@ -21,17 +22,28 @@ export function WhyStallion() {
       aria-labelledby="why-title"
       className="theme-light relative -mt-px bg-navy px-[max(20px,2.78vw)] pb-[max(96px,8.33vw)] text-ink"
     >
-      <div className="mb-10 grid gap-y-4 border-b border-ink pb-10 lg:grid-cols-12 lg:gap-x-6">
-        <h2 id="why-title" className="display m-0 text-[clamp(40px,3.99vw,76px)] leading-none tracking-[-0.02em] lg:col-span-7">
-          Why Stallion
+      <div className="mb-10 grid gap-y-8 border-b border-ink pb-10 lg:grid-cols-12 lg:gap-x-6">
+        <h2 id="why-title" className="display m-0 text-[clamp(40px,3.99vw,76px)] leading-none tracking-[-0.02em] lg:col-span-6">
+          You run all year. Just never for yourself.
         </h2>
-        <p className="m-0 self-end text-base leading-[1.3] text-ink/60 lg:col-span-5 lg:col-start-8 lg:text-right">
-          Run your distance, your way, then take the start line behind a stallion.
-        </p>
+        <div className="flex flex-col gap-3 self-end lg:col-span-5 lg:col-start-8">
+          {deadlineLines.map((line, i) => (
+            <motion.p
+              key={line}
+              className="display m-0 text-[clamp(20px,1.47vw,28px)] leading-[1.25] text-ink/80"
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.8 }}
+              transition={{ duration: 0.6, ease, delay: i * 0.25 }}
+            >
+              {line}
+            </motion.p>
+          ))}
+        </div>
       </div>
 
       <motion.ul
-        className="m-0 grid list-none gap-px bg-[#08335d] p-px sm:grid-cols-2 lg:grid-cols-4"
+        className="m-0 grid list-none gap-px bg-[#3b1f8e] p-px sm:grid-cols-2 lg:grid-cols-4"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, amount: 0.15 }}
@@ -41,7 +53,7 @@ export function WhyStallion() {
           <li key={p.title} className="flex">
             <Link
               href={pillarLinks[i] ?? "/"}
-              className="group relative isolate flex min-h-[clamp(320px,24vw,440px)] w-full flex-col overflow-hidden bg-navy p-6 text-ink transition-colors duration-[250ms] [transition-delay:120ms] hover:text-[#f7b538] focus-visible:outline-2 focus-visible:-outline-offset-[6px] focus-visible:outline-[#f7b538]"
+              className="group relative isolate flex min-h-[clamp(320px,24vw,440px)] w-full flex-col overflow-hidden bg-navy p-6 text-ink transition-colors duration-[250ms] [transition-delay:120ms] hover:text-[#f2b705] focus-visible:outline-2 focus-visible:-outline-offset-[6px] focus-visible:outline-[#f2b705]"
             >
               {PAINT.map((color, j) => (
                 <span

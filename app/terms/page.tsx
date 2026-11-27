@@ -20,7 +20,7 @@ export default function TermsPage() {
       sections={[
         {
           heading: "Organiser",
-          body: [`Stallion Marathon, Chapter I is organised by the ${site.organiser}.`],
+          body: [`Stallion Marathon, Chapter I is organised by ${site.legalName}, which also takes all payments.`],
         },
         {
           heading: "Booking",
@@ -36,7 +36,7 @@ export default function TermsPage() {
         {
           heading: "Virtual Run",
           body: [
-            "The Virtual Run starts on 19 January 2027 and winners are announced on 26 January 2027. The closing date, accepted proof of run and how winners are chosen will be published before the run starts.",
+            "The Virtual Run is open from 19 to 26 January 2027, and winners are announced on 26 January 2027. Accepted proof of run and how winners are chosen will be published before the run starts.",
             "Medals and goodie bags are shipped to the delivery address you give when booking.",
           ],
         },

@@ -1,4 +1,14 @@
-import { booking, dates, faqs, site, tiers, venue } from "@/lib/content";
+import {
+  booking,
+  dates,
+  faqs,
+  officialDistancePrices,
+  signaturePackages,
+  site,
+  studPackages,
+  tiers,
+  venue,
+} from "@/lib/content";
 
 /**
  * Event structured data (schema.org JSON-LD) for search engines, as the content
@@ -7,7 +17,7 @@ import { booking, dates, faqs, site, tiers, venue } from "@/lib/content";
  * once they are final.
  */
 
-const organizer = { "@type": "Organization", name: site.organiser, telephone: `+91${site.phone}`, url: site.url };
+const organizer = { "@type": "Organization", name: site.organiser, legalName: site.legalName, telephone: `+91${site.phone}`, url: site.url };
 const bookingUrl = booking.websiteUrl ?? undefined;
 
 export const virtualRunEvent = {
@@ -17,8 +27,9 @@ export const virtualRunEvent = {
   url: `${site.url}/virtual-run`,
   image: `${site.url}/opengraph-image.png`,
   description:
-    "Run your chosen distance, anywhere, at your own pace, from 19 January 2027. Winners announced on Republic Day, 26 January 2027.",
+    "Run your chosen distance, anywhere, at your own pace, between 19 and 26 January 2027. Winners announced on Republic Day, 26 January 2027.",
   startDate: dates.virtualStart,
+  ...(dates.virtualClose ? { endDate: dates.virtualClose } : {}),
   eventStatus: "https://schema.org/EventScheduled",
   eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
   location: { "@type": "VirtualLocation", name: "Anywhere you can run" },
@@ -55,6 +66,34 @@ export const officialRunEvent = {
     },
   },
   organizer,
+  offers: [
+    ...studPackages.map((p) => ({
+      "@type": "Offer",
+      name: `Stud ${p.distance} (Kids under 12)`,
+      price: p.price,
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock",
+      ...(bookingUrl ? { url: bookingUrl } : {}),
+    })),
+    ...officialDistancePrices.flatMap((d) =>
+      (["basic", "standard", "premium"] as const).map((tier) => ({
+        "@type": "Offer",
+        name: `${d.distance} ${tier[0].toUpperCase()}${tier.slice(1)}`,
+        price: d[tier],
+        priceCurrency: "INR",
+        availability: "https://schema.org/InStock",
+        ...(bookingUrl ? { url: bookingUrl } : {}),
+      })),
+    ),
+    ...signaturePackages.map((p) => ({
+      "@type": "Offer",
+      name: `${p.name} Package`,
+      price: p.price,
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock",
+      ...(bookingUrl ? { url: bookingUrl } : {}),
+    })),
+  ],
 };
 
 /** The organiser, on every page. */

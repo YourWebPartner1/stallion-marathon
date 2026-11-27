@@ -101,7 +101,7 @@ export function FitText({
                         show: { y: "0%", transition: { duration: 0.8, ease, delay: letterDelay + j * 0.035 } },
                       }}
                     >
-                      {ch === " " ? " " : ch}
+                      {ch === " " ? "00a0" : ch}
                     </motion.span>
                   </span>
                 ))}
@@ -133,14 +133,17 @@ export function FitText({
             className="block w-max"
             style={{ fontSize: `${PROBE}px` }}
           >
-            {/* Letters are measured as separate boxes too, so the fit matches what is drawn. */}
-            {perLetter && typeof line === "string"
-              ? Array.from(line).map((ch, j) => (
-                  <span key={j} className="inline-block">
-                    {ch === " " ? " " : ch}
-                  </span>
-                ))
-              : line}
+            {/* Letters are measured as separate boxes too, so the fit matches what is drawn. The
+                text sits in a generated ::before, so it never reads as a second copy of the title. */}
+            {perLetter && typeof line === "string" ? (
+              Array.from(line).map((ch, j) => (
+                <span key={j} data-t={ch === " " ? " " : ch} className="inline-block before:content-[attr(data-t)]" />
+              ))
+            ) : typeof line === "string" ? (
+              <span data-t={line} className="before:content-[attr(data-t)]" />
+            ) : (
+              line
+            )}
           </span>
         ))}
       </span>

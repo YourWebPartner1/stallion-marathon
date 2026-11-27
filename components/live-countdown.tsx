@@ -45,7 +45,7 @@ export function LiveCountdown({ spec, size }: { spec: TimerSpec; size: "large" |
 
   return (
     <div className="flex flex-col items-center gap-3">
-      <p className={`m-0 ${size === "large" ? "text-xl" : "text-base"} text-[#f7b538]`}>{done ? spec.zeroMessage : spec.label}</p>
+      <p className={`m-0 ${size === "large" ? "text-xl" : "text-base"} text-[#f2b705]`}>{done ? spec.zeroMessage : spec.label}</p>
       {parts == null ? (
         // Before scripts run, and if they never do.
         <p className={`display m-0 leading-none tracking-[-0.02em] ${num}`}>{spec.dateText}</p>
@@ -57,19 +57,19 @@ export function LiveCountdown({ spec, size }: { spec: TimerSpec; size: "large" |
           <div aria-hidden className="flex items-start gap-[clamp(8px,1vw,18px)]">
             {parts.map(([unit, value], k) => (
               <div key={unit as string} className="flex items-start gap-[clamp(8px,1vw,18px)]">
-                {k > 0 && <span className={`display leading-none text-[#f7b538]/50 ${num}`}>:</span>}
+                {k > 0 && <span className={`display leading-none text-[#f2b705]/50 ${num}`}>:</span>}
                 <div className="flex flex-col items-center gap-1">
                   <span className={`display leading-none tabular-nums tracking-[-0.02em] ${num}`}>
                     {k === 0 ? String(value) : pad(value as number)}
                   </span>
-                  <span className="text-xs uppercase tracking-[0.14em] text-[#fdffff]/60">{unit}</span>
+                  <span className="text-xs uppercase tracking-[0.14em] text-[#f8f3fe]/60">{unit}</span>
                 </div>
               </div>
             ))}
           </div>
         </>
       )}
-      <p className="m-0 text-sm text-[#fdffff]/60">{spec.dateText} · IST</p>
+      <p className="m-0 text-sm text-[#f8f3fe]/60">{spec.dateText} · IST</p>
     </div>
   );
 }

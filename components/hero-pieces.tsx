@@ -29,18 +29,16 @@ type Spot = {
   phone: { x: number; y: number; size: number };
 };
 
-// Places, sizes and speeds measured on the reference at 1440 x 900: the pieces
+// Placed around the artwork, clear of STALLION and the hero text: the pieces
 // behind the figure travel with the page, the ones in front rise 1.3 to 1.7
 // times as fast, and every piece keeps turning slowly on its own axis.
 const SPOTS: Spot[] = [
-  { kind: "trophy", layer: "front", x: 10.4, y: 52.6, size: 24.5, tilt: [0.3, 0, 0.17], rise: 0.57, spin: 0.1, turn: 0.4, from: -0.35, phone: { x: 12, y: 66, size: 28 } },
-  { kind: "medal", layer: "back", x: 21.6, y: 37.4, size: 12.2, tilt: [0.14, 0, 0.22], rise: 0, spin: 0.1, turn: 0.4, from: -0.3, phone: { x: 23, y: 56, size: 16 } },
-  { kind: "token", layer: "front", x: 17.0, y: 70.6, size: 5.2, tilt: [-0.1, 0.25, 0], rise: 0.45, spin: 0.12, turn: 0.5, from: -0.2, phone: { x: 9, y: 86, size: 7.5 } },
-  { kind: "coin", layer: "front", x: 8.6, y: 76.6, size: 7.3, tilt: [0.1, -0.2, 0], rise: 0.71, spin: -0.12, turn: -0.5, from: 0.15, phone: { x: 20, y: 93, size: 10.5 } },
-  { kind: "card", layer: "back", x: 47.4, y: 23.4, size: 10.2, tilt: [0.06, 0, 0.1], rise: 0, spin: 0.085, turn: 2.1, from: -0.5, phone: { x: 52.5, y: 38, size: 12.5 } },
-  { kind: "horseshoe", layer: "back", x: 77.2, y: 41.4, size: 11.8, tilt: [0.16, 0, -0.22], rise: 0, spin: -0.1, turn: -0.4, from: 0.35, phone: { x: 80, y: 55, size: 15 } },
-  { kind: "die", layer: "front", x: 91.2, y: 52.0, size: 10.6, tilt: [0.62, 0, 0.06], rise: 0.46, spin: 0.17, turn: 0.8, from: -0.75, phone: { x: 91.5, y: 71, size: 13.5 } },
-  { kind: "bib", layer: "front", x: 85.6, y: 71.2, size: 13.9, tilt: [0.08, 0, -0.16], rise: 0.38, spin: -0.085, turn: -1.4, from: 0.35, phone: { x: 87, y: 93, size: 18 } },
+  { kind: "medal", layer: "back", x: 10, y: 48, size: 9.5, tilt: [0.14, 0, 0.22], rise: 0, spin: 0.1, turn: 0.4, from: -0.3, phone: { x: 11, y: 192, size: 13 } },
+  { kind: "card", layer: "back", x: 30, y: 46, size: 8, tilt: [0.06, 0, 0.1], rise: 0, spin: 0.085, turn: 2.1, from: -0.5, phone: { x: 89, y: 190, size: 11 } },
+  { kind: "horseshoe", layer: "back", x: 94, y: 46, size: 9, tilt: [0.16, 0, -0.22], rise: 0, spin: -0.1, turn: -0.4, from: 0.35, phone: { x: 91, y: 230, size: 11 } },
+  { kind: "token", layer: "front", x: 33, y: 88, size: 4.4, tilt: [-0.1, 0.25, 0], rise: 0.45, spin: 0.12, turn: 0.5, from: -0.2, phone: { x: 8, y: 262, size: 7 } },
+  { kind: "coin", layer: "front", x: 38.5, y: 93, size: 6, tilt: [0.1, -0.2, 0], rise: 0.71, spin: -0.12, turn: -0.5, from: 0.15, phone: { x: 16, y: 274, size: 9 } },
+  { kind: "bib", layer: "front", x: 94, y: 89, size: 10, tilt: [0.08, 0, -0.16], rise: 0.38, spin: -0.085, turn: -1.4, from: 0.35, phone: { x: 88, y: 270, size: 13 } },
 ];
 
 const ACTION_SECONDS = 1.6;

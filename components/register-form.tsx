@@ -41,19 +41,6 @@ const forms = {
       ...contact,
     ],
   },
-  school: {
-    heading: "Educational institution registration",
-    submit: "Register your institution",
-    fields: [
-      { name: "institution", label: "Institution name", autoComplete: "organization", wide: true },
-      { name: "kind", label: "Type", type: "select", options: ["School", "College", "Other"] },
-      { name: "area", label: "Area or city" },
-      { name: "name", label: "Contact person", autoComplete: "name" },
-      { name: "role", label: "Role", autoComplete: "organization-title" },
-      ...contact,
-      { name: "students", label: "Number of students, roughly", type: "number", optional: true, wide: true },
-    ],
-  },
 } satisfies Record<string, { heading: string; submit: string; fields: Field[] }>;
 
 const inputClass =
@@ -127,7 +114,7 @@ export function RegisterForm({ kind }: { kind: keyof typeof forms }) {
       <div className="flex flex-col gap-4 sm:col-span-2">
         <button
           type="submit"
-          className="label w-full cursor-pointer border-0 bg-[#08335d] px-6 py-5 text-[#fdffff] transition-colors duration-300 hover:bg-[#f7b538] hover:text-[#041d36] sm:w-fit sm:px-10"
+          className="label w-full cursor-pointer border-0 bg-[#3b1f8e] px-6 py-5 text-[#f8f3fe] transition-colors duration-300 hover:bg-[#f2b705] hover:text-[#1e1146] sm:w-fit sm:px-10"
         >
           {form.submit}
         </button>

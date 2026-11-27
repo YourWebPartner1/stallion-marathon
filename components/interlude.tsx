@@ -96,7 +96,7 @@ export function Interlude({ text }: { text: string }) {
           }
         >
           <div className="grid h-full place-items-center p-[clamp(24px,2.78vw,40px)] [container-type:inline-size]">
-            <p className="display m-0 text-balance text-center text-[clamp(16px,6.6cqi,44px)] leading-[1.3] tracking-[-0.01em] text-[#08335d]">
+            <p className="display m-0 text-balance text-center text-[clamp(16px,6.6cqi,44px)] leading-[1.3] tracking-[-0.01em] text-[#3b1f8e]">
               {words.map((w, i) => (
                 <Word key={i} progress={scrollYProgress} index={i} count={words.length} still={still}>
                   {w}

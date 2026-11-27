@@ -15,6 +15,7 @@ const primaryLinks = [
   { href: "/virtual-run", label: "Virtual Run" },
   { href: "/official-run", label: "Official Run" },
   { href: "/workshops", label: "Workshops" },
+  { href: "/schools", label: "Schools & Colleges" },
 ];
 const secondaryLinks = [
   { href: "/volunteers", label: "Volunteers" },
@@ -34,6 +35,7 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [solid, setSolid] = useState(false);
   const lastY = useRef(0);
 
   // Close the menu on navigation.
@@ -43,13 +45,13 @@ export function SiteHeader() {
     setOpen(false);
   }
 
-  // Always transparent (no backdrop or line), like the reference.
   // Slides away while scrolling down and returns on the way back up.
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
       const dy = y - lastY.current;
       // Ignore repeated events at the same position (smooth scroll re-sends them).
+      setSolid(y > 80);
       if (Math.abs(dy) < 4) return;
       if (y <= 240) setHidden(false);
       else setHidden(dy > 0);
@@ -83,12 +85,11 @@ export function SiteHeader() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-transform duration-500 ${
-          hidden && !open ? "-translate-y-full" : "translate-y-0"
-        }`}
+        className={`fixed inset-x-0 top-0 z-50 transition-[transform,background-color] duration-500 ${hidden && !open ? "-translate-y-full" : "translate-y-0"
+          } ${solid && !open ? "bg-[#1e1146]" : ""}`}
       >
-        {/* No background, border or blur: the header stays transparent like the reference and simply hides while scrolling down. */}
-        <div className="flex items-center justify-between gap-6 px-[clamp(20px,2.78vw,64px)] pb-4 pt-12 sm:pb-5 sm:pt-[52px]">
+        {/* Transparent at the top of the page; once scrolled it hides going down and comes back up on a solid bar, so it never sits over content. */}
+        <div className={`flex items-center justify-between gap-6 px-[clamp(20px,2.78vw,64px)] transition-[padding] duration-500 ${solid ? "py-3 sm:py-4" : "pb-4 pt-12 sm:pb-5 sm:pt-[52px]"}`}>
           <Link href="/" aria-label="Stallion Marathon, home" className="group block">
             <span className="hidden sm:block">
               <Crest height={57} className="bg-gold group-hover:bg-ink" />
@@ -117,19 +118,17 @@ export function SiteHeader() {
                   Open: they meet in the middle and turn into an X. */}
               <span aria-hidden className="flex w-8 flex-col items-center justify-center gap-2">
                 <span
-                  className={`block h-[3px] w-full rounded-[1px] bg-gold will-change-transform ${
-                    open
-                      ? "[transform:translateY(5.5px)_rotate(45deg)]"
-                      : "pointer-fine:group-hover:[transform:translateX(18%)_scaleX(0.64)] group-focus-visible:[transform:translateX(18%)_scaleX(0.64)]"
-                  }`}
+                  className={`block h-[3px] w-full rounded-[1px] bg-gold will-change-transform ${open
+                    ? "[transform:translateY(5.5px)_rotate(45deg)]"
+                    : "pointer-fine:group-hover:[transform:translateX(18%)_scaleX(0.64)] group-focus-visible:[transform:translateX(18%)_scaleX(0.64)]"
+                    }`}
                   style={{ transition: barTransition }}
                 />
                 <span
-                  className={`block h-[3px] w-full rounded-[1px] bg-gold will-change-transform ${
-                    open
-                      ? "[transform:translateY(-5.5px)_rotate(-45deg)]"
-                      : "pointer-fine:group-hover:[transform:translateX(-18%)_scaleX(0.64)] group-focus-visible:[transform:translateX(-18%)_scaleX(0.64)]"
-                  }`}
+                  className={`block h-[3px] w-full rounded-[1px] bg-gold will-change-transform ${open
+                    ? "[transform:translateY(-5.5px)_rotate(-45deg)]"
+                    : "pointer-fine:group-hover:[transform:translateX(-18%)_scaleX(0.64)] group-focus-visible:[transform:translateX(-18%)_scaleX(0.64)]"
+                    }`}
                   style={{ transition: barTransition }}
                 />
               </span>
@@ -150,7 +149,7 @@ export function SiteHeader() {
       >
         {/* Curtain: four panels hinged at the top-right corner. Closed they are swung
             90° out of view; opening swings them in one after another, navy last. */}
-        {["#f7b538", "#c98f2e", "#145a86", "#08335d"].map((color, i) => (
+        {["#f2b705", "#c99400", "#ab71e3", "#3b1f8e"].map((color, i) => (
           <div
             key={color}
             aria-hidden
@@ -221,7 +220,7 @@ export function SiteHeader() {
 
             {/* Primary links, large serif. */}
             <nav aria-label="Main" className="order-2 flex flex-[2] max-[1000px]:order-1 max-[1000px]:flex-none">
-              <ul className="flex flex-col gap-[clamp(24px,2.78vw,40px)] text-[clamp(40px,5vw,76px)] tracking-[-0.02em] max-[1000px]:text-[clamp(36px,10vw,56px)]">
+              <ul className="flex flex-col gap-[clamp(14px,min(2.78vw,3vh),40px)] text-[clamp(34px,min(5vw,8.5vh),76px)] tracking-[-0.02em] max-[1000px]:text-[clamp(30px,min(10vw,6.5vh),56px)]">
                 {primaryLinks.map((item, i) => {
                   const active = pathname === item.href;
                   return (
